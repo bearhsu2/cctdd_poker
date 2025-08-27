@@ -1,17 +1,14 @@
 package idv.kuma.poker;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public class Poker {
-    private int number;
-    
-    private Poker(int number) {
-        this.number = number;
-    }
+    private final int number;
     
     public static Poker with(int number) {
         return new Poker(number);
-    }
-    
-    public int getNumber() {
-        return number;
     }
 }
