@@ -11,12 +11,21 @@ public class PokerComparatorTest {
 
     @Test
     public void _2_vs_2_makes_tie() {
+
         Poker poker1 = Poker.with(2);
         Poker poker2 = Poker.with(2);
 
-        actual = sut.compare(poker1, poker2);
+        when_compare(poker1, poker2);
 
-        assertEquals(0, actual);
+        then_result_is(0);
+    }
+    
+    private void when_compare(Poker poker1, Poker poker2) {
+        actual = sut.compare(poker1, poker2);
+    }
+    
+    private void then_result_is(int expected) {
+        assertEquals(expected, actual);
     }
 
 
