@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PokerComparatorTest {
 
     @Test
-    public void testPokerComparatorWith2vs2() {
+    public void _2_vs_2_makes_tie() {
         Poker poker1 = new Poker(2);
         Poker poker2 = new Poker(2);
         PokerComparator comparator = new PokerComparator();
