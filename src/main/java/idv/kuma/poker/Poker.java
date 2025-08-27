@@ -3,7 +3,7 @@ package idv.kuma.poker;
 public class Poker {
     private int number;
     
-    public Poker(int number) {
+    private Poker(int number) {
         this.number = number;
     }
     
