@@ -7,6 +7,10 @@ public class Poker {
         this.number = number;
     }
     
+    public static Poker with(int number) {
+        return new Poker(number);
+    }
+    
     public int getNumber() {
         return number;
     }
