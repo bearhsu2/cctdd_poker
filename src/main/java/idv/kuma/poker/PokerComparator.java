@@ -5,6 +5,9 @@ public class PokerComparator {
         if (poker1.getNumber() == 2 && poker2.getNumber() == 3) {
             return -1;
         }
+        if (poker1.getNumber() == 3 && poker2.getNumber() == 2) {
+            return 1;
+        }
         return 0;
     }
 }

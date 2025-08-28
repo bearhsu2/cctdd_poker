@@ -39,5 +39,16 @@ public class PokerComparatorTest {
         then_result_is(-1);
     }
 
+    @Test
+    public void _3_vs_2_makes_first_win() {
+
+        Poker poker1 = Poker.with(3);
+        Poker poker2 = Poker.with(2);
+
+        when_compare(poker1, poker2);
+
+        then_result_is(1);
+    }
+
 
 }
