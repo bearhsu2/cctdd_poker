@@ -94,5 +94,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void _club_2_vs_diamond_2_makes_first_win() {
+
+        Card poker1 = new Card(Suit.CLUB, CardNumber.TWO);
+        Card poker2 = new Card(Suit.DIAMOND, CardNumber.TWO);
+
+        when_compare(poker1, poker2);
+
+        then_result_is(1);
+    }
+
 
 }
