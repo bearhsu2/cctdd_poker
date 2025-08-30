@@ -7,14 +7,9 @@ public class PokerComparator {
             return cardNumberComparison;
         }
         
-        // When card numbers are equal, compare suits (CLUB wins over DIAMOND)
-        if (poker1.getSuit() == Suit.CLUB && poker2.getSuit() == Suit.DIAMOND) {
-            return 1;
-        }
-        if (poker1.getSuit() == Suit.DIAMOND && poker2.getSuit() == Suit.CLUB) {
-            return -1;
-        }
-        
-        return 0;
+        // When card numbers are equal, compare suits: SPADE > HEART > CLUB > DIAMOND
+        // Since enum ordinals are: SPADE=0, HEART=1, CLUB=2, DIAMOND=3
+        // Lower ordinal = higher suit rank, so we reverse the comparison
+        return Integer.compare(poker2.getSuit().ordinal(), poker1.getSuit().ordinal());
     }
 }

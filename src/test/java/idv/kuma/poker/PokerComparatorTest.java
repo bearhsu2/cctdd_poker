@@ -105,5 +105,38 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void _spade_2_vs_heart_2_makes_first_win() {
+
+        Card poker1 = new Card(Suit.SPADE, CardNumber.TWO);
+        Card poker2 = new Card(Suit.HEART, CardNumber.TWO);
+
+        when_compare(poker1, poker2);
+
+        then_result_is(1);
+    }
+
+    @Test
+    public void _heart_2_vs_club_2_makes_first_win() {
+
+        Card poker1 = new Card(Suit.HEART, CardNumber.TWO);
+        Card poker2 = new Card(Suit.CLUB, CardNumber.TWO);
+
+        when_compare(poker1, poker2);
+
+        then_result_is(1);
+    }
+
+    @Test
+    public void _spade_2_vs_diamond_2_makes_first_win() {
+
+        Card poker1 = new Card(Suit.SPADE, CardNumber.TWO);
+        Card poker2 = new Card(Suit.DIAMOND, CardNumber.TWO);
+
+        when_compare(poker1, poker2);
+
+        then_result_is(1);
+    }
+
 
 }
