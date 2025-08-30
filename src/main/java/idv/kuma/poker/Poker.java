@@ -8,10 +8,6 @@ import lombok.Getter;
 public class Poker {
     private final int number;
     
-    public static Poker with(int number) {
-        return new Poker(number);
-    }
-    
     public static Poker with(String card) {
         return new Poker(convertCardToNumber(card));
     }
@@ -21,7 +17,11 @@ public class Poker {
             case "J":
                 return 11;
             default:
-                throw new IllegalArgumentException("Unknown card: " + card);
+                try {
+                    return Integer.parseInt(card);
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Unknown card: " + card);
+                }
         }
     }
 }
