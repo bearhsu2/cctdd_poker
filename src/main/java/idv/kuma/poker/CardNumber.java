@@ -3,7 +3,7 @@ package idv.kuma.poker;
 import lombok.Getter;
 
 @Getter
-public enum Poker {
+public enum CardNumber {
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -20,7 +20,7 @@ public enum Poker {
     
     private final int number;
     
-    Poker(int number) {
+    CardNumber(int number) {
         this.number = number;
     }
     
