@@ -12,15 +12,15 @@ public class PokerComparatorTest {
     @Test
     public void _2_vs_2_makes_tie() {
 
-        CardNumber poker1 = CardNumber.TWO;
-        CardNumber poker2 = CardNumber.TWO;
+        Card poker1 = new Card(Suit.CLUB, CardNumber.TWO);
+        Card poker2 = new Card(Suit.CLUB, CardNumber.TWO);
 
         when_compare(poker1, poker2);
 
         then_result_is(0);
     }
 
-    private void when_compare(CardNumber poker1, CardNumber poker2) {
+    private void when_compare(Card poker1, Card poker2) {
         actual = sut.compare(poker1, poker2);
     }
 
@@ -31,8 +31,8 @@ public class PokerComparatorTest {
     @Test
     public void _2_vs_3_makes_first_lose() {
 
-        CardNumber poker1 = CardNumber.TWO;
-        CardNumber poker2 = CardNumber.THREE;
+        Card poker1 = new Card(Suit.CLUB, CardNumber.TWO);
+        Card poker2 = new Card(Suit.CLUB, CardNumber.THREE);
 
         when_compare(poker1, poker2);
 
@@ -42,8 +42,8 @@ public class PokerComparatorTest {
     @Test
     public void _3_vs_2_makes_first_win() {
 
-        CardNumber poker1 = CardNumber.THREE;
-        CardNumber poker2 = CardNumber.TWO;
+        Card poker1 = new Card(Suit.CLUB, CardNumber.THREE);
+        Card poker2 = new Card(Suit.CLUB, CardNumber.TWO);
 
         when_compare(poker1, poker2);
 
@@ -53,8 +53,8 @@ public class PokerComparatorTest {
     @Test
     public void _J_vs_10_makes_first_win() {
 
-        CardNumber poker1 = CardNumber.JACK;
-        CardNumber poker2 = CardNumber.TEN;
+        Card poker1 = new Card(Suit.CLUB, CardNumber.JACK);
+        Card poker2 = new Card(Suit.CLUB, CardNumber.TEN);
 
         when_compare(poker1, poker2);
 
@@ -64,8 +64,8 @@ public class PokerComparatorTest {
     @Test
     public void _Q_vs_J_makes_first_win() {
 
-        CardNumber poker1 = CardNumber.QUEEN;
-        CardNumber poker2 = CardNumber.JACK;
+        Card poker1 = new Card(Suit.CLUB, CardNumber.QUEEN);
+        Card poker2 = new Card(Suit.CLUB, CardNumber.JACK);
 
         when_compare(poker1, poker2);
 
@@ -75,8 +75,8 @@ public class PokerComparatorTest {
     @Test
     public void _K_vs_Q_makes_first_win() {
 
-        CardNumber poker1 = CardNumber.KING;
-        CardNumber poker2 = CardNumber.QUEEN;
+        Card poker1 = new Card(Suit.CLUB, CardNumber.KING);
+        Card poker2 = new Card(Suit.CLUB, CardNumber.QUEEN);
 
         when_compare(poker1, poker2);
 
@@ -86,8 +86,8 @@ public class PokerComparatorTest {
     @Test
     public void _A_vs_K_makes_first_win() {
 
-        CardNumber poker1 = CardNumber.ACE;
-        CardNumber poker2 = CardNumber.KING;
+        Card poker1 = new Card(Suit.CLUB, CardNumber.ACE);
+        Card poker2 = new Card(Suit.CLUB, CardNumber.KING);
 
         when_compare(poker1, poker2);
 
