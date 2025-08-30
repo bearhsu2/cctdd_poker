@@ -26,12 +26,4 @@ public enum Poker {
         this.number = number;
     }
     
-    public static Poker with(String card) {
-        for (Poker poker : values()) {
-            if (poker.symbol.equals(card)) {
-                return poker;
-            }
-        }
-        throw new IllegalArgumentException("Unknown card: " + card);
-    }
 }

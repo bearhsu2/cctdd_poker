@@ -12,8 +12,8 @@ public class PokerComparatorTest {
     @Test
     public void _2_vs_2_makes_tie() {
 
-        Poker poker1 = Poker.with("2");
-        Poker poker2 = Poker.with("2");
+        Poker poker1 = Poker.TWO;
+        Poker poker2 = Poker.TWO;
 
         when_compare(poker1, poker2);
 
@@ -31,8 +31,8 @@ public class PokerComparatorTest {
     @Test
     public void _2_vs_3_makes_first_lose() {
 
-        Poker poker1 = Poker.with("2");
-        Poker poker2 = Poker.with("3");
+        Poker poker1 = Poker.TWO;
+        Poker poker2 = Poker.THREE;
 
         when_compare(poker1, poker2);
 
@@ -42,8 +42,8 @@ public class PokerComparatorTest {
     @Test
     public void _3_vs_2_makes_first_win() {
 
-        Poker poker1 = Poker.with("3");
-        Poker poker2 = Poker.with("2");
+        Poker poker1 = Poker.THREE;
+        Poker poker2 = Poker.TWO;
 
         when_compare(poker1, poker2);
 
@@ -53,8 +53,8 @@ public class PokerComparatorTest {
     @Test
     public void _J_vs_10_makes_first_win() {
 
-        Poker poker1 = Poker.with("J");
-        Poker poker2 = Poker.with("10");
+        Poker poker1 = Poker.JACK;
+        Poker poker2 = Poker.TEN;
 
         when_compare(poker1, poker2);
 
@@ -64,8 +64,8 @@ public class PokerComparatorTest {
     @Test
     public void _Q_vs_J_makes_first_win() {
 
-        Poker poker1 = Poker.with("Q");
-        Poker poker2 = Poker.with("J");
+        Poker poker1 = Poker.QUEEN;
+        Poker poker2 = Poker.JACK;
 
         when_compare(poker1, poker2);
 
@@ -75,8 +75,8 @@ public class PokerComparatorTest {
     @Test
     public void _K_vs_Q_makes_first_win() {
 
-        Poker poker1 = Poker.with("K");
-        Poker poker2 = Poker.with("Q");
+        Poker poker1 = Poker.KING;
+        Poker poker2 = Poker.QUEEN;
 
         when_compare(poker1, poker2);
 
@@ -86,8 +86,8 @@ public class PokerComparatorTest {
     @Test
     public void _A_vs_K_makes_first_win() {
 
-        Poker poker1 = Poker.with("A");
-        Poker poker2 = Poker.with("K");
+        Poker poker1 = Poker.ACE;
+        Poker poker2 = Poker.KING;
 
         when_compare(poker1, poker2);
 
