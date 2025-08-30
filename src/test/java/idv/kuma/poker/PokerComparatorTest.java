@@ -61,5 +61,38 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void _Q_vs_J_makes_first_win() {
+
+        Poker poker1 = Poker.with("Q");
+        Poker poker2 = Poker.with("J");
+
+        when_compare(poker1, poker2);
+
+        then_result_is(1);
+    }
+
+    @Test
+    public void _K_vs_Q_makes_first_win() {
+
+        Poker poker1 = Poker.with("K");
+        Poker poker2 = Poker.with("Q");
+
+        when_compare(poker1, poker2);
+
+        then_result_is(1);
+    }
+
+    @Test
+    public void _A_vs_K_makes_first_win() {
+
+        Poker poker1 = Poker.with("A");
+        Poker poker2 = Poker.with("K");
+
+        when_compare(poker1, poker2);
+
+        then_result_is(1);
+    }
+
 
 }

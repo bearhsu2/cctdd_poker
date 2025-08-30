@@ -16,6 +16,12 @@ public class Poker {
         switch (card) {
             case "J":
                 return 11;
+            case "Q":
+                return 12;
+            case "K":
+                return 13;
+            case "A":
+                return 14;
             default:
                 try {
                     return Integer.parseInt(card);
