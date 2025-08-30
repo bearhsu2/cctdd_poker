@@ -1,33 +1,37 @@
 package idv.kuma.poker;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
-public class Poker {
+public enum Poker {
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
+    NINE("9", 9),
+    TEN("10", 10),
+    JACK("J", 11),
+    QUEEN("Q", 12),
+    KING("K", 13),
+    ACE("A", 14);
+    
+    private final String symbol;
     private final int number;
     
-    public static Poker with(String card) {
-        return new Poker(convertCardToNumber(card));
+    Poker(String symbol, int number) {
+        this.symbol = symbol;
+        this.number = number;
     }
     
-    private static int convertCardToNumber(String card) {
-        switch (card) {
-            case "J":
-                return 11;
-            case "Q":
-                return 12;
-            case "K":
-                return 13;
-            case "A":
-                return 14;
-            default:
-                try {
-                    return Integer.parseInt(card);
-                } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException("Unknown card: " + card);
-                }
+    public static Poker with(String card) {
+        for (Poker poker : values()) {
+            if (poker.symbol.equals(card)) {
+                return poker;
+            }
         }
+        throw new IllegalArgumentException("Unknown card: " + card);
     }
 }
