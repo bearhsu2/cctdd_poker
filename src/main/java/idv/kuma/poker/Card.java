@@ -8,19 +8,19 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Card {
     private final Suit suit;
-    private final Number cardNumber;
+    private final Number number;
     
-    public static Card of(Suit suit, Number cardNumber) {
-        return new Card(suit, cardNumber);
+    public static Card of(Suit suit, Number number) {
+        return new Card(suit, number);
     }
     
     public int compareTo(Card other) {
-        int cardNumberComparison = Integer.compare(this.cardNumber.getNumber(), other.cardNumber.getNumber());
-        if (cardNumberComparison != 0) {
-            return cardNumberComparison;
+        int numberComparison = this.number.compareValue(other.number);
+        if (numberComparison != 0) {
+            return numberComparison;
         }
         
         // When card numbers are equal, compare suits by weight: higher weight wins
-        return Integer.compare(this.suit.getWeight(), other.suit.getWeight());
+        return this.suit.compareValue(other.suit);
     }
 }

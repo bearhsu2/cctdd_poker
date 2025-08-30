@@ -24,4 +24,8 @@ public enum Number {
         this.number = number;
     }
     
+    public int compareValue(Number other) {
+        return Integer.compare(this.number, other.number);
+    }
+    
 }

@@ -12,4 +12,8 @@ public enum Suit {
     DIAMOND(1);
     
     private final int weight;
+    
+    public int compareValue(Suit other) {
+        return Integer.compare(this.weight, other.weight);
+    }
 }
