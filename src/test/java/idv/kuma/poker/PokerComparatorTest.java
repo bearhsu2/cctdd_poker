@@ -115,5 +115,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void when_comparing_two_lists_compare_largest_card() {
+
+        when_compare(
+            List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.ACE)),
+            List.of(card(Suit.CLUB, Number.KING), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.CLUB, Number.QUEEN))
+        );
+
+        then_result_is(1);
+    }
+
 
 }
