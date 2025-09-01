@@ -1,6 +1,7 @@
 package idv.kuma.poker;
 
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,7 +22,7 @@ public class PokerComparatorTest {
     }
 
     private void when_compare(Card poker1, Card poker2) {
-        actual = sut.compare(poker1, poker2);
+        actual = sut.compare(Arrays.asList(poker1), Arrays.asList(poker2));
     }
 
     private void then_result_is(int expected) {
