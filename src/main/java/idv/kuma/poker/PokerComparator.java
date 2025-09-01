@@ -6,6 +6,14 @@ public class PokerComparator {
     public int compare(List<Card> pokers1, List<Card> pokers2) {
         Card maxCard1 = pokers1.stream().max(Card::compareTo).get();
         Card maxCard2 = pokers2.stream().max(Card::compareTo).get();
-        return maxCard1.compareTo(maxCard2);
+        int maxComparison = maxCard1.compareTo(maxCard2);
+        
+        if (maxComparison != 0) {
+            return maxComparison;
+        }
+        
+        Card secondMaxCard1 = pokers1.stream().filter(card -> !card.equals(maxCard1)).max(Card::compareTo).orElse(maxCard1);
+        Card secondMaxCard2 = pokers2.stream().filter(card -> !card.equals(maxCard2)).max(Card::compareTo).orElse(maxCard2);
+        return secondMaxCard1.compareTo(secondMaxCard2);
     }
 }

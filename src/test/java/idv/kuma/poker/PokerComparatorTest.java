@@ -119,8 +119,19 @@ public class PokerComparatorTest {
     public void when_comparing_two_lists_compare_largest_card() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.ACE)),
-            List.of(card(Suit.CLUB, Number.KING), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.CLUB, Number.QUEEN))
+            List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.HEART, Number.ACE)),
+            List.of(card(Suit.CLUB, Number.KING), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.SPADE, Number.QUEEN))
+        );
+
+        then_result_is(1);
+    }
+
+    @Test
+    public void when_largest_cards_are_identical_compare_second_largest_cards() {
+
+        when_compare(
+            List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE)),
+            List.of(card(Suit.CLUB, Number.QUEEN), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.SPADE, Number.ACE))
         );
 
         then_result_is(1);
