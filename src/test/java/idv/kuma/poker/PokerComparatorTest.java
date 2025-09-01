@@ -1,7 +1,7 @@
 package idv.kuma.poker;
 
 import org.junit.jupiter.api.Test;
-import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,13 +16,13 @@ public class PokerComparatorTest {
         Card poker1 = Card.of(Suit.CLUB, Number.TWO);
         Card poker2 = Card.of(Suit.CLUB, Number.TWO);
 
-        when_compare(poker1, poker2);
+        when_compare(List.of(poker1), List.of(poker2));
 
         then_result_is(0);
     }
 
-    private void when_compare(Card poker1, Card poker2) {
-        actual = sut.compare(Arrays.asList(poker1), Arrays.asList(poker2));
+    private void when_compare(java.util.List<Card> poker1, java.util.List<Card> poker2) {
+        actual = sut.compare(poker1, poker2);
     }
 
     private void then_result_is(int expected) {
@@ -35,7 +35,7 @@ public class PokerComparatorTest {
         Card poker1 = Card.of(Suit.CLUB, Number.TWO);
         Card poker2 = Card.of(Suit.CLUB, Number.THREE);
 
-        when_compare(poker1, poker2);
+        when_compare(List.of(poker1), List.of(poker2));
 
         then_result_is(-1);
     }
@@ -46,7 +46,7 @@ public class PokerComparatorTest {
         Card poker1 = Card.of(Suit.CLUB, Number.THREE);
         Card poker2 = Card.of(Suit.CLUB, Number.TWO);
 
-        when_compare(poker1, poker2);
+        when_compare(List.of(poker1), List.of(poker2));
 
         then_result_is(1);
     }
@@ -57,7 +57,7 @@ public class PokerComparatorTest {
         Card poker1 = Card.of(Suit.CLUB, Number.JACK);
         Card poker2 = Card.of(Suit.CLUB, Number.TEN);
 
-        when_compare(poker1, poker2);
+        when_compare(List.of(poker1), List.of(poker2));
 
         then_result_is(1);
     }
@@ -68,7 +68,7 @@ public class PokerComparatorTest {
         Card poker1 = Card.of(Suit.CLUB, Number.QUEEN);
         Card poker2 = Card.of(Suit.CLUB, Number.JACK);
 
-        when_compare(poker1, poker2);
+        when_compare(List.of(poker1), List.of(poker2));
 
         then_result_is(1);
     }
@@ -79,7 +79,7 @@ public class PokerComparatorTest {
         Card poker1 = Card.of(Suit.CLUB, Number.KING);
         Card poker2 = Card.of(Suit.CLUB, Number.QUEEN);
 
-        when_compare(poker1, poker2);
+        when_compare(List.of(poker1), List.of(poker2));
 
         then_result_is(1);
     }
@@ -90,7 +90,7 @@ public class PokerComparatorTest {
         Card poker1 = Card.of(Suit.CLUB, Number.ACE);
         Card poker2 = Card.of(Suit.CLUB, Number.KING);
 
-        when_compare(poker1, poker2);
+        when_compare(List.of(poker1), List.of(poker2));
 
         then_result_is(1);
     }
@@ -101,7 +101,7 @@ public class PokerComparatorTest {
         Card poker1 = Card.of(Suit.CLUB, Number.TWO);
         Card poker2 = Card.of(Suit.DIAMOND, Number.TWO);
 
-        when_compare(poker1, poker2);
+        when_compare(List.of(poker1), List.of(poker2));
 
         then_result_is(1);
     }
@@ -112,7 +112,7 @@ public class PokerComparatorTest {
         Card poker1 = Card.of(Suit.SPADE, Number.TWO);
         Card poker2 = Card.of(Suit.HEART, Number.TWO);
 
-        when_compare(poker1, poker2);
+        when_compare(List.of(poker1), List.of(poker2));
 
         then_result_is(1);
     }
@@ -123,7 +123,7 @@ public class PokerComparatorTest {
         Card poker1 = Card.of(Suit.HEART, Number.TWO);
         Card poker2 = Card.of(Suit.CLUB, Number.TWO);
 
-        when_compare(poker1, poker2);
+        when_compare(List.of(poker1), List.of(poker2));
 
         then_result_is(1);
     }
@@ -134,7 +134,7 @@ public class PokerComparatorTest {
         Card poker1 = Card.of(Suit.SPADE, Number.TWO);
         Card poker2 = Card.of(Suit.DIAMOND, Number.TWO);
 
-        when_compare(poker1, poker2);
+        when_compare(List.of(poker1), List.of(poker2));
 
         then_result_is(1);
     }
