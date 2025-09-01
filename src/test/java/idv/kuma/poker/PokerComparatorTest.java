@@ -1,6 +1,7 @@
 package idv.kuma.poker;
 
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,7 +14,7 @@ public class PokerComparatorTest {
     @Test
     public void _2_vs_2_makes_tie() {
 
-        when_compare(List.of(card(Suit.CLUB, Number.TWO)), List.of(card(Suit.CLUB, Number.TWO)));
+        when_compare(five_identical_cards(card(Suit.CLUB, Number.TWO)), five_identical_cards(card(Suit.CLUB, Number.TWO)));
 
         then_result_is(0);
     }
@@ -22,18 +23,22 @@ public class PokerComparatorTest {
         actual = sut.compare(poker1, poker2);
     }
 
-    private void then_result_is(int expected) {
-        assertEquals(expected, actual);
+    private List<Card> five_identical_cards(Card card) {
+        return List.of(card, card, card, card, card);
     }
 
     private Card card(Suit suit, Number number) {
         return Card.of(suit, number);
     }
 
+    private void then_result_is(int expected) {
+        assertEquals(expected, actual);
+    }
+
     @Test
     public void _2_vs_3_makes_first_lose() {
 
-        when_compare(List.of(card(Suit.CLUB, Number.TWO)), List.of(card(Suit.CLUB, Number.THREE)));
+        when_compare(five_identical_cards(card(Suit.CLUB, Number.TWO)), five_identical_cards(card(Suit.CLUB, Number.THREE)));
 
         then_result_is(-1);
     }
@@ -41,7 +46,7 @@ public class PokerComparatorTest {
     @Test
     public void _3_vs_2_makes_first_win() {
 
-        when_compare(List.of(card(Suit.CLUB, Number.THREE)), List.of(card(Suit.CLUB, Number.TWO)));
+        when_compare(five_identical_cards(card(Suit.CLUB, Number.THREE)), five_identical_cards(card(Suit.CLUB, Number.TWO)));
 
         then_result_is(1);
     }
@@ -49,7 +54,7 @@ public class PokerComparatorTest {
     @Test
     public void _J_vs_10_makes_first_win() {
 
-        when_compare(List.of(card(Suit.CLUB, Number.JACK)), List.of(card(Suit.CLUB, Number.TEN)));
+        when_compare(five_identical_cards(card(Suit.CLUB, Number.JACK)), five_identical_cards(card(Suit.CLUB, Number.TEN)));
 
         then_result_is(1);
     }
@@ -57,7 +62,7 @@ public class PokerComparatorTest {
     @Test
     public void _Q_vs_J_makes_first_win() {
 
-        when_compare(List.of(card(Suit.CLUB, Number.QUEEN)), List.of(card(Suit.CLUB, Number.JACK)));
+        when_compare(five_identical_cards(card(Suit.CLUB, Number.QUEEN)), five_identical_cards(card(Suit.CLUB, Number.JACK)));
 
         then_result_is(1);
     }
@@ -65,7 +70,7 @@ public class PokerComparatorTest {
     @Test
     public void _K_vs_Q_makes_first_win() {
 
-        when_compare(List.of(card(Suit.CLUB, Number.KING)), List.of(card(Suit.CLUB, Number.QUEEN)));
+        when_compare(five_identical_cards(card(Suit.CLUB, Number.KING)), five_identical_cards(card(Suit.CLUB, Number.QUEEN)));
 
         then_result_is(1);
     }
@@ -73,7 +78,7 @@ public class PokerComparatorTest {
     @Test
     public void _A_vs_K_makes_first_win() {
 
-        when_compare(List.of(card(Suit.CLUB, Number.ACE)), List.of(card(Suit.CLUB, Number.KING)));
+        when_compare(five_identical_cards(card(Suit.CLUB, Number.ACE)), five_identical_cards(card(Suit.CLUB, Number.KING)));
 
         then_result_is(1);
     }
@@ -81,7 +86,7 @@ public class PokerComparatorTest {
     @Test
     public void _club_2_vs_diamond_2_makes_first_win() {
 
-        when_compare(List.of(card(Suit.CLUB, Number.TWO)), List.of(card(Suit.DIAMOND, Number.TWO)));
+        when_compare(five_identical_cards(card(Suit.CLUB, Number.TWO)), five_identical_cards(card(Suit.DIAMOND, Number.TWO)));
 
         then_result_is(1);
     }
@@ -89,7 +94,7 @@ public class PokerComparatorTest {
     @Test
     public void _spade_2_vs_heart_2_makes_first_win() {
 
-        when_compare(List.of(card(Suit.SPADE, Number.TWO)), List.of(card(Suit.HEART, Number.TWO)));
+        when_compare(five_identical_cards(card(Suit.SPADE, Number.TWO)), five_identical_cards(card(Suit.HEART, Number.TWO)));
 
         then_result_is(1);
     }
@@ -97,7 +102,7 @@ public class PokerComparatorTest {
     @Test
     public void _heart_2_vs_club_2_makes_first_win() {
 
-        when_compare(List.of(card(Suit.HEART, Number.TWO)), List.of(card(Suit.CLUB, Number.TWO)));
+        when_compare(five_identical_cards(card(Suit.HEART, Number.TWO)), five_identical_cards(card(Suit.CLUB, Number.TWO)));
 
         then_result_is(1);
     }
@@ -105,7 +110,7 @@ public class PokerComparatorTest {
     @Test
     public void _spade_2_vs_diamond_2_makes_first_win() {
 
-        when_compare(List.of(card(Suit.SPADE, Number.TWO)), List.of(card(Suit.DIAMOND, Number.TWO)));
+        when_compare(five_identical_cards(card(Suit.SPADE, Number.TWO)), five_identical_cards(card(Suit.DIAMOND, Number.TWO)));
 
         then_result_is(1);
     }
