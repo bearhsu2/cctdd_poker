@@ -1,5 +1,6 @@
 package idv.kuma.poker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PokerComparator {
@@ -12,8 +13,13 @@ public class PokerComparator {
             return maxComparison;
         }
         
-        Card secondMaxCard1 = pokers1.stream().filter(card -> !card.equals(maxCard1)).max(Card::compareTo).orElse(maxCard1);
-        Card secondMaxCard2 = pokers2.stream().filter(card -> !card.equals(maxCard2)).max(Card::compareTo).orElse(maxCard2);
+        List<Card> remainingCards1 = new ArrayList<>(pokers1);
+        remainingCards1.remove(maxCard1);
+        Card secondMaxCard1 = remainingCards1.stream().max(Card::compareTo).get();
+        
+        List<Card> remainingCards2 = new ArrayList<>(pokers2);
+        remainingCards2.remove(maxCard2);
+        Card secondMaxCard2 = remainingCards2.stream().max(Card::compareTo).get();
         return secondMaxCard1.compareTo(secondMaxCard2);
     }
 }
