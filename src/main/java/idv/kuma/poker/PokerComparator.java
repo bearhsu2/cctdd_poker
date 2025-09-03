@@ -11,7 +11,6 @@ public class PokerComparator {
         Card maxCard1 = pokers1.stream().max(Card::compareTo).get();
         Card maxCard2 = pokers2.stream().max(Card::compareTo).get();
         int maxComparison = maxCard1.compareTo(maxCard2);
-        
         if (maxComparison != 0) {
             return maxComparison;
         }
@@ -20,8 +19,8 @@ public class PokerComparator {
 
         Card secondMaxCard1 = remainingCards1.stream().max(Card::compareTo).get();
         Card secondMaxCard2 = remainingCards2.stream().max(Card::compareTo).get();
+
         int secondMaxComparison = secondMaxCard1.compareTo(secondMaxCard2);
-        
         if (secondMaxComparison != 0) {
             return secondMaxComparison;
         }
@@ -32,6 +31,7 @@ public class PokerComparator {
 
         Card thirdMaxCard1 = remainingCards1.stream().max(Card::compareTo).get();
         Card thirdMaxCard2 = remainingCards2.stream().max(Card::compareTo).get();
+
         return thirdMaxCard1.compareTo(thirdMaxCard2);
     }
 }
