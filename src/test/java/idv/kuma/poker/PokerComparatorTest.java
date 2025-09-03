@@ -137,5 +137,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void when_largest_and_second_largest_cards_are_identical_compare_third_largest_cards() {
+
+        when_compare(
+            List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE)),
+            List.of(card(Suit.CLUB, Number.TEN), card(Suit.CLUB, Number.SEVEN), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.NINE), card(Suit.SPADE, Number.ACE))
+        );
+
+        then_result_is(1);
+    }
+
 
 }

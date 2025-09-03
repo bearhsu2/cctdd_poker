@@ -20,6 +20,17 @@ public class PokerComparator {
         List<Card> remainingCards2 = new ArrayList<>(pokers2);
         remainingCards2.remove(maxCard2);
         Card secondMaxCard2 = remainingCards2.stream().max(Card::compareTo).get();
-        return secondMaxCard1.compareTo(secondMaxCard2);
+        int secondMaxComparison = secondMaxCard1.compareTo(secondMaxCard2);
+        
+        if (secondMaxComparison != 0) {
+            return secondMaxComparison;
+        }
+        
+        remainingCards1.remove(secondMaxCard1);
+        Card thirdMaxCard1 = remainingCards1.stream().max(Card::compareTo).get();
+        
+        remainingCards2.remove(secondMaxCard2);
+        Card thirdMaxCard2 = remainingCards2.stream().max(Card::compareTo).get();
+        return thirdMaxCard1.compareTo(thirdMaxCard2);
     }
 }
