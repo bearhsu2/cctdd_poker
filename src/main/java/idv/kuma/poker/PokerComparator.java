@@ -17,21 +17,19 @@ public class PokerComparator {
         remainingCards1.remove(maxCard1);
         remainingCards2.remove(maxCard2);
 
+
         Card secondMaxCard1 = remainingCards1.stream().max(Card::compareTo).get();
         Card secondMaxCard2 = remainingCards2.stream().max(Card::compareTo).get();
-
         int secondMaxComparison = secondMaxCard1.compareTo(secondMaxCard2);
         if (secondMaxComparison != 0) {
             return secondMaxComparison;
         }
-        
         remainingCards1.remove(secondMaxCard1);
         remainingCards2.remove(secondMaxCard2);
 
 
         Card thirdMaxCard1 = remainingCards1.stream().max(Card::compareTo).get();
         Card thirdMaxCard2 = remainingCards2.stream().max(Card::compareTo).get();
-
         return thirdMaxCard1.compareTo(thirdMaxCard2);
     }
 }
