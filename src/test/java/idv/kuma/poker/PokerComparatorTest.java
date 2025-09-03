@@ -148,5 +148,27 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void when_first_three_largest_cards_are_identical_then_compare_forth_largest_cards() {
+
+        when_compare(
+            List.of(card(Suit.CLUB, Number.NINE), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE)),
+            List.of(card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.SEVEN), card(Suit.SPADE, Number.ACE))
+        );
+
+        then_result_is(1);
+    }
+
+    @Test
+    public void when_first_four_largest_cards_are_identical_then_compare_fifth_largest_cards() {
+
+        when_compare(
+            List.of(card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE)),
+            List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE))
+        );
+
+        then_result_is(1);
+    }
+
 
 }
