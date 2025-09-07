@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -34,7 +35,7 @@ public class Hand implements Comparable<Hand> {
     
     private boolean hasPair() {
         return cards.stream()
-                .collect(java.util.stream.Collectors.groupingBy(Card::getNumber, java.util.stream.Collectors.counting()))
+                .collect(Collectors.groupingBy(Card::getNumber, Collectors.counting()))
                 .values()
                 .stream()
                 .anyMatch(count -> count == 2);
