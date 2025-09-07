@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Hand {
+public class Hand implements Comparable<Hand> {
     private final List<Card> cards;
     
     public static Hand of(List<Card> cards) {
@@ -16,6 +16,7 @@ public class Hand {
         return new Hand(cards);
     }
     
+    @Override
     public int compareTo(Hand other) {
         List<Card> sortedCards1 = this.cards.stream().sorted(Collections.reverseOrder()).toList();
         List<Card> sortedCards2 = other.cards.stream().sorted(Collections.reverseOrder()).toList();
