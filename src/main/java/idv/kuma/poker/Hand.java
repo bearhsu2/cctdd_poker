@@ -18,6 +18,10 @@ public class Hand implements Comparable<Hand> {
     
     @Override
     public int compareTo(Hand other) {
+        if (hasPair() && !other.hasPair()) {
+            return 1;
+        }
+        
         List<Card> sortedCards1 = this.cards.stream().sorted(Collections.reverseOrder()).toList();
         List<Card> sortedCards2 = other.cards.stream().sorted(Collections.reverseOrder()).toList();
 
@@ -26,5 +30,13 @@ public class Hand implements Comparable<Hand> {
                 .filter(comparison -> comparison != 0)
                 .findFirst()
                 .orElse(0);
+    }
+    
+    private boolean hasPair() {
+        return cards.stream()
+                .collect(java.util.stream.Collectors.groupingBy(Card::getNumber, java.util.stream.Collectors.counting()))
+                .values()
+                .stream()
+                .anyMatch(count -> count == 2);
     }
 }

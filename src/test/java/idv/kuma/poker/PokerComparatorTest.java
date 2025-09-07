@@ -170,5 +170,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void one_pair_beats_high_card() {
+
+        when_compare(
+            List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE)),
+            List.of(card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.CLUB, Number.TEN), card(Suit.SPADE, Number.ACE))
+        );
+
+        then_result_is(1);
+    }
+
 
 }
