@@ -12,6 +12,7 @@ public class Hand {
     private final List<Card> cards;
     
     public static Hand of(List<Card> cards) {
+        DBCUtil.requireSize(cards, 5, () -> cards.size() == 5);
         return new Hand(cards);
     }
     
