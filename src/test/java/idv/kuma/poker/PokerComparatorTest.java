@@ -20,7 +20,7 @@ public class PokerComparatorTest {
     }
 
     private void when_compare(java.util.List<Card> poker1, java.util.List<Card> poker2) {
-        actual = sut.compare(poker1, poker2);
+        actual = sut.compare(Hand.of(poker1), Hand.of(poker2));
     }
 
     private List<Card> five_identical_cards(Card card) {
