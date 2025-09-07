@@ -12,7 +12,7 @@ public class Hand {
     private final List<Card> cards;
     
     public static Hand of(List<Card> cards) {
-        DBCUtil.requireSize(cards, 5, () -> cards.size() == 5);
+        DBCUtil.require(() -> cards.size() == 5, "Hand must contain exactly 5 cards, but got " + cards.size());
         return new Hand(cards);
     }
     

@@ -5,9 +5,9 @@ import java.util.function.BooleanSupplier;
 
 public class DBCUtil {
     
-    public static void requireSize(List<?> list, int expectedSize, BooleanSupplier condition) {
+    public static void require(BooleanSupplier condition, String errorMessage) {
         if (!condition.getAsBoolean()) {
-            throw new RuntimeException("List must contain exactly " + expectedSize + " elements, but got " + list.size());
+            throw new RuntimeException(errorMessage);
         }
     }
 }
