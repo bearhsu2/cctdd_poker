@@ -181,5 +181,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void high_card_loses_to_one_pair() {
+
+        when_compare(
+            List.of(card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.CLUB, Number.TEN), card(Suit.SPADE, Number.ACE)),
+            List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE))
+        );
+
+        then_result_is(-1);
+    }
+
 
 }

@@ -22,6 +22,9 @@ public class Hand implements Comparable<Hand> {
         if (hasPair() && !other.hasPair()) {
             return 1;
         }
+        if (!hasPair() && other.hasPair()) {
+            return -1;
+        }
         
         List<Card> sortedCards1 = this.cards.stream().sorted(Collections.reverseOrder()).toList();
         List<Card> sortedCards2 = other.cards.stream().sorted(Collections.reverseOrder()).toList();
