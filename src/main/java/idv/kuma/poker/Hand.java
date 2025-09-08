@@ -55,6 +55,6 @@ public class Hand implements Comparable<Hand> {
                 .filter(entry -> entry.getValue() == 2)
                 .map(entry -> entry.getKey())
                 .findFirst()
-                .orElse(null);
+                .orElseThrow();
     }
 }
