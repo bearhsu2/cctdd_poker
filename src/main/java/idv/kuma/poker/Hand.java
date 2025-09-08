@@ -25,6 +25,9 @@ public class Hand implements Comparable<Hand> {
         if (!hasPair() && other.hasPair()) {
             return -1;
         }
+        if (hasPair() && other.hasPair()) {
+            return getPairValue().compareTo(other.getPairValue());
+        }
         
         List<Card> sortedCards1 = this.cards.stream().sorted(Collections.reverseOrder()).toList();
         List<Card> sortedCards2 = other.cards.stream().sorted(Collections.reverseOrder()).toList();
@@ -42,5 +45,16 @@ public class Hand implements Comparable<Hand> {
                 .values()
                 .stream()
                 .anyMatch(count -> count == 2);
+    }
+    
+    private Number getPairValue() {
+        return cards.stream()
+                .collect(Collectors.groupingBy(Card::getNumber, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() == 2)
+                .map(entry -> entry.getKey())
+                .findFirst()
+                .orElse(null);
     }
 }
