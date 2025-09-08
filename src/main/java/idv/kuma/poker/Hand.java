@@ -33,13 +33,13 @@ public class Hand implements Comparable<Hand> {
             if (numberComparison != 0) {
                 return numberComparison;
             }
-            return compareSortedCardLists(thisPair, otherPair);
+            return compareByHighestCards(thisPair, otherPair);
         }
         
-        return compareSortedCardLists(this.cards, other.cards);
+        return compareByHighestCards(this.cards, other.cards);
     }
     
-    private int compareSortedCardLists(List<Card> cards1, List<Card> cards2) {
+    private int compareByHighestCards(List<Card> cards1, List<Card> cards2) {
         List<Card> sortedCards1 = cards1.stream().sorted(Collections.reverseOrder()).toList();
         List<Card> sortedCards2 = cards2.stream().sorted(Collections.reverseOrder()).toList();
         
