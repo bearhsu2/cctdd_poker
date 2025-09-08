@@ -203,5 +203,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void one_pair_with_same_number_but_higher_suit_wins() {
+
+        when_compare(
+            List.of(card(Suit.HEART, Number.THREE), card(Suit.SPADE, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX)),
+            List.of(card(Suit.CLUB, Number.THREE), card(Suit.DIAMOND, Number.THREE), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE))
+        );
+
+        then_result_is(1);
+    }
+
 
 }
