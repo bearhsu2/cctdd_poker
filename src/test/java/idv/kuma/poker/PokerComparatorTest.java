@@ -214,5 +214,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void one_pair_with_identical_highest_pair_cards_compares_second_pair_card() {
+
+        when_compare(
+            List.of(card(Suit.SPADE, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX)),
+            List.of(card(Suit.SPADE, Number.THREE), card(Suit.DIAMOND, Number.THREE), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE))
+        );
+
+        then_result_is(1);
+    }
+
 
 }
