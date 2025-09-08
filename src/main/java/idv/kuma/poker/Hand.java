@@ -56,17 +56,12 @@ public class Hand implements Comparable<Hand> {
     }
     
     private List<Card> getPairCards() {
-        Number pairNumber = cards.stream()
-                .collect(Collectors.groupingBy(Card::getNumber, Collectors.counting()))
-                .entrySet()
+        return cards.stream()
+                .collect(Collectors.groupingBy(Card::getNumber))
+                .values()
                 .stream()
-                .filter(entry -> entry.getValue() == 2)
-                .map(entry -> entry.getKey())
+                .filter(group -> group.size() == 2)
                 .findFirst()
                 .orElseThrow();
-        
-        return cards.stream()
-                .filter(card -> card.getNumber().equals(pairNumber))
-                .toList();
     }
 }
