@@ -33,19 +33,16 @@ public class Hand implements Comparable<Hand> {
             if (numberComparison != 0) {
                 return numberComparison;
             }
-            List<Card> thisSortedPair = thisPair.stream().sorted(Collections.reverseOrder()).toList();
-            List<Card> otherSortedPair = otherPair.stream().sorted(Collections.reverseOrder()).toList();
-            
-            return IntStream.range(0, thisSortedPair.size())
-                    .map(i -> thisSortedPair.get(i).compareTo(otherSortedPair.get(i)))
-                    .filter(comparison -> comparison != 0)
-                    .findFirst()
-                    .orElse(0);
+            return compareSortedCardLists(thisPair, otherPair);
         }
         
-        List<Card> sortedCards1 = this.cards.stream().sorted(Collections.reverseOrder()).toList();
-        List<Card> sortedCards2 = other.cards.stream().sorted(Collections.reverseOrder()).toList();
-
+        return compareSortedCardLists(this.cards, other.cards);
+    }
+    
+    private int compareSortedCardLists(List<Card> cards1, List<Card> cards2) {
+        List<Card> sortedCards1 = cards1.stream().sorted(Collections.reverseOrder()).toList();
+        List<Card> sortedCards2 = cards2.stream().sorted(Collections.reverseOrder()).toList();
+        
         return IntStream.range(0, sortedCards1.size())
                 .map(i -> sortedCards1.get(i).compareTo(sortedCards2.get(i)))
                 .filter(comparison -> comparison != 0)
