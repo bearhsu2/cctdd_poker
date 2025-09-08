@@ -48,17 +48,17 @@ public class Hand implements Comparable<Hand> {
                 .orElse(0);
     }
     
-    private Map<Number, List<Card>> getCardGroups() {
+    private Map<Number, List<Card>> groupCardsByNumber() {
         return cards.stream().collect(Collectors.groupingBy(Card::getNumber));
     }
     
     private boolean hasPair() {
-        return getCardGroups().values().stream()
+        return groupCardsByNumber().values().stream()
                 .anyMatch(group -> group.size() == 2);
     }
     
     private List<Card> getPairCards() {
-        return getCardGroups().values().stream()
+        return groupCardsByNumber().values().stream()
                 .filter(group -> group.size() == 2)
                 .findFirst()
                 .orElseThrow();
