@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -47,19 +48,17 @@ public class Hand implements Comparable<Hand> {
                 .orElse(0);
     }
     
+    private Map<Number, List<Card>> getCardGroups() {
+        return cards.stream().collect(Collectors.groupingBy(Card::getNumber));
+    }
+    
     private boolean hasPair() {
-        return cards.stream()
-                .collect(Collectors.groupingBy(Card::getNumber, Collectors.counting()))
-                .values()
-                .stream()
-                .anyMatch(count -> count == 2);
+        return getCardGroups().values().stream()
+                .anyMatch(group -> group.size() == 2);
     }
     
     private List<Card> getPairCards() {
-        return cards.stream()
-                .collect(Collectors.groupingBy(Card::getNumber))
-                .values()
-                .stream()
+        return getCardGroups().values().stream()
                 .filter(group -> group.size() == 2)
                 .findFirst()
                 .orElseThrow();
