@@ -4,13 +4,13 @@ public enum HandType {
     HIGH_CARD(0),
     PAIR(1);
     
-    private final int rank;
+    private final int weight;
     
-    HandType(int rank) {
-        this.rank = rank;
+    HandType(int weight) {
+        this.weight = weight;
     }
     
-    public int getRank() {
-        return rank;
+    public int getWeight() {
+        return weight;
     }
 }

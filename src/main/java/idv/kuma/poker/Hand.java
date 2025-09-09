@@ -27,7 +27,7 @@ public class Hand implements Comparable<Hand> {
         HandType thisType = getHandType();
         HandType otherType = other.getHandType();
         
-        int typeComparison = Integer.compare(thisType.getRank(), otherType.getRank());
+        int typeComparison = Integer.compare(thisType.getWeight(), otherType.getWeight());
         if (typeComparison != 0) {
             return typeComparison;
         }
