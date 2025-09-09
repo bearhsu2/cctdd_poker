@@ -13,4 +13,8 @@ public enum HandType {
     public int getWeight() {
         return weight;
     }
+    
+    public static int compare(HandType thisType, HandType otherType) {
+        return Integer.compare(thisType.getWeight(), otherType.getWeight());
+    }
 }

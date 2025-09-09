@@ -27,7 +27,7 @@ public class Hand implements Comparable<Hand> {
         HandType thisType = getHandType();
         HandType otherType = other.getHandType();
         
-        int typeComparison = compareHandTypes(thisType, otherType);
+        int typeComparison = HandType.compare(thisType, otherType);
         if (typeComparison != 0) {
             return typeComparison;
         }
@@ -37,10 +37,6 @@ public class Hand implements Comparable<Hand> {
         }
         
         return compareByHighestCards(this.cards, other.cards);
-    }
-    
-    private int compareHandTypes(HandType thisType, HandType otherType) {
-        return Integer.compare(thisType.getWeight(), otherType.getWeight());
     }
     
     private int compareByHighestCards(List<Card> cards1, List<Card> cards2) {
