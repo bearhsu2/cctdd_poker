@@ -29,10 +29,6 @@ public class Hand implements Comparable<Hand> {
         if (hasPair() && other.hasPair()) {
             List<Card> thisPair = getPairCards();
             List<Card> otherPair = other.getPairCards();
-            int numberComparison = thisPair.get(0).getNumber().compareTo(otherPair.get(0).getNumber());
-            if (numberComparison != 0) {
-                return numberComparison;
-            }
             return compareByHighestCards(thisPair, otherPair);
         }
         
