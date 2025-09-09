@@ -18,18 +18,22 @@ public class Hand implements Comparable<Hand> {
         return new Hand(cards);
     }
     
+    private HandType getHandType() {
+        return hasPair() ? HandType.PAIR : HandType.HIGH_CARD;
+    }
+    
     @Override
     public int compareTo(Hand other) {
-        if (hasPair() && !other.hasPair()) {
-            return 1;
+        HandType thisType = getHandType();
+        HandType otherType = other.getHandType();
+        
+        int typeComparison = Integer.compare(thisType.getRank(), otherType.getRank());
+        if (typeComparison != 0) {
+            return typeComparison;
         }
-        if (!hasPair() && other.hasPair()) {
-            return -1;
-        }
-        if (hasPair() && other.hasPair()) {
-            List<Card> thisPair = getPairCards();
-            List<Card> otherPair = other.getPairCards();
-            return compareByHighestCards(thisPair, otherPair);
+        
+        if (thisType == HandType.PAIR) {
+            return compareByHighestCards(getPairCards(), other.getPairCards());
         }
         
         return compareByHighestCards(this.cards, other.cards);
