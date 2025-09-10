@@ -40,6 +40,9 @@ public class Hand implements Comparable<Hand> {
     }
     
     private int compareByHighestCards(List<Card> cards1, List<Card> cards2) {
+        DBCUtil.require(() -> cards1.size() == cards2.size(), 
+                "Card lists must have the same size for comparison, but got " + cards1.size() + " and " + cards2.size());
+        
         List<Card> sortedCards1 = cards1.stream().sorted(Collections.reverseOrder()).toList();
         List<Card> sortedCards2 = cards2.stream().sorted(Collections.reverseOrder()).toList();
         
