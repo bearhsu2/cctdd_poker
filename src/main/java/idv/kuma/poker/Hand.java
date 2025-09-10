@@ -10,14 +10,29 @@ import java.util.stream.Collectors;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Hand implements Comparable<Hand> {
     private final List<Card> cards;
+    private final HandType handType;
     
     public static Hand of(List<Card> cards) {
         DBCUtil.require(() -> cards.size() == 5, "Hand must contain exactly 5 cards, but got " + cards.size());
-        return new Hand(cards);
+        HandType handType = calculateHandType(cards);
+        return new Hand(cards, handType);
+    }
+    
+    private static HandType calculateHandType(List<Card> cards) {
+        return hasPair(cards) ? HandType.PAIR : HandType.HIGH_CARD;
+    }
+    
+    private static boolean hasPair(List<Card> cards) {
+        return groupCardsByNumber(cards).values().stream()
+                .anyMatch(group -> group.size() == 2);
+    }
+    
+    private static Map<Number, List<Card>> groupCardsByNumber(List<Card> cards) {
+        return cards.stream().collect(Collectors.groupingBy(Card::getNumber));
     }
     
     private HandType getHandType() {
-        return hasPair() ? HandType.PAIR : HandType.HIGH_CARD;
+        return handType;
     }
     
     @Override
@@ -38,17 +53,8 @@ public class Hand implements Comparable<Hand> {
     }
     
     
-    private Map<Number, List<Card>> groupCardsByNumber() {
-        return cards.stream().collect(Collectors.groupingBy(Card::getNumber));
-    }
-    
-    private boolean hasPair() {
-        return groupCardsByNumber().values().stream()
-                .anyMatch(group -> group.size() == 2);
-    }
-    
     private List<Card> getPairCards() {
-        return groupCardsByNumber().values().stream()
+        return groupCardsByNumber(cards).values().stream()
                 .filter(group -> group.size() == 2)
                 .findFirst()
                 .orElseThrow();
