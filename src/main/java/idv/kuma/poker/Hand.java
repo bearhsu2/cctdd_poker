@@ -31,10 +31,10 @@ public class Hand implements Comparable<Hand> {
         }
         
         if (thisType == HandType.PAIR) {
-            return ComparatorUtil.compareByHighestCards(getPairCards(), other.getPairCards());
+            return ComparatorUtil.compareByHighest(getPairCards(), other.getPairCards());
         }
         
-        return ComparatorUtil.compareByHighestCards(this.cards, other.cards);
+        return ComparatorUtil.compareByHighest(this.cards, other.cards);
     }
     
     
