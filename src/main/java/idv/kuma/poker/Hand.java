@@ -32,23 +32,9 @@ public class Hand implements Comparable<Hand> {
             return typeComparison;
         }
         
-        if (thisType == HandType.PAIR) {
-            return compareByHighestCards(getPairCards(), other.getPairCards());
-        }
-        
-        return compareByHighestCards(this.cards, other.cards);
+        return thisType.compareHands(this, other);
     }
     
-    private int compareByHighestCards(List<Card> cards1, List<Card> cards2) {
-        List<Card> sortedCards1 = cards1.stream().sorted(Collections.reverseOrder()).toList();
-        List<Card> sortedCards2 = cards2.stream().sorted(Collections.reverseOrder()).toList();
-        
-        return IntStream.range(0, sortedCards1.size())
-                .map(i -> sortedCards1.get(i).compareTo(sortedCards2.get(i)))
-                .filter(comparison -> comparison != 0)
-                .findFirst()
-                .orElse(0);
-    }
     
     private Map<Number, List<Card>> groupCardsByNumber() {
         return cards.stream().collect(Collectors.groupingBy(Card::getNumber));
@@ -59,10 +45,25 @@ public class Hand implements Comparable<Hand> {
                 .anyMatch(group -> group.size() == 2);
     }
     
-    private List<Card> getPairCards() {
+    public List<Card> getPairCards() {
         return groupCardsByNumber().values().stream()
                 .filter(group -> group.size() == 2)
                 .findFirst()
                 .orElseThrow();
+    }
+    
+    public List<Card> getCards() {
+        return cards;
+    }
+    
+    public static int compareByHighestCards(List<Card> cards1, List<Card> cards2) {
+        List<Card> sortedCards1 = cards1.stream().sorted(Collections.reverseOrder()).toList();
+        List<Card> sortedCards2 = cards2.stream().sorted(Collections.reverseOrder()).toList();
+        
+        return IntStream.range(0, sortedCards1.size())
+                .map(i -> sortedCards1.get(i).compareTo(sortedCards2.get(i)))
+                .filter(comparison -> comparison != 0)
+                .findFirst()
+                .orElse(0);
     }
 }
