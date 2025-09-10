@@ -1,18 +1,8 @@
 package idv.kuma.poker;
 
 public enum HandType {
-    HIGH_CARD(0) {
-        @Override
-        public int compareHands(Hand thisHand, Hand otherHand) {
-            return Hand.compareByHighestCards(thisHand.getCards(), otherHand.getCards());
-        }
-    },
-    PAIR(1) {
-        @Override
-        public int compareHands(Hand thisHand, Hand otherHand) {
-            return Hand.compareByHighestCards(thisHand.getPairCards(), otherHand.getPairCards());
-        }
-    };
+    HIGH_CARD(0),
+    PAIR(1);
     
     private final int weight;
     
@@ -27,6 +17,4 @@ public enum HandType {
     public int compare(HandType other) {
         return Integer.compare(this.getWeight(), other.getWeight());
     }
-    
-    public abstract int compareHands(Hand thisHand, Hand otherHand);
 }
