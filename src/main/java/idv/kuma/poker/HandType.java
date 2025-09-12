@@ -1,11 +1,14 @@
 package idv.kuma.poker;
 
+import lombok.Getter;
+
 import java.util.function.BiFunction;
 
 public enum HandType {
     HIGH_CARD(0, (hand1, hand2) -> ComparatorUtil.compareByHighest(hand1.getCards(), hand2.getCards())),
     PAIR(1, (hand1, hand2) -> ComparatorUtil.compareByHighest(hand1.getPairCards(), hand2.getPairCards()));
     
+    @Getter
     private final int weight;
     private final BiFunction<Hand, Hand, Integer> compareStrategy;
     
@@ -14,9 +17,6 @@ public enum HandType {
         this.compareStrategy = compareStrategy;
     }
     
-    public int getWeight() {
-        return weight;
-    }
     
     public int compare(HandType other) {
         return Integer.compare(this.getWeight(), other.getWeight());
