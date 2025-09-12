@@ -45,15 +45,15 @@ public class Hand implements Comparable<Hand> {
             return typeComparison;
         }
         
-        if (thisType == HandType.PAIR) {
-            return ComparatorUtil.compareByHighest(getPairCards(), other.getPairCards());
-        }
-        
-        return ComparatorUtil.compareByHighest(this.cards, other.cards);
+        return thisType.compareHands(this, other);
     }
     
     
-    private List<Card> getPairCards() {
+    public List<Card> getCards() {
+        return cards;
+    }
+    
+    public List<Card> getPairCards() {
         return groupCardsByNumber().values().stream()
                 .filter(group -> group.size() == 2)
                 .findFirst()
