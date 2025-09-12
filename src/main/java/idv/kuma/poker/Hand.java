@@ -59,4 +59,11 @@ public class Hand implements Comparable<Hand> {
                 .findFirst()
                 .orElseThrow();
     }
+    
+    public List<Card> getKickerCards() {
+        return groupCardsByNumber().values().stream()
+                .filter(group -> group.size() == 1)
+                .flatMap(List::stream)
+                .toList();
+    }
 }

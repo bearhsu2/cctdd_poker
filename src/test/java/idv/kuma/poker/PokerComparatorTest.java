@@ -225,5 +225,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void one_pair_with_identical_pairs_compares_kickers_from_largest_to_smallest() {
+
+        when_compare(
+            List.of(card(Suit.SPADE, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.KING)),
+            List.of(card(Suit.SPADE, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE))
+        );
+
+        then_result_is(1);
+    }
+
 
 }
