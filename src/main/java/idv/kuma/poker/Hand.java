@@ -1,10 +1,13 @@
 package idv.kuma.poker;
 
+import lombok.Getter;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Hand implements Comparable<Hand> {
+    @Getter
     private final List<Card> cards;
     private final HandType handType;
     
@@ -49,9 +52,6 @@ public class Hand implements Comparable<Hand> {
     }
     
     
-    public List<Card> getCards() {
-        return cards;
-    }
     
     public List<Card> getPairCards() {
         return groupCardsByNumber().values().stream()
