@@ -6,7 +6,7 @@ import java.util.function.BiFunction;
 
 public enum HandType {
     HIGH_CARD(0, (hand1, hand2) -> ComparatorUtil.compareByHighest(hand1.getCards(), hand2.getCards())),
-    PAIR(1, (hand1, hand2) -> {
+    ONE_PAIR(1, (hand1, hand2) -> {
         int pairComparison = ComparatorUtil.compareByHighest(hand1.getPairCards(), hand2.getPairCards());
         if (pairComparison != 0) {
             return pairComparison;

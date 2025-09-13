@@ -22,7 +22,7 @@ public class Hand implements Comparable<Hand> {
     }
     
     private HandType calculateHandType() {
-        return hasPair() ? HandType.PAIR : HandType.HIGH_CARD;
+        return hasPair() ? HandType.ONE_PAIR : HandType.HIGH_CARD;
     }
     
     private boolean hasPair() {
