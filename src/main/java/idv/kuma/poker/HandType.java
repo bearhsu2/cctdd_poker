@@ -12,6 +12,17 @@ public enum HandType {
             return pairComparison;
         }
         return ComparatorUtil.compareByHighest(hand1.getKickerCards(), hand2.getKickerCards());
+    }),
+    TWO_PAIR(2, (hand1, hand2) -> {
+        int highPairComparison = ComparatorUtil.compareByHighest(hand1.getHighPairCards(), hand2.getHighPairCards());
+        if (highPairComparison != 0) {
+            return highPairComparison;
+        }
+        int lowPairComparison = ComparatorUtil.compareByHighest(hand1.getLowPairCards(), hand2.getLowPairCards());
+        if (lowPairComparison != 0) {
+            return lowPairComparison;
+        }
+        return ComparatorUtil.compareByHighest(hand1.getKickerCards(), hand2.getKickerCards());
     });
     
     @Getter

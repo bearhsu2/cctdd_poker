@@ -236,5 +236,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void two_pair_beats_one_pair() {
+
+        when_compare(
+            List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.FOUR)),
+            List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.ACE), card(Suit.CLUB, Number.KING), card(Suit.CLUB, Number.QUEEN), card(Suit.CLUB, Number.JACK))
+        );
+
+        then_result_is(1);
+    }
+
 
 }

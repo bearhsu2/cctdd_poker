@@ -22,6 +22,9 @@ public class Hand implements Comparable<Hand> {
     }
     
     private HandType calculateHandType() {
+        if (hasTwoPair()) {
+            return HandType.TWO_PAIR;
+        }
         return hasPair() ? HandType.ONE_PAIR : HandType.HIGH_CARD;
     }
     
@@ -65,5 +68,26 @@ public class Hand implements Comparable<Hand> {
                 .filter(group -> group.size() == 1)
                 .flatMap(List::stream)
                 .toList();
+    }
+    
+    private boolean hasTwoPair() {
+        long pairCount = groupCardsByNumber().values().stream()
+                .filter(group -> group.size() == 2)
+                .count();
+        return pairCount == 2;
+    }
+    
+    public List<Card> getHighPairCards() {
+        return groupCardsByNumber().values().stream()
+                .filter(group -> group.size() == 2)
+                .max((group1, group2) -> ComparatorUtil.compareByHighest(group1, group2))
+                .orElseThrow();
+    }
+    
+    public List<Card> getLowPairCards() {
+        return groupCardsByNumber().values().stream()
+                .filter(group -> group.size() == 2)
+                .min((group1, group2) -> ComparatorUtil.compareByHighest(group1, group2))
+                .orElseThrow();
     }
 }
