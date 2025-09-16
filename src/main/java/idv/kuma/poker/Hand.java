@@ -25,12 +25,14 @@ public class Hand implements Comparable<Hand> {
         if (hasTwoPair()) {
             return HandType.TWO_PAIR;
         }
-        return hasPair() ? HandType.ONE_PAIR : HandType.HIGH_CARD;
+        return hasOnePair() ? HandType.ONE_PAIR : HandType.HIGH_CARD;
     }
     
-    private boolean hasPair() {
-        return groupCardsByNumber().values().stream()
-                .anyMatch(group -> group.size() == 2);
+    private boolean hasOnePair() {
+        long pairCount = groupCardsByNumber().values().stream()
+                .filter(group -> group.size() == 2)
+                .count();
+        return pairCount == 1;
     }
     
     private Map<Number, List<Card>> groupCardsByNumber() {
