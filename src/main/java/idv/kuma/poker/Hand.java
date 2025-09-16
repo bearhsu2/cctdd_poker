@@ -82,14 +82,14 @@ public class Hand implements Comparable<Hand> {
     public List<Card> getHighPairCards() {
         return groupCardsByNumber().values().stream()
                 .filter(group -> group.size() == 2)
-                .max((group1, group2) -> ComparatorUtil.compareByHighest(group1, group2))
+                .max(ComparatorUtil::compareByHighest)
                 .orElseThrow();
     }
     
     public List<Card> getLowPairCards() {
         return groupCardsByNumber().values().stream()
                 .filter(group -> group.size() == 2)
-                .min((group1, group2) -> ComparatorUtil.compareByHighest(group1, group2))
+                .min(ComparatorUtil::compareByHighest)
                 .orElseThrow();
     }
 }
