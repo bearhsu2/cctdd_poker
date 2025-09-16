@@ -29,12 +29,15 @@ public class Hand implements Comparable<Hand> {
     }
     
     private boolean hasOnePair() {
-        long pairCount = groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 2)
-                .count();
-        return pairCount == 1;
+        return getAllPairs().size() == 1;
     }
-    
+
+    private List<List<Card>> getAllPairs() {
+        return groupCardsByNumber().values().stream()
+                .filter(group -> group.size() == 2)
+                .toList();
+    }
+
     private Map<Number, List<Card>> groupCardsByNumber() {
         return cards.stream().collect(Collectors.groupingBy(Card::getNumber));
     }
@@ -59,8 +62,7 @@ public class Hand implements Comparable<Hand> {
     
     
     public List<Card> getPairCards() {
-        return groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 2)
+        return getAllPairs().stream()
                 .findFirst()
                 .orElseThrow();
     }
@@ -73,22 +75,17 @@ public class Hand implements Comparable<Hand> {
     }
     
     private boolean hasTwoPair() {
-        long pairCount = groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 2)
-                .count();
-        return pairCount == 2;
+        return getAllPairs().size() == 2;
     }
     
     public List<Card> getHighPairCards() {
-        return groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 2)
+        return getAllPairs().stream()
                 .max(ComparatorUtil::compareByHighest)
                 .orElseThrow();
     }
     
     public List<Card> getLowPairCards() {
-        return groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 2)
+        return getAllPairs().stream()
                 .min(ComparatorUtil::compareByHighest)
                 .orElseThrow();
     }
