@@ -41,22 +41,19 @@ public class Hand implements Comparable<Hand> {
     private Map<Number, List<Card>> groupCardsByNumber() {
         return cards.stream().collect(Collectors.groupingBy(Card::getNumber));
     }
-    
+
     private HandType getHandType() {
         return handType;
     }
-    
+
     @Override
     public int compareTo(Hand other) {
-        HandType thisType = getHandType();
-        HandType otherType = other.getHandType();
-        
-        int typeComparison = thisType.compare(otherType);
+        int typeComparison = handType.compare(other.getHandType());
         if (typeComparison != 0) {
             return typeComparison;
         }
-        
-        return thisType.compareHands(this, other);
+
+        return handType.compareHands(this, other);
     }
     
     
