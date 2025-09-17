@@ -33,8 +33,14 @@ public enum HandType {
         this.weight = weight;
         this.compareStrategy = compareStrategy;
     }
-    
-    
+
+    static HandType from(Hand hand) {
+        if (hand.hasTwoPair()) {
+            return HandType.TWO_PAIR;
+        }
+        return hand.hasOnePair() ? HandType.ONE_PAIR : HandType.HIGH_CARD;
+    }
+
     public int compare(HandType other) {
         return Integer.compare(this.getWeight(), other.getWeight());
     }

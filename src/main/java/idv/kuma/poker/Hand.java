@@ -13,7 +13,7 @@ public class Hand implements Comparable<Hand> {
     
     private Hand(List<Card> cards) {
         this.cards = cards;
-        this.handType = calculateHandType();
+        this.handType = HandType.from(this);
     }
     
     public static Hand of(List<Card> cards) {
@@ -21,14 +21,8 @@ public class Hand implements Comparable<Hand> {
         return new Hand(cards);
     }
     
-    private HandType calculateHandType() {
-        if (hasTwoPair()) {
-            return HandType.TWO_PAIR;
-        }
-        return hasOnePair() ? HandType.ONE_PAIR : HandType.HIGH_CARD;
-    }
     
-    private boolean hasOnePair() {
+    boolean hasOnePair() {
         return getAllPairs().size() == 1;
     }
 
@@ -71,7 +65,7 @@ public class Hand implements Comparable<Hand> {
                 .toList();
     }
     
-    private boolean hasTwoPair() {
+    boolean hasTwoPair() {
         return getAllPairs().size() == 2;
     }
     
