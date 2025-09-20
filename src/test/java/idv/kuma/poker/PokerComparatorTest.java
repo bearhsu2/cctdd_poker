@@ -119,8 +119,8 @@ public class PokerComparatorTest {
     public void when_comparing_two_lists_compare_largest_card() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.HEART, Number.ACE)),
-            List.of(card(Suit.CLUB, Number.KING), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.SPADE, Number.QUEEN))
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.HEART, Number.ACE)),
+                List.of(card(Suit.CLUB, Number.KING), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.SPADE, Number.QUEEN))
         );
 
         then_result_is(1);
@@ -130,8 +130,8 @@ public class PokerComparatorTest {
     public void when_largest_cards_are_identical_compare_second_largest_cards() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE)),
-            List.of(card(Suit.CLUB, Number.QUEEN), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.SPADE, Number.ACE))
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE)),
+                List.of(card(Suit.CLUB, Number.QUEEN), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.SPADE, Number.ACE))
         );
 
         then_result_is(1);
@@ -141,8 +141,8 @@ public class PokerComparatorTest {
     public void when_largest_and_second_largest_cards_are_identical_compare_third_largest_cards() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE)),
-            List.of(card(Suit.CLUB, Number.TEN), card(Suit.CLUB, Number.SEVEN), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.NINE), card(Suit.SPADE, Number.ACE))
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE)),
+                List.of(card(Suit.CLUB, Number.TEN), card(Suit.CLUB, Number.SEVEN), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.NINE), card(Suit.SPADE, Number.ACE))
         );
 
         then_result_is(1);
@@ -152,8 +152,8 @@ public class PokerComparatorTest {
     public void when_first_three_largest_cards_are_identical_then_compare_forth_largest_cards() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.NINE), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE)),
-            List.of(card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.SEVEN), card(Suit.SPADE, Number.ACE))
+                List.of(card(Suit.CLUB, Number.NINE), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE)),
+                List.of(card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.SEVEN), card(Suit.SPADE, Number.ACE))
         );
 
         then_result_is(1);
@@ -163,8 +163,8 @@ public class PokerComparatorTest {
     public void when_first_four_largest_cards_are_identical_then_compare_fifth_largest_cards() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE)),
-            List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE))
+                List.of(card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE)),
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.JACK), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.ACE))
         );
 
         then_result_is(1);
@@ -174,8 +174,8 @@ public class PokerComparatorTest {
     public void one_pair_beats_high_card() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE)),
-            List.of(card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.CLUB, Number.TEN), card(Suit.SPADE, Number.ACE))
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE)),
+                List.of(card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.CLUB, Number.TEN), card(Suit.SPADE, Number.ACE))
         );
 
         then_result_is(1);
@@ -185,8 +185,8 @@ public class PokerComparatorTest {
     public void high_card_loses_to_one_pair() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.CLUB, Number.TEN), card(Suit.SPADE, Number.ACE)),
-            List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE))
+                List.of(card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE), card(Suit.CLUB, Number.TEN), card(Suit.SPADE, Number.ACE)),
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE))
         );
 
         then_result_is(-1);
@@ -196,8 +196,8 @@ public class PokerComparatorTest {
     public void one_pair_with_larger_pair_wins() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX)),
-            List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE))
+                List.of(card(Suit.CLUB, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX)),
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE))
         );
 
         then_result_is(1);
@@ -207,8 +207,8 @@ public class PokerComparatorTest {
     public void one_pair_with_same_number_but_higher_suit_wins() {
 
         when_compare(
-            List.of(card(Suit.HEART, Number.THREE), card(Suit.SPADE, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX)),
-            List.of(card(Suit.CLUB, Number.THREE), card(Suit.DIAMOND, Number.THREE), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE))
+                List.of(card(Suit.HEART, Number.THREE), card(Suit.SPADE, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX)),
+                List.of(card(Suit.CLUB, Number.THREE), card(Suit.DIAMOND, Number.THREE), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE))
         );
 
         then_result_is(1);
@@ -218,8 +218,8 @@ public class PokerComparatorTest {
     public void one_pair_with_identical_highest_pair_cards_compares_second_pair_card() {
 
         when_compare(
-            List.of(card(Suit.SPADE, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX)),
-            List.of(card(Suit.SPADE, Number.THREE), card(Suit.DIAMOND, Number.THREE), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE))
+                List.of(card(Suit.SPADE, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX)),
+                List.of(card(Suit.SPADE, Number.THREE), card(Suit.DIAMOND, Number.THREE), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE))
         );
 
         then_result_is(1);
@@ -229,8 +229,8 @@ public class PokerComparatorTest {
     public void one_pair_with_identical_pairs_compares_kickers_from_largest_to_smallest() {
 
         when_compare(
-            List.of(card(Suit.SPADE, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.KING)),
-            List.of(card(Suit.SPADE, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE))
+                List.of(card(Suit.SPADE, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.KING)),
+                List.of(card(Suit.SPADE, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE))
         );
 
         then_result_is(1);
@@ -240,8 +240,8 @@ public class PokerComparatorTest {
     public void two_pair_beats_one_pair() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.FOUR)),
-            List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.ACE), card(Suit.CLUB, Number.KING), card(Suit.CLUB, Number.QUEEN), card(Suit.CLUB, Number.JACK))
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.CLUB, Number.FOUR)),
+                List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.ACE), card(Suit.CLUB, Number.KING), card(Suit.CLUB, Number.QUEEN), card(Suit.CLUB, Number.JACK))
         );
 
         then_result_is(1);
@@ -251,8 +251,8 @@ public class PokerComparatorTest {
     public void three_of_a_kind_beats_two_pair() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.DIAMOND, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR)),
-            List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.ACE), card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.QUEEN))
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO), card(Suit.DIAMOND, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR)),
+                List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.ACE), card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.QUEEN))
         );
 
         then_result_is(1);
@@ -262,8 +262,8 @@ public class PokerComparatorTest {
     public void three_of_a_kind_vs_three_of_a_kind_higher_wins() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.DIAMOND, Number.KING), card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.THREE)),
-            List.of(card(Suit.CLUB, Number.QUEEN), card(Suit.HEART, Number.QUEEN), card(Suit.DIAMOND, Number.QUEEN), card(Suit.CLUB, Number.ACE), card(Suit.CLUB, Number.FOUR))
+                List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.DIAMOND, Number.KING), card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.THREE)),
+                List.of(card(Suit.CLUB, Number.QUEEN), card(Suit.HEART, Number.QUEEN), card(Suit.DIAMOND, Number.QUEEN), card(Suit.CLUB, Number.ACE), card(Suit.CLUB, Number.FOUR))
         );
 
         then_result_is(1);
@@ -273,8 +273,8 @@ public class PokerComparatorTest {
     public void three_of_a_kind_vs_three_of_a_kind_same_rank_higher_kicker_wins() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.DIAMOND, Number.KING), card(Suit.CLUB, Number.ACE), card(Suit.CLUB, Number.THREE)),
-            List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.DIAMOND, Number.KING), card(Suit.CLUB, Number.QUEEN), card(Suit.CLUB, Number.FOUR))
+                List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.DIAMOND, Number.KING), card(Suit.CLUB, Number.ACE), card(Suit.CLUB, Number.THREE)),
+                List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.DIAMOND, Number.KING), card(Suit.CLUB, Number.QUEEN), card(Suit.CLUB, Number.FOUR))
         );
 
         then_result_is(1);
@@ -284,8 +284,8 @@ public class PokerComparatorTest {
     public void straight_beats_three_of_a_kind() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.THREE), card(Suit.DIAMOND, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.SIX)),
-            List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.ACE), card(Suit.DIAMOND, Number.ACE), card(Suit.CLUB, Number.KING), card(Suit.CLUB, Number.QUEEN))
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.THREE), card(Suit.DIAMOND, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.SIX)),
+                List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.ACE), card(Suit.DIAMOND, Number.ACE), card(Suit.CLUB, Number.KING), card(Suit.CLUB, Number.QUEEN))
         );
 
         then_result_is(1);
@@ -295,8 +295,8 @@ public class PokerComparatorTest {
     public void five_high_straight_beats_three_of_a_kind() {
 
         when_compare(
-            List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.TWO), card(Suit.DIAMOND, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.SPADE, Number.FIVE)),
-            List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.DIAMOND, Number.KING), card(Suit.CLUB, Number.QUEEN), card(Suit.CLUB, Number.JACK))
+                List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.TWO), card(Suit.DIAMOND, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.SPADE, Number.FIVE)),
+                List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.DIAMOND, Number.KING), card(Suit.CLUB, Number.QUEEN), card(Suit.CLUB, Number.JACK))
         );
 
         then_result_is(1);
