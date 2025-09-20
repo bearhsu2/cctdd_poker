@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum HandType {
     HIGH_CARD(0, hand -> true, (hand1, hand2) -> ComparatorUtil.compareByHighest(hand1.getCards(), hand2.getCards())),
@@ -26,7 +27,11 @@ public enum HandType {
             return lowPairComparison;
         }
         return ComparatorUtil.compareByHighest(hand1.getKickerCards(), hand2.getKickerCards());
-    });
+    }),
+    THREE_OF_A_KIND(3, hand -> hand.getCards().stream()
+            .collect(Collectors.groupingBy(Card::getNumber))
+            .values().stream()
+            .anyMatch(group -> group.size() == 3), (hand1, hand2) -> 0);
 
     @Getter
     private final int weight;
