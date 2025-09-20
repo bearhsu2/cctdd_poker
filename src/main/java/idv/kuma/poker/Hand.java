@@ -80,4 +80,9 @@ public class Hand implements Comparable<Hand> {
                 .min(ComparatorUtil::compareByHighest)
                 .orElseThrow();
     }
+
+    boolean hasThreeOfAKind() {
+        return groupCardsByNumber().values().stream()
+                .anyMatch(group -> group.size() == 3);
+    }
 }
