@@ -85,4 +85,11 @@ public class Hand implements Comparable<Hand> {
         return groupCardsByNumber().values().stream()
                 .anyMatch(group -> group.size() == 3);
     }
+
+    public List<Card> getThreeOfAKindCards() {
+        return groupCardsByNumber().values().stream()
+                .filter(group -> group.size() == 3)
+                .findFirst()
+                .orElseThrow();
+    }
 }

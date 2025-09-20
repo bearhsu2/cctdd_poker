@@ -258,5 +258,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void three_of_a_kind_vs_three_of_a_kind_higher_wins() {
+
+        when_compare(
+            List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.DIAMOND, Number.KING), card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.THREE)),
+            List.of(card(Suit.CLUB, Number.QUEEN), card(Suit.HEART, Number.QUEEN), card(Suit.DIAMOND, Number.QUEEN), card(Suit.CLUB, Number.ACE), card(Suit.CLUB, Number.FOUR))
+        );
+
+        then_result_is(1);
+    }
+
 
 }
