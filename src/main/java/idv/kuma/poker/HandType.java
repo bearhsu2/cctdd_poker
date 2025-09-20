@@ -27,7 +27,13 @@ public enum HandType {
         }
         return ComparatorUtil.compareByHighest(hand1.getKickerCards(), hand2.getKickerCards());
     }),
-    THREE_OF_A_KIND(3, Hand::hasThreeOfAKind, (hand1, hand2) -> ComparatorUtil.compareByHighest(hand1.getThreeOfAKindCards(), hand2.getThreeOfAKindCards()));
+    THREE_OF_A_KIND(3, Hand::hasThreeOfAKind, (hand1, hand2) -> {
+        int threeOfAKindComparison = ComparatorUtil.compareByHighest(hand1.getThreeOfAKindCards(), hand2.getThreeOfAKindCards());
+        if (threeOfAKindComparison != 0) {
+            return threeOfAKindComparison;
+        }
+        return ComparatorUtil.compareByHighest(hand1.getKickerCards(), hand2.getKickerCards());
+    });
 
     @Getter
     private final int weight;
