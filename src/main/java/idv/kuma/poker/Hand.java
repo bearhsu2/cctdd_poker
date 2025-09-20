@@ -110,4 +110,18 @@ public class Hand implements Comparable<Hand> {
         return sortedNumbers.size() == 5 &&
                sortedNumbers.get(4) - sortedNumbers.get(0) == 4;
     }
+
+    public int getStraightHighValue() {
+        List<Integer> sortedNumbers = cards.stream()
+                .map(card -> card.getNumber().getNumber())
+                .distinct()
+                .sorted()
+                .toList();
+
+        if (sortedNumbers.equals(List.of(2, 3, 4, 5, 14))) {
+            return 5;
+        }
+
+        return sortedNumbers.get(4);
+    }
 }

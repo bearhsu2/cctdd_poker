@@ -302,5 +302,27 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void higher_straight_beats_lower_straight() {
+
+        when_compare(
+                List.of(card(Suit.CLUB, Number.FIVE), card(Suit.HEART, Number.SIX), card(Suit.DIAMOND, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.SPADE, Number.NINE)),
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.THREE), card(Suit.DIAMOND, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.SIX))
+        );
+
+        then_result_is(1);
+    }
+
+    @Test
+    public void six_high_straight_beats_five_high_straight() {
+
+        when_compare(
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.THREE), card(Suit.DIAMOND, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.SPADE, Number.SIX)),
+                List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.TWO), card(Suit.DIAMOND, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.SPADE, Number.FIVE))
+        );
+
+        then_result_is(1);
+    }
+
 
 }
