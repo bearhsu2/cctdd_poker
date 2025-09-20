@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Hand implements Comparable<Hand> {
@@ -82,14 +83,16 @@ public class Hand implements Comparable<Hand> {
     }
 
     boolean hasThreeOfAKind() {
+        return findThreeOfAKindCards().isPresent();
+    }
+
+    private Optional<List<Card>> findThreeOfAKindCards() {
         return groupCardsByNumber().values().stream()
-                .anyMatch(group -> group.size() == 3);
+                .filter(group -> group.size() == 3)
+                .findFirst();
     }
 
     public List<Card> getThreeOfAKindCards() {
-        return groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 3)
-                .findFirst()
-                .orElseThrow();
+        return findThreeOfAKindCards().orElseThrow();
     }
 }
