@@ -103,16 +103,11 @@ public class Hand implements Comparable<Hand> {
                 .sorted()
                 .toList();
 
-        if (sortedNumbers.size() != 5) {
-            return false;
-        }
-
-        // Check for regular straight
-        if (sortedNumbers.get(4) - sortedNumbers.get(0) == 4) {
+        if (sortedNumbers.equals(List.of(2, 3, 4, 5, 14))) {
             return true;
         }
 
-        // Check for A,2,3,4,5 (ace low straight)
-        return sortedNumbers.equals(List.of(2, 3, 4, 5, 14));
+        return sortedNumbers.size() == 5 &&
+               sortedNumbers.get(4) - sortedNumbers.get(0) == 4;
     }
 }
