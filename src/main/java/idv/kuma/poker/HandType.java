@@ -33,7 +33,8 @@ public enum HandType {
             return threeOfAKindComparison;
         }
         return ComparatorUtil.compareByHighest(hand1.getKickerCards(), hand2.getKickerCards());
-    });
+    }),
+    STRAIGHT(4, Hand::hasStraight, (hand1, hand2) -> 0);
 
     @Getter
     private final int weight;

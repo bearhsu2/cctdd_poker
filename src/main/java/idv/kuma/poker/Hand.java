@@ -95,4 +95,24 @@ public class Hand implements Comparable<Hand> {
     public List<Card> getThreeOfAKindCards() {
         return findThreeOfAKindCards().orElseThrow();
     }
+
+    boolean hasStraight() {
+        List<Integer> sortedNumbers = cards.stream()
+                .map(card -> card.getNumber().getNumber())
+                .distinct()
+                .sorted()
+                .toList();
+
+        if (sortedNumbers.size() != 5) {
+            return false;
+        }
+
+        for (int i = 1; i < sortedNumbers.size(); i++) {
+            if (sortedNumbers.get(i) - sortedNumbers.get(i - 1) != 1) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
