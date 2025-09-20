@@ -103,16 +103,7 @@ public class Hand implements Comparable<Hand> {
                 .sorted()
                 .toList();
 
-        if (sortedNumbers.size() != 5) {
-            return false;
-        }
-
-        for (int i = 1; i < sortedNumbers.size(); i++) {
-            if (sortedNumbers.get(i) - sortedNumbers.get(i - 1) != 1) {
-                return false;
-            }
-        }
-
-        return true;
+        return sortedNumbers.size() == 5 &&
+               sortedNumbers.get(4) - sortedNumbers.get(0) == 4;
     }
 }
