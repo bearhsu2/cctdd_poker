@@ -325,14 +325,14 @@ public class PokerComparatorTest {
     }
 
     @Test
-    public void straight_with_identical_numbers_compares_suits() {
+    public void straight_with_identical_numbers_makes_tie() {
 
         when_compare(
-                List.of(card(Suit.SPADE, Number.TWO), card(Suit.HEART, Number.THREE), card(Suit.DIAMOND, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX)),
-                List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.THREE), card(Suit.DIAMOND, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX))
+                List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.TWO), card(Suit.DIAMOND, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.HEART, Number.FIVE)),
+                List.of(card(Suit.SPADE, Number.ACE), card(Suit.HEART, Number.TWO), card(Suit.DIAMOND, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE))
         );
 
-        then_result_is(1);
+        then_result_is(0);
     }
 
 
