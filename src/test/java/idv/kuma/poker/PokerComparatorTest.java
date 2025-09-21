@@ -324,5 +324,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void straight_with_identical_numbers_compares_suits() {
+
+        when_compare(
+                List.of(card(Suit.SPADE, Number.TWO), card(Suit.HEART, Number.THREE), card(Suit.DIAMOND, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX)),
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.THREE), card(Suit.DIAMOND, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX))
+        );
+
+        then_result_is(1);
+    }
+
 
 }
