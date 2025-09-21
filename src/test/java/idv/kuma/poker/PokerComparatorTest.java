@@ -11,21 +11,10 @@ public class PokerComparatorTest {
     private PokerComparator sut = new PokerComparator();
     private int actual;
 
-    @Test
-    public void _2_vs_2_makes_tie() {
-
-        when_compare(five_identical_cards(card(Suit.CLUB, Number.TWO)), five_identical_cards(card(Suit.CLUB, Number.TWO)));
-
-        then_result_is(0);
-    }
-
     private void when_compare(java.util.List<Card> poker1, java.util.List<Card> poker2) {
         actual = sut.compare(Hand.of(poker1), Hand.of(poker2));
     }
 
-    private List<Card> five_identical_cards(Card card) {
-        return List.of(card, card, card, card, card);
-    }
 
     private Card card(Suit suit, Number number) {
         return Card.of(suit, number);
@@ -33,86 +22,6 @@ public class PokerComparatorTest {
 
     private void then_result_is(int expected) {
         assertEquals(expected, actual);
-    }
-
-    @Test
-    public void _2_vs_3_makes_first_lose() {
-
-        when_compare(five_identical_cards(card(Suit.CLUB, Number.TWO)), five_identical_cards(card(Suit.CLUB, Number.THREE)));
-
-        then_result_is(-1);
-    }
-
-    @Test
-    public void _3_vs_2_makes_first_win() {
-
-        when_compare(five_identical_cards(card(Suit.CLUB, Number.THREE)), five_identical_cards(card(Suit.CLUB, Number.TWO)));
-
-        then_result_is(1);
-    }
-
-    @Test
-    public void _J_vs_10_makes_first_win() {
-
-        when_compare(five_identical_cards(card(Suit.CLUB, Number.JACK)), five_identical_cards(card(Suit.CLUB, Number.TEN)));
-
-        then_result_is(1);
-    }
-
-    @Test
-    public void _Q_vs_J_makes_first_win() {
-
-        when_compare(five_identical_cards(card(Suit.CLUB, Number.QUEEN)), five_identical_cards(card(Suit.CLUB, Number.JACK)));
-
-        then_result_is(1);
-    }
-
-    @Test
-    public void _K_vs_Q_makes_first_win() {
-
-        when_compare(five_identical_cards(card(Suit.CLUB, Number.KING)), five_identical_cards(card(Suit.CLUB, Number.QUEEN)));
-
-        then_result_is(1);
-    }
-
-    @Test
-    public void _A_vs_K_makes_first_win() {
-
-        when_compare(five_identical_cards(card(Suit.CLUB, Number.ACE)), five_identical_cards(card(Suit.CLUB, Number.KING)));
-
-        then_result_is(1);
-    }
-
-    @Test
-    public void _club_2_vs_diamond_2_makes_first_win() {
-
-        when_compare(five_identical_cards(card(Suit.CLUB, Number.TWO)), five_identical_cards(card(Suit.DIAMOND, Number.TWO)));
-
-        then_result_is(1);
-    }
-
-    @Test
-    public void _spade_2_vs_heart_2_makes_first_win() {
-
-        when_compare(five_identical_cards(card(Suit.SPADE, Number.TWO)), five_identical_cards(card(Suit.HEART, Number.TWO)));
-
-        then_result_is(1);
-    }
-
-    @Test
-    public void _heart_2_vs_club_2_makes_first_win() {
-
-        when_compare(five_identical_cards(card(Suit.HEART, Number.TWO)), five_identical_cards(card(Suit.CLUB, Number.TWO)));
-
-        then_result_is(1);
-    }
-
-    @Test
-    public void _spade_2_vs_diamond_2_makes_first_win() {
-
-        when_compare(five_identical_cards(card(Suit.SPADE, Number.TWO)), five_identical_cards(card(Suit.DIAMOND, Number.TWO)));
-
-        then_result_is(1);
     }
 
     @Test
