@@ -11,19 +11,6 @@ public class PokerComparatorTest {
     private PokerComparator sut = new PokerComparator();
     private int actual;
 
-    private void when_compare(java.util.List<Card> poker1, java.util.List<Card> poker2) {
-        actual = sut.compare(Hand.of(poker1), Hand.of(poker2));
-    }
-
-
-    private Card card(Suit suit, Number number) {
-        return Card.of(suit, number);
-    }
-
-    private void then_result_is(int expected) {
-        assertEquals(expected, actual);
-    }
-
     @Test
     public void when_comparing_two_lists_compare_largest_card() {
 
@@ -33,6 +20,18 @@ public class PokerComparatorTest {
         );
 
         then_result_is(1);
+    }
+
+    private void when_compare(java.util.List<Card> poker1, java.util.List<Card> poker2) {
+        actual = sut.compare(Hand.of(poker1), Hand.of(poker2));
+    }
+
+    private Card card(Suit suit, Number number) {
+        return Card.of(suit, number);
+    }
+
+    private void then_result_is(int expected) {
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -304,7 +303,7 @@ public class PokerComparatorTest {
 
         when_compare(
                 List.of(card(Suit.CLUB, Number.SEVEN), card(Suit.HEART, Number.SEVEN), card(Suit.DIAMOND, Number.SEVEN), card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING)),
-                List.of(card(Suit.SPADE, Number.SEVEN), card(Suit.DIAMOND, Number.SEVEN), card(Suit.HEART, Number.SEVEN), card(Suit.DIAMOND, Number.QUEEN), card(Suit.SPADE, Number.QUEEN))
+                List.of(card(Suit.SPADE, Number.SEVEN), card(Suit.DIAMOND, Number.SEVEN), card(Suit.HEART, Number.SEVEN), card(Suit.DIAMOND, Number.KING), card(Suit.SPADE, Number.KING))
         );
 
         then_result_is(0);
