@@ -288,5 +288,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void full_house_vs_full_house_higher_three_of_a_kind_wins() {
+
+        when_compare(
+                List.of(card(Suit.CLUB, Number.FIVE), card(Suit.HEART, Number.FIVE), card(Suit.DIAMOND, Number.FIVE), card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.TWO)),
+                List.of(card(Suit.CLUB, Number.THREE), card(Suit.HEART, Number.THREE), card(Suit.DIAMOND, Number.THREE), card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.ACE))
+        );
+
+        then_result_is(1);
+    }
+
 
 }

@@ -36,7 +36,8 @@ public enum Category {
     }),
     STRAIGHT(4, Hand::hasStraight, (hand1, hand2) -> Integer.compare(hand1.getStraightHighValue(), hand2.getStraightHighValue())),
     FLUSH(5, Hand::hasFlush, (hand1, hand2) -> ComparatorUtil.compareByHighest(hand1.getNumbers(), hand2.getNumbers())),
-    FULL_HOUSE(6, Hand::hasFullHouse, null);
+    FULL_HOUSE(6, Hand::hasFullHouse,
+            (hand1, hand2) -> ComparatorUtil.compareByHighest(hand1.getThreeOfAKindCards(), hand2.getThreeOfAKindCards()));
 
     @Getter
     private final int weight;
