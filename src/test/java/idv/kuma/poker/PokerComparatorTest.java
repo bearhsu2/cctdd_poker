@@ -255,5 +255,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void flush_with_larger_high_card_wins() {
+
+        when_compare(
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.SIX), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.KING)),
+                List.of(card(Suit.HEART, Number.THREE), card(Suit.HEART, Number.FIVE), card(Suit.HEART, Number.SEVEN), card(Suit.HEART, Number.NINE), card(Suit.HEART, Number.QUEEN))
+        );
+
+        then_result_is(1);
+    }
+
 
 }
