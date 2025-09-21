@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 public class Hand implements Comparable<Hand> {
     @Getter
     private final List<Card> cards;
-    private final HandType handType;
+    private final Category category;
 
     private Hand(List<Card> cards) {
         this.cards = cards;
-        this.handType = HandType.from(this);
+        this.category = Category.from(this);
     }
 
     public static Hand of(List<Card> cards) {
@@ -39,16 +39,16 @@ public class Hand implements Comparable<Hand> {
 
     @Override
     public int compareTo(Hand other) {
-        int typeComparison = handType.compare(other.getHandType());
+        int typeComparison = category.compare(other.getCategory());
         if (typeComparison != 0) {
             return typeComparison;
         }
 
-        return handType.compareHands(this, other);
+        return category.compareHands(this, other);
     }
 
-    private HandType getHandType() {
-        return handType;
+    private Category getCategory() {
+        return category;
     }
 
     public List<Card> getPairCards() {

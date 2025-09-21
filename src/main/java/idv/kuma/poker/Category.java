@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public enum HandType {
+public enum Category {
     HIGH_CARD(0, hand -> true, (hand1, hand2) -> ComparatorUtil.compareByHighest(hand1.getCards(), hand2.getCards())),
     ONE_PAIR(1, Hand::hasOnePair, (hand1, hand2) -> {
         int pairComparison = ComparatorUtil.compareByHighest(hand1.getPairCards(), hand2.getPairCards());
@@ -43,21 +43,21 @@ public enum HandType {
     private final Function<Hand, Boolean> checker;
     private final BiFunction<Hand, Hand, Integer> compareStrategy;
 
-    HandType(int weight, Function<Hand, Boolean> checker, BiFunction<Hand, Hand, Integer> compareStrategy) {
+    Category(int weight, Function<Hand, Boolean> checker, BiFunction<Hand, Hand, Integer> compareStrategy) {
         this.weight = weight;
         this.checker = checker;
         this.compareStrategy = compareStrategy;
     }
 
-    static HandType from(Hand hand) {
+    static Category from(Hand hand) {
         return Arrays.stream(values())
-                .sorted(Comparator.comparing(HandType::getWeight).reversed())
+                .sorted(Comparator.comparing(Category::getWeight).reversed())
                 .filter(type -> type.checker.apply(hand))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("unknown hand type: " + hand));
     }
 
-    public int compare(HandType other) {
+    public int compare(Category other) {
         return Integer.compare(this.getWeight(), other.getWeight());
     }
 
