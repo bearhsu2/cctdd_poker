@@ -266,5 +266,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void flush_hands_with_identical_numbers_but_different_suits_are_equal() {
+
+        when_compare(
+                List.of(card(Suit.DIAMOND, Number.TEN), card(Suit.DIAMOND, Number.EIGHT), card(Suit.DIAMOND, Number.SEVEN), card(Suit.DIAMOND, Number.SIX), card(Suit.DIAMOND, Number.FIVE)),
+                List.of(card(Suit.SPADE, Number.TEN), card(Suit.SPADE, Number.EIGHT), card(Suit.SPADE, Number.SEVEN), card(Suit.SPADE, Number.SIX), card(Suit.SPADE, Number.FIVE))
+        );
+
+        then_result_is(0);
+    }
+
 
 }
