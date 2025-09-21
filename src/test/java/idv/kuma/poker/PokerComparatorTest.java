@@ -299,7 +299,7 @@ public class PokerComparatorTest {
     }
 
     @Test
-    public void full_house_vs_full_house_same_triplet_rank_higher_pair_wins() {
+    public void full_house_vs_full_house_identical_triplet_and_pair_ranks_tie() {
 
         when_compare(
                 List.of(card(Suit.CLUB, Number.SEVEN), card(Suit.HEART, Number.SEVEN), card(Suit.DIAMOND, Number.SEVEN), card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING)),
