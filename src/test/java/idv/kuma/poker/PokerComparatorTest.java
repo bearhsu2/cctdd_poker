@@ -244,5 +244,16 @@ public class PokerComparatorTest {
         then_result_is(0);
     }
 
+    @Test
+    public void flush_beats_straight() {
+
+        when_compare(
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.SIX), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.TEN)),
+                List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.TWO), card(Suit.DIAMOND, Number.THREE), card(Suit.SPADE, Number.FOUR), card(Suit.CLUB, Number.FIVE))
+        );
+
+        then_result_is(1);
+    }
+
 
 }

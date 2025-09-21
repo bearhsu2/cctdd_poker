@@ -130,4 +130,11 @@ public class Hand implements Comparable<Hand> {
 
         return sortedNumbers.get(4);
     }
+
+    boolean hasFlush() {
+        return cards.stream()
+                .map(Card::getSuit)
+                .distinct()
+                .count() == 1;
+    }
 }

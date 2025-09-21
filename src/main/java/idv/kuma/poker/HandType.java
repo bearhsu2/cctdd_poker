@@ -34,7 +34,8 @@ public enum HandType {
         }
         return ComparatorUtil.compareByHighest(hand1.getKickerCards(), hand2.getKickerCards());
     }),
-    STRAIGHT(4, Hand::hasStraight, (hand1, hand2) -> Integer.compare(hand1.getStraightHighValue(), hand2.getStraightHighValue()));
+    STRAIGHT(4, Hand::hasStraight, (hand1, hand2) -> Integer.compare(hand1.getStraightHighValue(), hand2.getStraightHighValue())),
+    FLUSH(5, Hand::hasFlush, null);
 
     @Getter
     private final int weight;
