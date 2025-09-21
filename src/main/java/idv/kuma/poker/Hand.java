@@ -96,14 +96,22 @@ public class Hand implements Comparable<Hand> {
         return findThreeOfAKindCards().orElseThrow();
     }
 
-    boolean hasStraight() {
-        List<Integer> sortedNumbers = cards.stream()
+    private List<Integer> getSortedNumbers() {
+        return cards.stream()
                 .map(card -> card.getNumber().getNumber())
                 .distinct()
                 .sorted()
                 .toList();
+    }
 
-        if (sortedNumbers.equals(List.of(2, 3, 4, 5, 14))) {
+    private boolean isAceLowStraight(List<Integer> sortedNumbers) {
+        return sortedNumbers.equals(List.of(2, 3, 4, 5, 14));
+    }
+
+    boolean hasStraight() {
+        List<Integer> sortedNumbers = getSortedNumbers();
+
+        if (isAceLowStraight(sortedNumbers)) {
             return true;
         }
 
@@ -114,13 +122,9 @@ public class Hand implements Comparable<Hand> {
     public int getStraightHighValue() {
         DBCUtil.require(this::hasStraight, "getStraightHighValue can only be called on a straight hand");
 
-        List<Integer> sortedNumbers = cards.stream()
-                .map(card -> card.getNumber().getNumber())
-                .distinct()
-                .sorted()
-                .toList();
+        List<Integer> sortedNumbers = getSortedNumbers();
 
-        if (sortedNumbers.equals(List.of(2, 3, 4, 5, 14))) {
+        if (isAceLowStraight(sortedNumbers)) {
             return 5;
         }
 
