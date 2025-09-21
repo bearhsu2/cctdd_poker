@@ -112,6 +112,8 @@ public class Hand implements Comparable<Hand> {
     }
 
     public int getStraightHighValue() {
+        DBCUtil.require(this::hasStraight, "getStraightHighValue can only be called on a straight hand");
+
         List<Integer> sortedNumbers = cards.stream()
                 .map(card -> card.getNumber().getNumber())
                 .distinct()
