@@ -143,4 +143,8 @@ public class Hand implements Comparable<Hand> {
     boolean hasFullHouse() {
         return hasThreeOfAKind() && hasOnePair();
     }
+
+    public Number getTripletNumber() {
+        return getThreeOfAKindCards().get(0).getNumber();
+    }
 }
