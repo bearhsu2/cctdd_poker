@@ -147,4 +147,8 @@ public class Hand implements Comparable<Hand> {
     public Number getTripletNumber() {
         return getThreeOfAKindCards().get(0).getNumber();
     }
+
+    public Number getPairNumber() {
+        return getPairCards().get(0).getNumber();
+    }
 }

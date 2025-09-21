@@ -36,8 +36,13 @@ public enum Category {
     }),
     STRAIGHT(4, Hand::hasStraight, (hand1, hand2) -> Integer.compare(hand1.getStraightHighValue(), hand2.getStraightHighValue())),
     FLUSH(5, Hand::hasFlush, (hand1, hand2) -> ComparatorUtil.compareByHighest(hand1.getNumbers(), hand2.getNumbers())),
-    FULL_HOUSE(6, Hand::hasFullHouse,
-            (hand1, hand2) -> hand1.getTripletNumber().compareValue(hand2.getTripletNumber()));
+    FULL_HOUSE(6, Hand::hasFullHouse, (hand1, hand2) -> {
+        int tripletComparison = hand1.getTripletNumber().compareValue(hand2.getTripletNumber());
+        if (tripletComparison != 0) {
+            return tripletComparison;
+        }
+        return hand1.getPairNumber().compareValue(hand2.getPairNumber());
+    });
 
     @Getter
     private final int weight;
