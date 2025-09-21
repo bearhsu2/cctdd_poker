@@ -139,4 +139,8 @@ public class Hand implements Comparable<Hand> {
     public List<Number> getNumbers() {
         return cards.stream().map(Card::getNumber).toList();
     }
+
+    boolean hasFullHouse() {
+        return hasThreeOfAKind() && hasOnePair();
+    }
 }
