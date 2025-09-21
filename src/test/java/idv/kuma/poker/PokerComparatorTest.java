@@ -299,5 +299,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void full_house_vs_full_house_same_triplet_rank_higher_pair_wins() {
+
+        when_compare(
+                List.of(card(Suit.CLUB, Number.SEVEN), card(Suit.HEART, Number.SEVEN), card(Suit.DIAMOND, Number.SEVEN), card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING)),
+                List.of(card(Suit.SPADE, Number.SEVEN), card(Suit.DIAMOND, Number.SEVEN), card(Suit.HEART, Number.SEVEN), card(Suit.DIAMOND, Number.QUEEN), card(Suit.SPADE, Number.QUEEN))
+        );
+
+        then_result_is(0);
+    }
+
 
 }
