@@ -11,18 +11,18 @@ public class Hand implements Comparable<Hand> {
     @Getter
     private final List<Card> cards;
     private final HandType handType;
-    
+
     private Hand(List<Card> cards) {
         this.cards = cards;
         this.handType = HandType.from(this);
     }
-    
+
     public static Hand of(List<Card> cards) {
         DBCUtil.require(() -> cards.size() == 5, "Hand must contain exactly 5 cards, but got " + cards.size());
         return new Hand(cards);
     }
-    
-    
+
+
     boolean hasOnePair() {
         return getAllPairs().size() == 1;
     }
@@ -37,10 +37,6 @@ public class Hand implements Comparable<Hand> {
         return cards.stream().collect(Collectors.groupingBy(Card::getNumber));
     }
 
-    private HandType getHandType() {
-        return handType;
-    }
-
     @Override
     public int compareTo(Hand other) {
         int typeComparison = handType.compare(other.getHandType());
@@ -50,32 +46,34 @@ public class Hand implements Comparable<Hand> {
 
         return handType.compareHands(this, other);
     }
-    
-    
-    
+
+    private HandType getHandType() {
+        return handType;
+    }
+
     public List<Card> getPairCards() {
         return getAllPairs().stream()
                 .findFirst()
                 .orElseThrow();
     }
-    
+
     public List<Card> getKickerCards() {
         return groupCardsByNumber().values().stream()
                 .filter(group -> group.size() == 1)
                 .flatMap(List::stream)
                 .toList();
     }
-    
+
     boolean hasTwoPair() {
         return getAllPairs().size() == 2;
     }
-    
+
     public List<Card> getHighPairCards() {
         return getAllPairs().stream()
                 .max(ComparatorUtil::compareByHighest)
                 .orElseThrow();
     }
-    
+
     public List<Card> getLowPairCards() {
         return getAllPairs().stream()
                 .min(ComparatorUtil::compareByHighest)
@@ -96,29 +94,6 @@ public class Hand implements Comparable<Hand> {
         return findThreeOfAKindCards().orElseThrow();
     }
 
-    private List<Integer> getSortedNumbers() {
-        return cards.stream()
-                .map(card -> card.getNumber().getNumber())
-                .distinct()
-                .sorted()
-                .toList();
-    }
-
-    private boolean isAceLowStraight(List<Integer> sortedNumbers) {
-        return sortedNumbers.equals(List.of(2, 3, 4, 5, 14));
-    }
-
-    boolean hasStraight() {
-        List<Integer> sortedNumbers = getSortedNumbers();
-
-        if (isAceLowStraight(sortedNumbers)) {
-            return true;
-        }
-
-        return sortedNumbers.size() == 5 &&
-               sortedNumbers.get(4) - sortedNumbers.get(0) == 4;
-    }
-
     public int getStraightHighValue() {
         DBCUtil.require(this::hasStraight, "getStraightHighValue can only be called on a straight hand");
 
@@ -131,10 +106,37 @@ public class Hand implements Comparable<Hand> {
         return sortedNumbers.get(4);
     }
 
+    boolean hasStraight() {
+        List<Integer> sortedNumbers = getSortedNumbers();
+
+        if (isAceLowStraight(sortedNumbers)) {
+            return true;
+        }
+
+        return sortedNumbers.size() == 5 &&
+                sortedNumbers.get(4) - sortedNumbers.get(0) == 4;
+    }
+
+    private List<Integer> getSortedNumbers() {
+        return cards.stream()
+                .map(card -> card.getNumber().getNumber())
+                .distinct()
+                .sorted()
+                .toList();
+    }
+
+    private boolean isAceLowStraight(List<Integer> sortedNumbers) {
+        return sortedNumbers.equals(List.of(2, 3, 4, 5, 14));
+    }
+
     boolean hasFlush() {
         return cards.stream()
                 .map(Card::getSuit)
                 .distinct()
                 .count() == 1;
+    }
+
+    public List<Number> getNumbers() {
+        return cards.stream().map(Card::getNumber).toList();
     }
 }
