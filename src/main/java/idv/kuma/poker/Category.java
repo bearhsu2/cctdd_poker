@@ -49,7 +49,8 @@ public enum Category {
             return quadrupletComparison;
         }
         return hand1.getKickerNumber().compareValue(hand2.getKickerNumber());
-    });
+    }),
+    STRAIGHT_FLUSH(8, Hand::hasStraightFlush, (hand1, hand2) -> 0);
 
     @Getter
     private final int weight;

@@ -126,6 +126,10 @@ public class Hand implements Comparable<Hand> {
         return hasThreeOfAKind() && hasOnePair();
     }
 
+    boolean hasStraightFlush() {
+        return hasStraight() && hasFlush();
+    }
+
     boolean hasThreeOfAKind() {
         return tryFindTripletCards().isPresent();
     }

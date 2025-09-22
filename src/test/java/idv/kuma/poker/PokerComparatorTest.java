@@ -364,5 +364,16 @@ public class PokerComparatorTest {
         then_result_is(0);
     }
 
+    @Test
+    public void straight_flush_beats_four_of_a_kind() {
+
+        when_compare(
+                List.of(card(Suit.CLUB, Number.TWO), card(Suit.CLUB, Number.THREE), card(Suit.CLUB, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX)),
+                List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.ACE), card(Suit.DIAMOND, Number.ACE), card(Suit.SPADE, Number.ACE), card(Suit.CLUB, Number.KING))
+        );
+
+        then_result_is(1);
+    }
+
 
 }
