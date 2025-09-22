@@ -386,5 +386,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void straight_flush_vs_straight_flush_same_numbers_different_suits_tie() {
+
+        when_compare(
+                List.of(card(Suit.DIAMOND, Number.SEVEN), card(Suit.DIAMOND, Number.SIX), card(Suit.DIAMOND, Number.FIVE), card(Suit.DIAMOND, Number.FOUR), card(Suit.DIAMOND, Number.THREE)),
+                List.of(card(Suit.SPADE, Number.SEVEN), card(Suit.SPADE, Number.SIX), card(Suit.SPADE, Number.FIVE), card(Suit.SPADE, Number.FOUR), card(Suit.SPADE, Number.THREE))
+        );
+
+        then_result_is(0);
+    }
+
 
 }
