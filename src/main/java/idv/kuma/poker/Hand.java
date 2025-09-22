@@ -43,6 +43,12 @@ public class Hand implements Comparable<Hand> {
                 .toList();
     }
 
+    public List<Number> getKickerNumbers() {
+        return getKickerCards().stream()
+                .map(Card::getNumber)
+                .toList();
+    }
+
     private Map<Number, List<Card>> groupCardsByNumber() {
         return cards.stream().collect(Collectors.groupingBy(Card::getNumber));
     }

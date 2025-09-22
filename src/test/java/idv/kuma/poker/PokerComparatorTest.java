@@ -353,5 +353,16 @@ public class PokerComparatorTest {
         then_result_is(-1);
     }
 
+    @Test
+    public void four_of_a_kind_vs_four_of_a_kind_same_quadruplet_same_kicker_number_is_tie() {
+
+        when_compare(
+                List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.DIAMOND, Number.KING), card(Suit.SPADE, Number.KING), card(Suit.DIAMOND, Number.ACE)),
+                List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING), card(Suit.DIAMOND, Number.KING), card(Suit.HEART, Number.KING), card(Suit.CLUB, Number.ACE))
+        );
+
+        then_result_is(0);
+    }
+
 
 }
