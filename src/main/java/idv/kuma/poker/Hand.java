@@ -81,17 +81,17 @@ public class Hand implements Comparable<Hand> {
     }
 
     boolean hasThreeOfAKind() {
-        return findThreeOfAKindCards().isPresent();
+        return findTripletCards().isPresent();
     }
 
-    private Optional<List<Card>> findThreeOfAKindCards() {
+    private Optional<List<Card>> findTripletCards() {
         return groupCardsByNumber().values().stream()
                 .filter(group -> group.size() == 3)
                 .findFirst();
     }
 
-    public List<Card> getThreeOfAKindCards() {
-        return findThreeOfAKindCards().orElseThrow();
+    public List<Card> getTripletCards() {
+        return findTripletCards().orElseThrow();
     }
 
     public int getStraightHighValue() {
@@ -145,7 +145,7 @@ public class Hand implements Comparable<Hand> {
     }
 
     public Number getTripletNumber() {
-        return getThreeOfAKindCards().get(0).getNumber();
+        return getTripletCards().get(0).getNumber();
     }
 
     public Number getPairNumber() {
