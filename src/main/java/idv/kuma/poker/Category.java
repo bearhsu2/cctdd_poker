@@ -43,7 +43,13 @@ public enum Category {
         }
         return hand1.getPairNumber().compareValue(hand2.getPairNumber());
     }),
-    FOUR_OF_A_KIND(7, Hand::hasFourOfAKind, (hand1, hand2) -> hand1.getQuadrupletNumber().compareValue(hand2.getQuadrupletNumber()));
+    FOUR_OF_A_KIND(7, Hand::hasFourOfAKind, (hand1, hand2) -> {
+        int quadrupletComparison = hand1.getQuadrupletNumber().compareValue(hand2.getQuadrupletNumber());
+        if (quadrupletComparison != 0) {
+            return quadrupletComparison;
+        }
+        return ComparatorUtil.compareByHighest(hand1.getKickerCards(), hand2.getKickerCards());
+    });
 
     @Getter
     private final int weight;
