@@ -163,4 +163,8 @@ public class Hand implements Comparable<Hand> {
                 .findFirst()
                 .orElseThrow();
     }
+
+    public Number getQuadrupletNumber() {
+        return getQuadrupletCards().get(0).getNumber();
+    }
 }
