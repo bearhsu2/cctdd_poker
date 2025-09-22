@@ -36,21 +36,18 @@ public class Hand implements Comparable<Hand> {
         return category;
     }
 
+    public Number getKickerNumber() {
+        return getKickerCards().stream()
+                .map(Card::getNumber)
+                .findFirst()
+                .orElseThrow();
+    }
+
     public List<Card> getKickerCards() {
         return groupCardsByNumber().values().stream()
                 .filter(group -> group.size() == 1)
                 .flatMap(List::stream)
                 .toList();
-    }
-
-    public List<Number> getKickerNumbers() {
-        return getKickerCards().stream()
-                .map(Card::getNumber)
-                .toList();
-    }
-
-    public Number getKickerNumber() {
-        return getKickerNumbers().get(0);
     }
 
     private Map<Number, List<Card>> groupCardsByNumber() {
