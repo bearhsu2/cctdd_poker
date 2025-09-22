@@ -152,16 +152,18 @@ public class Hand implements Comparable<Hand> {
         return getPairCards().get(0).getNumber();
     }
 
-    boolean hasFourOfAKind() {
+    private Optional<List<Card>> tryFindQuadrupletCards() {
         return groupCardsByNumber().values().stream()
-                .anyMatch(group -> group.size() == 4);
+                .filter(group -> group.size() == 4)
+                .findFirst();
+    }
+
+    boolean hasFourOfAKind() {
+        return tryFindQuadrupletCards().isPresent();
     }
 
     public List<Card> getQuadrupletCards() {
-        return groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 4)
-                .findFirst()
-                .orElseThrow();
+        return tryFindQuadrupletCards().orElseThrow();
     }
 
     public Number getQuadrupletNumber() {
