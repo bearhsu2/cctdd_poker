@@ -50,7 +50,7 @@ public enum Category {
         }
         return hand1.getKickerNumber().compareValue(hand2.getKickerNumber());
     }),
-    STRAIGHT_FLUSH(8, Hand::hasStraightFlush, (hand1, hand2) -> 0);
+    STRAIGHT_FLUSH(8, Hand::hasStraightFlush, (hand1, hand2) -> Integer.compare(hand1.getStraightHighValue(), hand2.getStraightHighValue()));
 
     @Getter
     private final int weight;

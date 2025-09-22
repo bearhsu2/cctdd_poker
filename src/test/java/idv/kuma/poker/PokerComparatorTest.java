@@ -375,5 +375,16 @@ public class PokerComparatorTest {
         then_result_is(1);
     }
 
+    @Test
+    public void straight_flush_vs_straight_flush_higher_highest_card_wins() {
+
+        when_compare(
+                List.of(card(Suit.CLUB, Number.FIVE), card(Suit.CLUB, Number.SIX), card(Suit.CLUB, Number.SEVEN), card(Suit.CLUB, Number.EIGHT), card(Suit.CLUB, Number.NINE)),
+                List.of(card(Suit.HEART, Number.TWO), card(Suit.HEART, Number.THREE), card(Suit.HEART, Number.FOUR), card(Suit.HEART, Number.FIVE), card(Suit.HEART, Number.SIX))
+        );
+
+        then_result_is(1);
+    }
+
 
 }
