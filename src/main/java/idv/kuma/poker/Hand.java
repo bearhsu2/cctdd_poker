@@ -151,4 +151,9 @@ public class Hand implements Comparable<Hand> {
     public Number getPairNumber() {
         return getPairCards().get(0).getNumber();
     }
+
+    boolean hasFourOfAKind() {
+        return groupCardsByNumber().values().stream()
+                .anyMatch(group -> group.size() == 4);
+    }
 }

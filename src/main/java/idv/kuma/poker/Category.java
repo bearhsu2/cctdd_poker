@@ -42,7 +42,8 @@ public enum Category {
             return tripletComparison;
         }
         return hand1.getPairNumber().compareValue(hand2.getPairNumber());
-    });
+    }),
+    FOUR_OF_A_KIND(7, Hand::hasFourOfAKind, (hand1, hand2) -> 0);
 
     @Getter
     private final int weight;
