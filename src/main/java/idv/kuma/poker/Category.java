@@ -43,7 +43,7 @@ public enum Category {
         }
         return hand1.getPairNumber().compareValue(hand2.getPairNumber());
     }),
-    FOUR_OF_A_KIND(7, Hand::hasFourOfAKind, (hand1, hand2) -> 0);
+    FOUR_OF_A_KIND(7, Hand::hasFourOfAKind, (hand1, hand2) -> ComparatorUtil.compareByHighest(hand1.getQuadrupletCards(), hand2.getQuadrupletCards()));
 
     @Getter
     private final int weight;

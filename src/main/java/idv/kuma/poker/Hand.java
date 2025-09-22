@@ -156,4 +156,11 @@ public class Hand implements Comparable<Hand> {
         return groupCardsByNumber().values().stream()
                 .anyMatch(group -> group.size() == 4);
     }
+
+    public List<Card> getQuadrupletCards() {
+        return groupCardsByNumber().values().stream()
+                .filter(group -> group.size() == 4)
+                .findFirst()
+                .orElseThrow();
+    }
 }
