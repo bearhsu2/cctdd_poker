@@ -22,21 +22,6 @@ public class Hand implements Comparable<Hand> {
         return new Hand(cards);
     }
 
-
-    boolean hasOnePair() {
-        return getAllPairs().size() == 1;
-    }
-
-    private List<List<Card>> getAllPairs() {
-        return groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 2)
-                .toList();
-    }
-
-    private Map<Number, List<Card>> groupCardsByNumber() {
-        return cards.stream().collect(Collectors.groupingBy(Card::getNumber));
-    }
-
     @Override
     public int compareTo(Hand other) {
         int typeComparison = category.compare(other.getCategory());
@@ -51,12 +36,6 @@ public class Hand implements Comparable<Hand> {
         return category;
     }
 
-    public List<Card> getPairCards() {
-        return getAllPairs().stream()
-                .findFirst()
-                .orElseThrow();
-    }
-
     public List<Card> getKickerCards() {
         return groupCardsByNumber().values().stream()
                 .filter(group -> group.size() == 1)
@@ -64,8 +43,18 @@ public class Hand implements Comparable<Hand> {
                 .toList();
     }
 
+    private Map<Number, List<Card>> groupCardsByNumber() {
+        return cards.stream().collect(Collectors.groupingBy(Card::getNumber));
+    }
+
     boolean hasTwoPair() {
         return getAllPairs().size() == 2;
+    }
+
+    private List<List<Card>> getAllPairs() {
+        return groupCardsByNumber().values().stream()
+                .filter(group -> group.size() == 2)
+                .toList();
     }
 
     public List<Card> getHighPairCards() {
@@ -78,20 +67,6 @@ public class Hand implements Comparable<Hand> {
         return getAllPairs().stream()
                 .min(ComparatorUtil::compareByHighest)
                 .orElseThrow();
-    }
-
-    boolean hasThreeOfAKind() {
-        return tryFindTripletCards().isPresent();
-    }
-
-    private Optional<List<Card>> tryFindTripletCards() {
-        return groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 3)
-                .findFirst();
-    }
-
-    public List<Card> getTripletCards() {
-        return tryFindTripletCards().orElseThrow();
     }
 
     public int getStraightHighValue() {
@@ -144,12 +119,40 @@ public class Hand implements Comparable<Hand> {
         return hasThreeOfAKind() && hasOnePair();
     }
 
+    boolean hasThreeOfAKind() {
+        return tryFindTripletCards().isPresent();
+    }
+
+    boolean hasOnePair() {
+        return getAllPairs().size() == 1;
+    }
+
+    private Optional<List<Card>> tryFindTripletCards() {
+        return groupCardsByNumber().values().stream()
+                .filter(group -> group.size() == 3)
+                .findFirst();
+    }
+
     public Number getTripletNumber() {
         return getTripletCards().get(0).getNumber();
     }
 
+    public List<Card> getTripletCards() {
+        return tryFindTripletCards().orElseThrow();
+    }
+
     public Number getPairNumber() {
         return getPairCards().get(0).getNumber();
+    }
+
+    public List<Card> getPairCards() {
+        return getAllPairs().stream()
+                .findFirst()
+                .orElseThrow();
+    }
+
+    boolean hasFourOfAKind() {
+        return tryFindQuadrupletCards().isPresent();
     }
 
     private Optional<List<Card>> tryFindQuadrupletCards() {
@@ -158,15 +161,11 @@ public class Hand implements Comparable<Hand> {
                 .findFirst();
     }
 
-    boolean hasFourOfAKind() {
-        return tryFindQuadrupletCards().isPresent();
+    public Number getQuadrupletNumber() {
+        return getQuadrupletCards().get(0).getNumber();
     }
 
     public List<Card> getQuadrupletCards() {
         return tryFindQuadrupletCards().orElseThrow();
-    }
-
-    public Number getQuadrupletNumber() {
-        return getQuadrupletCards().get(0).getNumber();
     }
 }
