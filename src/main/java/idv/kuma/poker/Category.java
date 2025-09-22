@@ -48,7 +48,7 @@ public enum Category {
         if (quadrupletComparison != 0) {
             return quadrupletComparison;
         }
-        return hand1.getKickerNumbers().get(0).compareValue(hand2.getKickerNumbers().get(0));
+        return hand1.getKickerNumber().compareValue(hand2.getKickerNumber());
     });
 
     @Getter
