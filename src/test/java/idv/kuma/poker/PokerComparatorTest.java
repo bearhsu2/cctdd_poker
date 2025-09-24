@@ -14,7 +14,7 @@ public class PokerComparatorTest {
     public void findMaxCategory_returns_non_null_hand() {
 
         Hand result = sut.findMaxCategory(
-                List.of(card(Suit.CLUB, Number.TWO), card(Suit.HEART, Number.THREE)),
+                List.of(card(Suit.CLUB, Number.NINE), card(Suit.HEART, Number.TEN)),
                 List.of(card(Suit.SPADE, Number.FOUR), card(Suit.DIAMOND, Number.FIVE), card(Suit.CLUB, Number.SIX), card(Suit.HEART, Number.SEVEN), card(Suit.SPADE, Number.EIGHT))
         );
 
