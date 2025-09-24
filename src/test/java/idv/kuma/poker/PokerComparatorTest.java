@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PokerComparatorTest {
 
-    private PokerComparator sut = new PokerComparator();
     private int actual;
 
     @Test
@@ -23,7 +22,7 @@ public class PokerComparatorTest {
     }
 
     private void when_compare(java.util.List<Card> poker1, java.util.List<Card> poker2) {
-        actual = sut.compare(Hand.of(poker1), Hand.of(poker2));
+        actual = Hand.of(poker1).compareTo(Hand.of(poker2));
     }
 
     private Card card(Suit suit, Number number) {
