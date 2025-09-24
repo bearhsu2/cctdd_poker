@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardComparatorTest {
 
-    private PokerComparator sut = new PokerComparator();
     private int actual;
 
     @Test
