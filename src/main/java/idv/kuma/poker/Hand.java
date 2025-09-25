@@ -40,7 +40,7 @@ public class Hand implements Comparable<Hand> {
 
     public Number getKickerNumber() {
         return getKickerCards().stream()
-                .map(Card::getNumber)
+                .map(Card::number)
                 .findFirst()
                 .orElseThrow();
     }
@@ -53,7 +53,7 @@ public class Hand implements Comparable<Hand> {
     }
 
     private Map<Number, List<Card>> groupCardsByNumber() {
-        return cards.stream().collect(Collectors.groupingBy(Card::getNumber));
+        return cards.stream().collect(Collectors.groupingBy(Card::number));
     }
 
     boolean hasTwoPair() {
@@ -103,7 +103,7 @@ public class Hand implements Comparable<Hand> {
 
     private List<Integer> getSortedNumbers() {
         return cards.stream()
-                .map(card -> card.getNumber().getNumber())
+                .map(card -> card.number().getNumber())
                 .distinct()
                 .sorted()
                 .toList();
@@ -115,13 +115,13 @@ public class Hand implements Comparable<Hand> {
 
     boolean hasFlush() {
         return cards.stream()
-                .map(Card::getSuit)
+                .map(Card::suit)
                 .distinct()
                 .count() == 1;
     }
 
     public List<Number> getNumbers() {
-        return cards.stream().map(Card::getNumber).toList();
+        return cards.stream().map(Card::number).toList();
     }
 
     boolean hasFullHouse() {
@@ -147,7 +147,7 @@ public class Hand implements Comparable<Hand> {
     }
 
     public Number getTripletNumber() {
-        return getTripletCards().get(0).getNumber();
+        return getTripletCards().get(0).number();
     }
 
     public List<Card> getTripletCards() {
@@ -155,7 +155,7 @@ public class Hand implements Comparable<Hand> {
     }
 
     public Number getPairNumber() {
-        return getPairCards().get(0).getNumber();
+        return getPairCards().get(0).number();
     }
 
     public List<Card> getPairCards() {
@@ -175,7 +175,7 @@ public class Hand implements Comparable<Hand> {
     }
 
     public Number getQuadrupletNumber() {
-        return getQuadrupletCards().get(0).getNumber();
+        return getQuadrupletCards().get(0).number();
     }
 
     public List<Card> getQuadrupletCards() {
