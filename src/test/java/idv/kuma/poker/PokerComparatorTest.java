@@ -20,11 +20,11 @@ public class PokerComparatorTest {
         );
 
         Hand expected = Hand.of(List.of(
-                card(Suit.CLUB, Number.NINE),
-                card(Suit.HEART, Number.TEN),
                 card(Suit.CLUB, Number.SIX),
                 card(Suit.HEART, Number.SEVEN),
-                card(Suit.SPADE, Number.EIGHT)
+                card(Suit.SPADE, Number.EIGHT),
+                card(Suit.CLUB, Number.NINE),
+                card(Suit.HEART, Number.TEN)
         ));
         assertEquals(expected, result);
     }
