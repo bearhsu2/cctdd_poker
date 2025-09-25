@@ -2,6 +2,7 @@ package idv.kuma.poker;
 
 import lombok.Getter;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -186,7 +187,7 @@ public class Hand implements Comparable<Hand> {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Hand hand = (Hand) obj;
-        return Objects.equals(cards, hand.cards);
+        return new HashSet<>(cards).equals(new HashSet<>(hand.cards));
     }
 
     @Override
