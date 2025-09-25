@@ -39,8 +39,8 @@ public class PokerComparatorTest {
 
         Hand expected = Hand.of(List.of(
                 card(Suit.DIAMOND, Number.FOUR),
-                card(Suit.HEART, Number.FIVE),
                 card(Suit.SPADE, Number.FOUR),
+                card(Suit.HEART, Number.FIVE),
                 card(Suit.CLUB, Number.FIVE),
                 card(Suit.HEART, Number.JACK)
         ));
