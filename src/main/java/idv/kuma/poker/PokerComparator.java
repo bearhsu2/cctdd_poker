@@ -3,7 +3,7 @@ package idv.kuma.poker;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import java.util.Collections;
+import java.util.stream.Stream;
 
 public class PokerComparator {
 
@@ -30,22 +30,33 @@ public class PokerComparator {
         return bestHand;
     }
 
-    private List<List<Card>> generateCombinations(List<Card> cards, int k) {
-        List<List<Card>> result = new ArrayList<>();
-        generateCombinationsHelper(cards, k, 0, new ArrayList<>(), result);
-        return result;
+    private List<List<Card>> generateCombinations(List<Card> cards, int targetCardsInHand) {
+        return combinations(cards, targetCardsInHand).collect(Collectors.toList());
     }
 
-    private void generateCombinationsHelper(List<Card> cards, int k, int start, List<Card> current, List<List<Card>> result) {
-        if (current.size() == k) {
-            result.add(new ArrayList<>(current));
-            return;
+    private Stream<List<Card>> combinations(List<Card> cards, int k) {
+        if (k == 0) {
+            return Stream.of(new ArrayList<>());
+        }
+        if (k > cards.size()) {
+            return Stream.empty();
         }
 
-        for (int i = start; i < cards.size(); i++) {
-            current.add(cards.get(i));
-            generateCombinationsHelper(cards, k, i + 1, current, result);
-            current.remove(current.size() - 1);
-        }
+        Card head = cards.get(0);
+        List<Card> tail = cards.subList(1, cards.size());
+
+        // Combinations including the first element
+        Stream<List<Card>> withHead = combinations(tail, k - 1)
+            .map(combination -> {
+                List<Card> newCombination = new ArrayList<>();
+                newCombination.add(head);
+                newCombination.addAll(combination);
+                return newCombination;
+            });
+
+        // Combinations not including the first element
+        Stream<List<Card>> withoutHead = combinations(tail, k);
+
+        return Stream.concat(withHead, withoutHead);
     }
 }
