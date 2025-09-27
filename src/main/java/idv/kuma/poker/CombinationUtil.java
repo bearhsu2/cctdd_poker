@@ -7,30 +7,30 @@ import java.util.stream.Stream;
 
 public class CombinationUtil {
 
-    public static List<List<Card>> generateCombinations(List<Card> cards, int targetCardsInHand) {
-        return combinations(cards, targetCardsInHand).collect(Collectors.toList());
+    public static <T> List<List<T>> generateCombinations(List<T> items, int targetSize) {
+        return combinations(items, targetSize).collect(Collectors.toList());
     }
 
-    private static Stream<List<Card>> combinations(List<Card> cards, int k) {
+    private static <T> Stream<List<T>> combinations(List<T> items, int k) {
         if (k == 0) {
             return Stream.of(new ArrayList<>());
         }
-        if (k > cards.size()) {
+        if (k > items.size()) {
             return Stream.empty();
         }
 
-        Card head = cards.get(0);
-        List<Card> tail = cards.subList(1, cards.size());
+        T head = items.get(0);
+        List<T> tail = items.subList(1, items.size());
 
-        Stream<List<Card>> withHead = combinations(tail, k - 1)
+        Stream<List<T>> withHead = combinations(tail, k - 1)
             .map(combination -> {
-                List<Card> newCombination = new ArrayList<>();
+                List<T> newCombination = new ArrayList<>();
                 newCombination.add(head);
                 newCombination.addAll(combination);
                 return newCombination;
             });
 
-        Stream<List<Card>> withoutHead = combinations(tail, k);
+        Stream<List<T>> withoutHead = combinations(tail, k);
 
         return Stream.concat(withHead, withoutHead);
     }
