@@ -5,8 +5,8 @@ import java.util.stream.Stream;
 
 public class PokerComparator {
 
-    public Hand findMaxCategory(PlayCards playCards, Board board) {
-        List<Card> allCards = Stream.concat(playCards.getCards().stream(), board.getCards().stream()).toList();
+    public Hand findMaxCategory(PlayerCards playerCards, Board board) {
+        List<Card> allCards = Stream.concat(playerCards.getCards().stream(), board.getCards().stream()).toList();
 
         return CombinationUtil.generateCombinations(allCards, 5)
             .stream()
