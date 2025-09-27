@@ -13,17 +13,11 @@ public class PokerComparator {
         allCards.addAll(playerCards);
         allCards.addAll(board);
 
-        List<List<Card>> allCombinations = CombinationUtil.generateCombinations(allCards, 5);
-
-        Hand bestHand = null;
-        for (List<Card> combination : allCombinations) {
-            Hand currentHand = Hand.of(combination);
-            if (bestHand == null || currentHand.compareTo(bestHand) > 0) {
-                bestHand = currentHand;
-            }
-        }
-
-        return bestHand;
+        return CombinationUtil.generateCombinations(allCards, 5)
+            .stream()
+            .map(Hand::of)
+            .max(Hand::compareTo)
+            .orElseThrow();
     }
 
 }
