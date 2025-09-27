@@ -10,6 +10,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Hand implements Comparable<Hand> {
+    public static final int HAND_SIZE = 5;
+
     @Getter
     private final List<Card> cards;
     private final Category category;
@@ -20,7 +22,7 @@ public class Hand implements Comparable<Hand> {
     }
 
     public static Hand of(List<Card> cards) {
-        DBCUtil.require(() -> cards.size() == 5, "Hand must contain exactly 5 cards, but got " + cards.size());
+        DBCUtil.require(() -> cards.size() == HAND_SIZE, "Hand must contain exactly " + HAND_SIZE + " cards, but got " + cards.size());
         return new Hand(cards);
     }
 
@@ -87,7 +89,7 @@ public class Hand implements Comparable<Hand> {
             return 5;
         }
 
-        return sortedNumbers.get(4);
+        return sortedNumbers.get(HAND_SIZE - 1);
     }
 
     boolean hasStraight() {
@@ -97,8 +99,8 @@ public class Hand implements Comparable<Hand> {
             return true;
         }
 
-        return sortedNumbers.size() == 5 &&
-                sortedNumbers.get(4) - sortedNumbers.get(0) == 4;
+        return sortedNumbers.size() == HAND_SIZE &&
+                sortedNumbers.get(HAND_SIZE - 1) - sortedNumbers.get(0) == HAND_SIZE - 1;
     }
 
     private List<Integer> getSortedNumbers() {

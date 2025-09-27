@@ -20,7 +20,7 @@ public class PlayerCards {
     public Hand findBestHand(Board board) {
         List<Card> allCards = Stream.concat(cards.stream(), board.getCards().stream()).toList();
 
-        return CombinationUtil.generateCombinations(allCards, 5)
+        return CombinationUtil.generateCombinations(allCards, Hand.HAND_SIZE)
             .stream()
             .map(Hand::of)
             .max(Hand::compareTo)
