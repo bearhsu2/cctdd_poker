@@ -2,6 +2,7 @@ package idv.kuma.poker;
 
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class PlayerCards {
     private final List<Card> cards;
@@ -17,5 +18,15 @@ public class PlayerCards {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public Hand findBestHand(Board board) {
+        List<Card> allCards = Stream.concat(cards.stream(), board.getCards().stream()).toList();
+
+        return CombinationUtil.generateCombinations(allCards, 5)
+            .stream()
+            .map(Hand::of)
+            .max(Hand::compareTo)
+            .orElseThrow();
     }
 }
