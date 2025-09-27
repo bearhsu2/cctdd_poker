@@ -1,13 +1,15 @@
 package idv.kuma.poker;
 
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class PlayCards {
     private final List<Card> cards;
+
+    private PlayCards(List<Card> cards) {
+        DBCUtil.require(() -> cards.size() == 2, "Player cards must be exactly 2 cards, but got " + cards.size());
+        this.cards = cards;
+    }
 
     public static PlayCards of(List<Card> cards) {
         return new PlayCards(cards);
