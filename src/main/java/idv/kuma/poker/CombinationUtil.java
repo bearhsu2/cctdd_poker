@@ -2,13 +2,12 @@ package idv.kuma.poker;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CombinationUtil {
 
     public static <T> List<List<T>> generateCombinations(List<T> items, int targetSize) {
-        return combinations(items, targetSize).collect(Collectors.toList());
+        return combinations(items, targetSize).toList();
     }
 
     private static <T> Stream<List<T>> combinations(List<T> items, int k) {
