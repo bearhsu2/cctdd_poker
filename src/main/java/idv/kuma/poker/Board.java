@@ -1,9 +1,11 @@
 package idv.kuma.poker;
 
+import lombok.Getter;
 
 import java.util.List;
 
 public class Board {
+    @Getter
     private final List<Card> cards;
 
     private Board(List<Card> cards) {
@@ -15,7 +17,4 @@ public class Board {
         return new Board(cards);
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
 }

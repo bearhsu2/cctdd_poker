@@ -16,9 +16,6 @@ public class PlayerCards {
         return new PlayerCards(cards);
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
 
     public Hand findBestHand(Board board) {
         List<Card> allCards = Stream.concat(cards.stream(), board.getCards().stream()).toList();
