@@ -1,9 +1,13 @@
 package idv.kuma.poker;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CombinationUtil {
 
     public static <T> List<List<T>> generateCombinations(List<T> items, int targetSize) {
