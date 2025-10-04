@@ -7,15 +7,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PokerComparatorTest {
-
-    private PokerComparator sut = new PokerComparator();
+public class PlayerCardsTest {
 
     @Test
     public void findMaxCategory_returns_non_null_hand() {
+        PlayerCards sut = PlayerCards.of(List.of(card(Suit.CLUB, Number.NINE), card(Suit.HEART, Number.TEN)));
 
-        Hand result = sut.findMaxCategory(
-                PlayerCards.of(List.of(card(Suit.CLUB, Number.NINE), card(Suit.HEART, Number.TEN))),
+        Hand result = sut.findBestHand(
                 Board.of(List.of(card(Suit.SPADE, Number.FOUR), card(Suit.DIAMOND, Number.FIVE), card(Suit.CLUB, Number.SIX), card(Suit.HEART, Number.SEVEN), card(Suit.SPADE, Number.EIGHT)))
         );
 
@@ -31,9 +29,9 @@ public class PokerComparatorTest {
 
     @Test
     public void findMaxCategory_with_high_card_board_and_player_cards_matching_two_board_numbers() {
+        PlayerCards sut = PlayerCards.of(List.of(card(Suit.DIAMOND, Number.FOUR), card(Suit.HEART, Number.FIVE)));
 
-        Hand result = sut.findMaxCategory(
-                PlayerCards.of(List.of(card(Suit.DIAMOND, Number.FOUR), card(Suit.HEART, Number.FIVE))),
+        Hand result = sut.findBestHand(
                 Board.of(List.of(card(Suit.SPADE, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.HEART, Number.JACK), card(Suit.DIAMOND, Number.SEVEN), card(Suit.SPADE, Number.NINE)))
         );
 
