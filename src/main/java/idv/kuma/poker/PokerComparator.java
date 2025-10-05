@@ -9,11 +9,10 @@ import java.util.stream.IntStream;
 public class PokerComparator {
 
     public PokerResult compare(List<PlayerCards> playerCards, Board board) {
-        Map<Integer, Hand> positionToHand = IntStream.range(0, playerCards.size())
+        List<Map.Entry<Integer, Hand>> sortedEntries = IntStream.range(0, playerCards.size())
                 .boxed()
-                .collect(Collectors.toMap(i -> i, i -> playerCards.get(i).findBestHand(board)));
-
-        List<Map.Entry<Integer, Hand>> sortedEntries = positionToHand.entrySet().stream()
+                .collect(Collectors.toMap(i -> i, i -> playerCards.get(i).findBestHand(board)))
+                .entrySet().stream()
                 .sorted(Map.Entry.<Integer, Hand>comparingByValue().reversed())
                 .toList();
 
