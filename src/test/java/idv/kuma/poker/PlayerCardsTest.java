@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PlayerCardsTest {
 
     @Test
-    public void findMaxCategory_returns_non_null_hand() {
+    public void findBestHand_returns_straight_when_player_cards_complete_board_straight() {
         PlayerCards sut = PlayerCards.of(List.of(card(Suit.CLUB, Number.NINE), card(Suit.HEART, Number.TEN)));
 
         Hand result = sut.findBestHand(
@@ -28,7 +28,7 @@ public class PlayerCardsTest {
     }
 
     @Test
-    public void findMaxCategory_with_high_card_board_and_player_cards_matching_two_board_numbers() {
+    public void findBestHand_returns_two_pair_when_player_cards_match_two_board_numbers() {
         PlayerCards sut = PlayerCards.of(List.of(card(Suit.DIAMOND, Number.FOUR), card(Suit.HEART, Number.FIVE)));
 
         Hand result = sut.findBestHand(
