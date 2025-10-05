@@ -14,11 +14,11 @@ public class PokerComparatorTest {
         PlayerCards cards0 = PlayerCards.of(List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING)));
         PlayerCards cards1 = PlayerCards.of(List.of(card(Suit.DIAMOND, Number.ACE), card(Suit.SPADE, Number.JACK)));
         Board board = Board.of(List.of(
-                card(Suit.CLUB, Number.TWO),
-                card(Suit.DIAMOND, Number.THREE),
-                card(Suit.HEART, Number.FOUR),
-                card(Suit.SPADE, Number.FIVE),
-                card(Suit.CLUB, Number.SEVEN)
+                card(Suit.CLUB, Number.THREE),
+                card(Suit.DIAMOND, Number.FOUR),
+                card(Suit.HEART, Number.FIVE),
+                card(Suit.SPADE, Number.SIX),
+                card(Suit.CLUB, Number.EIGHT)
         ));
 
         PokerResult result = sut.compare(List.of(cards0, cards1), board);

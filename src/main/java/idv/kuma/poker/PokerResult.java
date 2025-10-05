@@ -1,11 +1,16 @@
 package idv.kuma.poker;
 
+import java.util.Map;
+
 public class PokerResult {
 
+    private final Map<Integer, Integer> positionToRank;
+
+    public PokerResult(Map<Integer, Integer> positionToRank) {
+        this.positionToRank = positionToRank;
+    }
+
     public int getRank(int position) {
-        if (position == 0) {
-            return 1;
-        }
-        return 2;
+        return positionToRank.get(position);
     }
 }
