@@ -27,6 +27,27 @@ public class PokerComparatorTest {
         assertEquals(2, result.getRank(1));
     }
 
+    @Test
+    public void compare_returns_same_rank_for_tied_players() {
+        PokerComparator sut = new PokerComparator();
+        PlayerCards cards0 = PlayerCards.of(List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.KING)));
+        PlayerCards cards1 = PlayerCards.of(List.of(card(Suit.DIAMOND, Number.TWO), card(Suit.SPADE, Number.THREE)));
+        PlayerCards cards2 = PlayerCards.of(List.of(card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.THREE)));
+        Board board = Board.of(List.of(
+                card(Suit.SPADE, Number.FOUR),
+                card(Suit.DIAMOND, Number.FIVE),
+                card(Suit.HEART, Number.SIX),
+                card(Suit.CLUB, Number.NINE),
+                card(Suit.SPADE, Number.TEN)
+        ));
+
+        PokerResult result = sut.compare(List.of(cards0, cards1, cards2), board);
+
+        assertEquals(3, result.getRank(0));
+        assertEquals(1, result.getRank(1));
+        assertEquals(1, result.getRank(2));
+    }
+
     private Card card(Suit suit, Number number) {
         return Card.of(suit, number);
     }
