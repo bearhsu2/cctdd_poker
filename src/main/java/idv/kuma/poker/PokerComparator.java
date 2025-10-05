@@ -3,16 +3,13 @@ package idv.kuma.poker;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class PokerComparator {
 
     public PokerResult compare(List<PlayerCards> playerCards, Board board) {
         List<Map.Entry<Integer, Hand>> sortedEntries = IntStream.range(0, playerCards.size())
-                .boxed()
-                .collect(Collectors.toMap(i -> i, i -> playerCards.get(i).findBestHand(board)))
-                .entrySet().stream()
+                .mapToObj(i -> Map.entry(i, playerCards.get(i).findBestHand(board)))
                 .sorted(Map.Entry.<Integer, Hand>comparingByValue().reversed())
                 .toList();
 
