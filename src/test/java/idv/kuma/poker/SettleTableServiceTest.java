@@ -11,12 +11,13 @@ public class SettleTableServiceTest {
         TableRepository tableRepository = new TableRepositoryInMemory();
         SettleTableService settleTableService = new SettleTableService(tableRepository);
 
-        Table table = Table.create("table-1");
-        tableRepository.save(table);
+        Table originalTable = Table.create("table-1");
+        tableRepository.save(originalTable);
 
         settleTableService.settle("table-1");
 
         Table settledTable = tableRepository.findById("table-1");
         assertThat(settledTable.getStatus()).isEqualTo(TableStatus.SETTLED);
+        assertThat(settledTable.getVersion()).isEqualTo(2);
     }
 }
