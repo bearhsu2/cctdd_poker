@@ -106,13 +106,15 @@ public class CreateOtpService {
 - Use static factory methods (e.g., ```create()```, ```restore()```) to instantiate the aggregate/entity.
     - create() is used for creating a new instance.
     - restore() is used for rehydrating an existing instance from the database.
+    - The constructor should be private or protected to enforce the use of factory methods, using Lombok's
+      @AllArgsConstructor(access = AccessLevel.PRIVATE).
 
 ### Sample
 
 ```java
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Tenant {
     private long id;
     private String code;
