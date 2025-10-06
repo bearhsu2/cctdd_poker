@@ -5,29 +5,28 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SettleTableServiceTest {
+    private final TableRepository tableRepository = new TableRepositoryInMemory();
+    private final SettleTableService settleTableService = new SettleTableService(tableRepository);
 
     @Test
     void shouldRetrieveTableSettleItAndSaveBack() {
-        TableRepository tableRepository = new TableRepositoryInMemory();
-        SettleTableService settleTableService = new SettleTableService(tableRepository);
+        given_table("table-1");
 
-        given_table("table-1", tableRepository);
+        when_settle("table-1");
 
-        when_settle("table-1", settleTableService);
-
-        then_table_status_should_be("table-1", TableStatus.SETTLED, 2, tableRepository);
+        then_table_status_should_be("table-1", TableStatus.SETTLED, 2);
     }
 
-    private void given_table(String tableId, TableRepository tableRepository) {
+    private void given_table(String tableId) {
         Table table = Table.create(tableId);
         tableRepository.save(table);
     }
 
-    private void when_settle(String tableId, SettleTableService settleTableService) {
+    private void when_settle(String tableId) {
         settleTableService.settle(tableId);
     }
 
-    private void then_table_status_should_be(String tableId, TableStatus expectedStatus, int expectedVersion, TableRepository tableRepository) {
+    private void then_table_status_should_be(String tableId, TableStatus expectedStatus, int expectedVersion) {
         Table table = tableRepository.findById(tableId);
         assertThat(table.getStatus()).isEqualTo(expectedStatus);
         assertThat(table.getVersion()).isEqualTo(expectedVersion);
