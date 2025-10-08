@@ -1,5 +1,7 @@
 package idv.kuma.poker;
 
+import idv.kuma.poker.usecase.SettleTableService;
+import idv.kuma.poker.usecase.TableRepository;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

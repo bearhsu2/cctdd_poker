@@ -1,5 +1,6 @@
-package idv.kuma.poker;
+package idv.kuma.poker.usecase;
 
+import idv.kuma.poker.Table;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
