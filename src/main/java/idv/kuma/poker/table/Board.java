@@ -1,5 +1,6 @@
 package idv.kuma.poker.table;
 
+import idv.kuma.poker.common.DBCUtil;
 import lombok.Getter;
 
 import java.util.List;

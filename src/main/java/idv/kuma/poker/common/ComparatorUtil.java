@@ -1,4 +1,4 @@
-package idv.kuma.poker.table;
+package idv.kuma.poker.common;
 
 import java.util.Collections;
 import java.util.List;

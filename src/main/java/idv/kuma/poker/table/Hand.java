@@ -1,5 +1,7 @@
 package idv.kuma.poker.table;
 
+import idv.kuma.poker.common.ComparatorUtil;
+import idv.kuma.poker.common.DBCUtil;
 import lombok.Getter;
 
 import java.util.HashSet;

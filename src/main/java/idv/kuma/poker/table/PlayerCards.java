@@ -1,5 +1,7 @@
 package idv.kuma.poker.table;
 
+import idv.kuma.poker.common.CombinationUtil;
+import idv.kuma.poker.common.DBCUtil;
 
 import java.util.List;
 import java.util.stream.Stream;
