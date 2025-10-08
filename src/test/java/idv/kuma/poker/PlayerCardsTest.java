@@ -1,5 +1,11 @@
 package idv.kuma.poker;
 
+import idv.kuma.poker.table.Board;
+import idv.kuma.poker.table.Card;
+import idv.kuma.poker.table.Hand;
+import idv.kuma.poker.table.Number;
+import idv.kuma.poker.table.PlayerCards;
+import idv.kuma.poker.table.Suit;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

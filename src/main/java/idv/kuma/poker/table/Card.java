@@ -1,4 +1,4 @@
-package idv.kuma.poker;
+package idv.kuma.poker.table;
 
 public record Card(Suit suit, Number number) implements Comparable<Card> {
 

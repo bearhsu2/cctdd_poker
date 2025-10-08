@@ -1,4 +1,4 @@
-package idv.kuma.poker;
+package idv.kuma.poker.table;
 
 import lombok.Getter;
 
