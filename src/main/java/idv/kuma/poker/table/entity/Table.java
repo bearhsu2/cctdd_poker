@@ -29,11 +29,9 @@ public class Table {
         this.domainEvents.add(new TableSettledEvent(id));
     }
 
-    public List<Object> getDomainEvents() {
-        return new ArrayList<>(domainEvents);
-    }
-
-    public void clearDomainEvents() {
+    public List<Object> flushDomainEvents() {
+        List<Object> events = new ArrayList<>(domainEvents);
         domainEvents.clear();
+        return events;
     }
 }

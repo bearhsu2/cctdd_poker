@@ -15,9 +15,8 @@ public class SettleTableService {
         Table table = tableRepository.findById(tableId);
         table.settle();
         tableRepository.save(table);
-        for (Object event : table.getDomainEvents()) {
+        for (Object event : table.flushDomainEvents()) {
             domainEventBus.publish(event);
         }
-        table.clearDomainEvents();
     }
 }
