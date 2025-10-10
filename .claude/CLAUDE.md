@@ -25,6 +25,10 @@ convenience.
 - Use @RequestBody to bind the request body to a Java object.
 - Use @Valid to enable validation on the request body.
 
+### package
+
+- Place controllers in the `/{aggreagte name}/controller` package.
+
 ### Sample
 
 - Below is an example of a controller that follows this pattern.
@@ -70,6 +74,10 @@ public class CreateByDayTeamController {
 - Use @Component to define the service class.
 - Use @RequiredArgsConstructor to automatically generate a constructor for final fields (dependency injection).
 
+### package
+
+- Place services in the `/{aggreagte name}/service` package.
+
 ### Sample
 
 ```java
@@ -108,6 +116,10 @@ public class CreateOtpService {
     - restore() is used for rehydrating an existing instance from the database.
     - The constructor should be private or protected to enforce the use of factory methods, using Lombok's
       @AllArgsConstructor(access = AccessLevel.PRIVATE).
+
+### package
+
+- Place aggregates/entities in the `/{aggreagte name}/domain` package.
 
 ### Sample
 
