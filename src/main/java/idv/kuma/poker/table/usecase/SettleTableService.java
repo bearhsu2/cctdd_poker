@@ -1,6 +1,6 @@
 package idv.kuma.poker.table.usecase;
 
-import idv.kuma.poker.DomainEventBus;
+import idv.kuma.poker.common.usecase.DomainEventBus;
 import idv.kuma.poker.table.entity.Table;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

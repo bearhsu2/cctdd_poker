@@ -1,4 +1,7 @@
-package idv.kuma.poker;
+package idv.kuma.poker.common.adapter;
+
+import idv.kuma.poker.common.usecase.DomainEventBus;
+import idv.kuma.poker.common.usecase.DomainEventHandler;
 
 import java.util.ArrayList;
 import java.util.List;

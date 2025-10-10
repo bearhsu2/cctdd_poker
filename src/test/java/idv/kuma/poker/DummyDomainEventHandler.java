@@ -1,5 +1,6 @@
 package idv.kuma.poker;
 
+import idv.kuma.poker.common.usecase.DomainEventHandler;
 import idv.kuma.poker.table.entity.TableSettledEvent;
 
 import java.util.ArrayList;

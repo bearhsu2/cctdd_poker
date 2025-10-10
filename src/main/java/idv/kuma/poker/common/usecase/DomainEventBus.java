@@ -1,4 +1,4 @@
-package idv.kuma.poker;
+package idv.kuma.poker.common.usecase;
 
 public interface DomainEventBus {
     void register(DomainEventHandler handler);
