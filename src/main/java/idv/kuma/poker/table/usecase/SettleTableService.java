@@ -2,7 +2,6 @@ package idv.kuma.poker.table.usecase;
 
 import idv.kuma.poker.DomainEventBus;
 import idv.kuma.poker.table.entity.Table;
-import idv.kuma.poker.table.entity.TableSettledEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +15,9 @@ public class SettleTableService {
         Table table = tableRepository.findById(tableId);
         table.settle();
         tableRepository.save(table);
-        domainEventBus.publish(new TableSettledEvent(tableId));
+        for (Object event : table.getDomainEvents()) {
+            domainEventBus.publish(event);
+        }
+        table.clearDomainEvents();
     }
 }
