@@ -1,3 +1,14 @@
+# ARCHITECTURE DECISION RECORDS
+
+## Purpose
+
+- Document the architecture decisions made in this project.
+- Provide context and rationale for future reference.
+
+## Directory
+
+- Store ADRs in the `.ADR` directory at the root of the project.
+
 # PROJECT ARCHITECTURE PATTERNS
 
 This document outlines the architecture patterns used in this project, including controller, service, and
@@ -195,6 +206,7 @@ public class Tenant {
 - The repository implementation should NOT contain business logic.
 
 ### Spring Annotations
+
 - Use @Component to define the repository implementation class.
 - Use @RequiredArgsConstructor to automatically generate a constructor for final fields (dependency injection).
 
@@ -205,6 +217,7 @@ public class Tenant {
 ### Sample
 
 ```java
+
 @RequiredArgsConstructor
 @Component
 public class TableRepositoryInMemory implements TableRepository {
