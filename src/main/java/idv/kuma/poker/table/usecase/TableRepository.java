@@ -1,6 +1,6 @@
 package idv.kuma.poker.table.usecase;
 
-import idv.kuma.poker.table.Table;
+import idv.kuma.poker.table.entity.Table;
 
 public interface TableRepository {
     void save(Table table);

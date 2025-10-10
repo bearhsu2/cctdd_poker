@@ -212,7 +212,8 @@ public class Tenant {
 
 ### package
 
-- Place repository interfaces in the `/{aggreagte name}/adapter` package.
+- Place repository interfaces in the `/{aggreagte name}/service` package.
+- Place repository implements in the `/{aggreagte name}/adapter` package.
 
 ### Sample
 
@@ -231,6 +232,50 @@ public class TableRepositoryInMemory implements TableRepository {
     @Override
     public Table findById(String tableId) {
         return tables.get(tableId);
+    }
+}
+```
+
+
+## Domain Service Pattern
+
+### Responsibility
+- A domain service encapsulates domain logic that doesn't naturally fit within an aggregate/entity.
+- It should be stateless and operate on aggregates/entities passed as parameters.
+
+### Input/Output
+- The input should be aggregates/entities or simple VOs/primitive types.
+- The output can be a simple VO, primitive type, or void.
+
+### Spring Annotations
+- Use @Component to define the domain service class.
+- Use @RequiredArgsConstructor to automatically generate a constructor for final fields (dependency injection).
+- Avoid using @Service annotation to distinguish from use case services.
+- Domain services should not depend on repositories directly. Instead, they should receive aggregates/entities as parameters.
+
+### package
+- Place domain services in the `/{aggregate name}/entity` package.
+
+### Sample
+```java
+public class PokerComparator {
+
+    public PokerResult compare(List<PlayerCards> playerCards, Board board) {
+        List<Map.Entry<Integer, Hand>> sortedEntries = IntStream.range(0, playerCards.size())
+                .mapToObj(i -> Map.entry(i, playerCards.get(i).findBestHand(board)))
+                .sorted(Map.Entry.<Integer, Hand>comparingByValue().reversed())
+                .toList();
+
+        Map<Integer, Integer> positionToRank = new HashMap<>();
+        int currentRank = 1;
+        for (int i = 0; i < sortedEntries.size(); i++) {
+            if (i > 0 && sortedEntries.get(i).getValue().compareTo(sortedEntries.get(i - 1).getValue()) != 0) {
+                currentRank = i + 1;
+            }
+            positionToRank.put(sortedEntries.get(i).getKey(), currentRank);
+        }
+
+        return new PokerResult(positionToRank);
     }
 }
 ```

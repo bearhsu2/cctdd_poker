@@ -1,4 +1,4 @@
-package idv.kuma.poker.table;
+package idv.kuma.poker.table.entity;
 
 import idv.kuma.poker.common.ComparatorUtil;
 import idv.kuma.poker.common.DBCUtil;

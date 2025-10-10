@@ -1,4 +1,4 @@
-package idv.kuma.poker.table;
+package idv.kuma.poker.table.entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
