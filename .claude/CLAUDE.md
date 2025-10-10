@@ -27,7 +27,7 @@ convenience.
 
 ### package
 
-- Place controllers in the `/{aggreagte name}/controller` package.
+- Place controllers in the `/{aggreagte name}/adapter` package.
 
 ### Sample
 
@@ -119,7 +119,7 @@ public class CreateOtpService {
 
 ### package
 
-- Place aggregates/entities in the `/{aggreagte name}/domain` package.
+- Place aggregates/entities in the `/{aggreagte name}/entity` package.
 
 ### Sample
 
@@ -182,6 +182,42 @@ public class Tenant {
 
     public TenantInfo getInfo() {
         return TenantInfo.from(this);
+    }
+}
+```
+
+## Repository Pattern
+
+### Responsibility
+
+- The repository interface defines methods for persisting and retrieving aggregates/entities.
+- The repository implementation can use any persistence mechanism (e.g., in-memory, database, file system).
+- The repository implementation should NOT contain business logic.
+
+### Spring Annotations
+- Use @Component to define the repository implementation class.
+- Use @RequiredArgsConstructor to automatically generate a constructor for final fields (dependency injection).
+
+### package
+
+- Place repository interfaces in the `/{aggreagte name}/adapter` package.
+
+### Sample
+
+```java
+@RequiredArgsConstructor
+@Component
+public class TableRepositoryInMemory implements TableRepository {
+    private final Map<String, Table> tables = new HashMap<>();
+
+    @Override
+    public void save(Table table) {
+        tables.put(table.getId(), table);
+    }
+
+    @Override
+    public Table findById(String tableId) {
+        return tables.get(tableId);
     }
 }
 ```

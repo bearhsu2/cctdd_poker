@@ -1,8 +1,8 @@
 package idv.kuma.poker;
 
 import idv.kuma.poker.table.Table;
-import idv.kuma.poker.table.TableRepositoryInMemory;
 import idv.kuma.poker.table.TableStatus;
+import idv.kuma.poker.table.adapter.TableRepositoryInMemory;
 import idv.kuma.poker.table.usecase.SettleTableService;
 import idv.kuma.poker.table.usecase.TableRepository;
 import org.junit.jupiter.api.Test;

@@ -1,5 +1,6 @@
-package idv.kuma.poker.table;
+package idv.kuma.poker.table.adapter;
 
+import idv.kuma.poker.table.Table;
 import idv.kuma.poker.table.usecase.TableRepository;
 
 import java.util.HashMap;
