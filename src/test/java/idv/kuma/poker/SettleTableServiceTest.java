@@ -14,7 +14,7 @@ public class SettleTableServiceTest {
     private final SettleTableService settleTableService = new SettleTableService(tableRepository);
 
     @Test
-    void shouldRetrieveTableSettleItAndSaveBack() {
+    void should_retrieve_table_settle_it_and_save_back() {
         given_table("table-1");
 
         when_settle("table-1");
