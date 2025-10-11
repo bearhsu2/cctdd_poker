@@ -7,4 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class TableSettledEvent {
     private String tableId;
+    private PokerResult pokerResult;
 }

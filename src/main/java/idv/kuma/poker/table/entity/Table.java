@@ -14,19 +14,21 @@ public class Table {
     private TableStatus status;
     private int version;
     private List<Object> domainEvents;
+    private List<PlayerCards> playerCards;
+    private Board board;
 
-    public static Table create(String id) {
-        return new Table(id, TableStatus.CREATED, 1, new ArrayList<>());
+    public static Table create(String id, List<PlayerCards> playerCards, Board board) {
+        return new Table(id, TableStatus.CREATED, 1, new ArrayList<>(), playerCards, board);
     }
 
-    public static Table restore(String id, TableStatus status, int version) {
-        return new Table(id, status, version, new ArrayList<>());
+    public static Table restore(String id, TableStatus status, int version, List<PlayerCards> playerCards, Board board) {
+        return new Table(id, status, version, new ArrayList<>(), playerCards, board);
     }
 
-    public void settle() {
+    public void settle(PokerResult pokerResult) {
         this.status = TableStatus.SETTLED;
         this.version++;
-        this.domainEvents.add(new TableSettledEvent(id));
+        this.domainEvents.add(new TableSettledEvent(id, pokerResult));
     }
 
     public List<Object> flushDomainEvents() {

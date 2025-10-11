@@ -4,19 +4,33 @@ import idv.kuma.poker.common.adapter.DomainEventBusInMemory;
 import idv.kuma.poker.common.usecase.DomainEventBus;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
 import idv.kuma.poker.table.adapter.TableRepositoryInMemory;
+import idv.kuma.poker.table.entity.Board;
+import idv.kuma.poker.table.entity.Card;
+import idv.kuma.poker.table.entity.PlayerCards;
+import idv.kuma.poker.table.entity.PokerComparator;
 import idv.kuma.poker.table.entity.Table;
 import idv.kuma.poker.table.entity.TableStatus;
 import idv.kuma.poker.table.usecase.SettleTableService;
 import idv.kuma.poker.table.usecase.TableRepository;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static idv.kuma.poker.table.entity.Number.ACE;
+import static idv.kuma.poker.table.entity.Number.KING;
+import static idv.kuma.poker.table.entity.Number.QUEEN;
+import static idv.kuma.poker.table.entity.Number.TWO;
+import static idv.kuma.poker.table.entity.Number.THREE;
+import static idv.kuma.poker.table.entity.Suit.HEART;
+import static idv.kuma.poker.table.entity.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SettleTableServiceTest {
     private final TableRepository tableRepository = new TableRepositoryInMemory();
     private final DomainEventBus domainEventBus = new DomainEventBusInMemory();
     private final DomainEventHandler dummyDomainEventHandler = new DummyDomainEventHandler();
-    private final SettleTableService settleTableService = new SettleTableService(tableRepository, domainEventBus);
+    private final PokerComparator pokerComparator = new PokerComparator();
+    private final SettleTableService settleTableService = new SettleTableService(tableRepository, domainEventBus, pokerComparator);
 
     {
         domainEventBus.register(dummyDomainEventHandler);
@@ -33,7 +47,18 @@ public class SettleTableServiceTest {
     }
 
     private void given_table(String tableId) {
-        Table table = Table.create(tableId);
+        List<PlayerCards> playerCards = List.of(
+                PlayerCards.of(List.of(Card.of(HEART, ACE), Card.of(HEART, KING))),
+                PlayerCards.of(List.of(Card.of(SPADE, TWO), Card.of(SPADE, QUEEN)))
+        );
+        Board board = Board.of(List.of(
+                Card.of(HEART, THREE),
+                Card.of(SPADE, THREE),
+                Card.of(HEART, TWO),
+                Card.of(SPADE, KING),
+                Card.of(HEART, QUEEN)
+        ));
+        Table table = Table.create(tableId, playerCards, board);
         tableRepository.save(table);
     }
 
@@ -51,5 +76,6 @@ public class SettleTableServiceTest {
         DummyDomainEventHandler handler = (DummyDomainEventHandler) dummyDomainEventHandler;
         assertThat(handler.getReceivedEvents()).hasSize(1);
         assertThat(handler.getReceivedEvents().get(0).getTableId()).isEqualTo(tableId);
+        assertThat(handler.getReceivedEvents().get(0).getPokerResult()).isNotNull();
     }
 }
