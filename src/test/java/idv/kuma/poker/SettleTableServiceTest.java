@@ -29,14 +29,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SettleTableServiceTest {
     private final TableRepository tableRepository = new TableRepositoryInMemory();
-    private final DomainEventBus domainEventBus = new DomainEventBusInMemory();
     private final DomainEventHandler dummyDomainEventHandler = new DummyDomainEventHandler();
+    private final DomainEventBus domainEventBus = new DomainEventBusInMemory(dummyDomainEventHandler);
     private final PokerComparator pokerComparator = new PokerComparator();
     private final SettleTableService settleTableService = new SettleTableService(tableRepository, domainEventBus, pokerComparator);
-
-    {
-        domainEventBus.register(dummyDomainEventHandler);
-    }
 
     @Test
     void should_retrieve_table_settle_it_and_save_back() {

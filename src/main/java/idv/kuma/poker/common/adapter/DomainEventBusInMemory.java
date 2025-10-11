@@ -4,15 +4,14 @@ import idv.kuma.poker.common.entity.DomainEvent;
 import idv.kuma.poker.common.usecase.DomainEventBus;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DomainEventBusInMemory implements DomainEventBus {
-    private List<DomainEventHandler> handlers = new ArrayList<>();
+    private List<DomainEventHandler> handlers;
 
-    @Override
-    public void register(DomainEventHandler handler) {
-        handlers.add(handler);
+    public DomainEventBusInMemory(DomainEventHandler... handlers) {
+        this.handlers = Arrays.asList(handlers);
     }
 
     @Override
