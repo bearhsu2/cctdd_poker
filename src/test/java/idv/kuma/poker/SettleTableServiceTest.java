@@ -81,7 +81,6 @@ public class SettleTableServiceTest {
 
         PokerResult expectedResult = new PokerResult(Map.of(0, 1, 1, 2));
         PokerResult actualResult = handler.getReceivedEvents().get(0).getPokerResult();
-        assertThat(actualResult.getRank(0)).isEqualTo(expectedResult.getRank(0));
-        assertThat(actualResult.getRank(1)).isEqualTo(expectedResult.getRank(1));
+        assertThat(actualResult).isEqualTo(expectedResult);
     }
 }
