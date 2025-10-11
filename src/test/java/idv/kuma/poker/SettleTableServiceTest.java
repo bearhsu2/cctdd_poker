@@ -60,7 +60,7 @@ public class SettleTableServiceTest {
     }
 
     private void given_table(String tableId, List<PlayerCards> playerCards, Board board) {
-        Table table = Table.create(tableId, playerCards, board);
+        Table table = Table.restore(tableId, TableStatus.CREATED, 1, playerCards, board);
         tableRepository.save(table);
     }
 
