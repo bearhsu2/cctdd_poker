@@ -2,8 +2,7 @@ package idv.kuma.poker.gamehistory.adapter;
 
 import idv.kuma.poker.common.entity.DomainEvent;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
-import idv.kuma.poker.gamehistory.entity.GameHistory;
-import idv.kuma.poker.gamehistory.usecase.GameHistoryRepository;
+import idv.kuma.poker.gamehistory.usecase.AddGameHistoryService;
 import idv.kuma.poker.table.entity.TableSettledEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,16 +10,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class AddGameHistoryEventHandler implements DomainEventHandler {
-    private final GameHistoryRepository gameHistoryRepository;
+    private final AddGameHistoryService addGameHistoryService;
 
     @Override
     public void handle(DomainEvent event) {
         if (event instanceof TableSettledEvent tableSettledEvent) {
-            GameHistory gameHistory = GameHistory.create(
+            addGameHistoryService.execute(
                     tableSettledEvent.getTableId(),
                     tableSettledEvent.getPokerResult()
             );
-            gameHistoryRepository.save(gameHistory);
         }
     }
 }
