@@ -45,7 +45,7 @@ public class SettleTableServiceTest {
         when_settle("table-1");
 
         then_table_status_should_be("table-1", TableStatus.SETTLED, 2);
-        then_table_settled_event_should_be_sent("table-1");
+        then_table_settled_event_should_be_sent("table-1", new PokerResult(Map.of(0, 1, 1, 2)));
     }
 
     private void given_table(String tableId) {
@@ -74,12 +74,11 @@ public class SettleTableServiceTest {
         assertThat(table.getVersion()).isEqualTo(expectedVersion);
     }
 
-    private void then_table_settled_event_should_be_sent(String tableId) {
+    private void then_table_settled_event_should_be_sent(String tableId, PokerResult expectedResult) {
         DummyDomainEventHandler handler = (DummyDomainEventHandler) dummyDomainEventHandler;
         assertThat(handler.getReceivedEvents()).hasSize(1);
         assertThat(handler.getReceivedEvents().get(0).getTableId()).isEqualTo(tableId);
 
-        PokerResult expectedResult = new PokerResult(Map.of(0, 1, 1, 2));
         PokerResult actualResult = handler.getReceivedEvents().get(0).getPokerResult();
         assertThat(actualResult).isEqualTo(expectedResult);
     }
