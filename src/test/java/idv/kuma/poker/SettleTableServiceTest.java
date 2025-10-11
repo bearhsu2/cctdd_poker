@@ -4,6 +4,7 @@ import idv.kuma.poker.common.adapter.DomainEventBusInMemory;
 import idv.kuma.poker.common.usecase.DomainEventBus;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
 import idv.kuma.poker.gamehistory.adapter.AddGameHistoryEventHandler;
+import idv.kuma.poker.gamehistory.adapter.GameHistoryRepositoryInMemory;
 import idv.kuma.poker.gamehistory.entity.GameHistory;
 import idv.kuma.poker.gamehistory.usecase.GameHistoryRepository;
 import idv.kuma.poker.table.adapter.TableRepositoryInMemory;
