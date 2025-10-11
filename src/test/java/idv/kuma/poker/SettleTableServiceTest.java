@@ -4,8 +4,8 @@ import idv.kuma.poker.common.adapter.DomainEventBusInMemory;
 import idv.kuma.poker.common.usecase.DomainEventBus;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
 import idv.kuma.poker.gamehistory.entity.GameHistory;
+import idv.kuma.poker.gamehistory.usecase.AddGameHistoryEventHandler;
 import idv.kuma.poker.gamehistory.usecase.GameHistoryRepository;
-import idv.kuma.poker.gamehistory.usecase.TableSettledEventHandler;
 import idv.kuma.poker.table.adapter.TableRepositoryInMemory;
 import idv.kuma.poker.table.entity.Board;
 import idv.kuma.poker.table.entity.Card;
@@ -34,8 +34,8 @@ public class SettleTableServiceTest {
     private final TableRepository tableRepository = new TableRepositoryInMemory();
     private final GameHistoryRepository gameHistoryRepository = new GameHistoryRepositoryInMemory();
     private final DomainEventHandler dummyDomainEventHandler = new DummyDomainEventHandler();
-    private final DomainEventHandler tableSettledEventHandler = new TableSettledEventHandler(gameHistoryRepository);
-    private final DomainEventBus domainEventBus = new DomainEventBusInMemory(dummyDomainEventHandler, tableSettledEventHandler);
+    private final DomainEventHandler addGameHistoryEventHandler = new AddGameHistoryEventHandler(gameHistoryRepository);
+    private final DomainEventBus domainEventBus = new DomainEventBusInMemory(dummyDomainEventHandler, addGameHistoryEventHandler);
     private final PokerComparator pokerComparator = new PokerComparator();
     private final SettleTableService settleTableService = new SettleTableService(tableRepository, domainEventBus, pokerComparator);
 

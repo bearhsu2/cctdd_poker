@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class TableSettledEventHandler implements DomainEventHandler {
+public class AddGameHistoryEventHandler implements DomainEventHandler {
     private final GameHistoryRepository gameHistoryRepository;
 
     @Override
