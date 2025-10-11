@@ -8,6 +8,7 @@ import idv.kuma.poker.table.entity.Board;
 import idv.kuma.poker.table.entity.Card;
 import idv.kuma.poker.table.entity.PlayerCards;
 import idv.kuma.poker.table.entity.PokerComparator;
+import idv.kuma.poker.table.entity.PokerResult;
 import idv.kuma.poker.table.entity.Table;
 import idv.kuma.poker.table.entity.TableStatus;
 import idv.kuma.poker.table.usecase.SettleTableService;
@@ -15,6 +16,7 @@ import idv.kuma.poker.table.usecase.TableRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static idv.kuma.poker.table.entity.Number.ACE;
 import static idv.kuma.poker.table.entity.Number.KING;
@@ -76,6 +78,10 @@ public class SettleTableServiceTest {
         DummyDomainEventHandler handler = (DummyDomainEventHandler) dummyDomainEventHandler;
         assertThat(handler.getReceivedEvents()).hasSize(1);
         assertThat(handler.getReceivedEvents().get(0).getTableId()).isEqualTo(tableId);
-        assertThat(handler.getReceivedEvents().get(0).getPokerResult()).isNotNull();
+
+        PokerResult expectedResult = new PokerResult(Map.of(0, 1, 1, 2));
+        PokerResult actualResult = handler.getReceivedEvents().get(0).getPokerResult();
+        assertThat(actualResult.getRank(0)).isEqualTo(expectedResult.getRank(0));
+        assertThat(actualResult.getRank(1)).isEqualTo(expectedResult.getRank(1));
     }
 }
