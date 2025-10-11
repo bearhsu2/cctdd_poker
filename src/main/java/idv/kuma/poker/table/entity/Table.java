@@ -17,8 +17,8 @@ public class Table {
     private List<PlayerCards> playerCards;
     private Board board;
 
-    public static Table create(String id, List<PlayerCards> playerCards, Board board) {
-        return new Table(id, TableStatus.CREATED, 1, new ArrayList<>(), playerCards, board);
+    public static Table create(String id) {
+        return new Table(id, TableStatus.CREATED, 1, new ArrayList<>(), new ArrayList<>(), null);
     }
 
     public static Table restore(String id, TableStatus status, int version, List<PlayerCards> playerCards, Board board) {
