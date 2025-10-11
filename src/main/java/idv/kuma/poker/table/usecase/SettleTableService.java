@@ -1,5 +1,6 @@
 package idv.kuma.poker.table.usecase;
 
+import idv.kuma.poker.common.entity.DomainEvent;
 import idv.kuma.poker.common.usecase.DomainEventBus;
 import idv.kuma.poker.table.entity.PokerComparator;
 import idv.kuma.poker.table.entity.PokerResult;
@@ -19,7 +20,7 @@ public class SettleTableService {
         PokerResult pokerResult = pokerComparator.compare(table.getPlayerCards(), table.getBoard());
         table.settle(pokerResult);
         tableRepository.save(table);
-        for (Object event : table.flushDomainEvents()) {
+        for (DomainEvent event : table.flushDomainEvents()) {
             domainEventBus.publish(event);
         }
     }

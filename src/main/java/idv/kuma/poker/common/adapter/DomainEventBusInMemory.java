@@ -1,5 +1,6 @@
 package idv.kuma.poker.common.adapter;
 
+import idv.kuma.poker.common.entity.DomainEvent;
 import idv.kuma.poker.common.usecase.DomainEventBus;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
 
@@ -15,7 +16,7 @@ public class DomainEventBusInMemory implements DomainEventBus {
     }
 
     @Override
-    public void publish(Object event) {
+    public void publish(DomainEvent event) {
         for (DomainEventHandler handler : handlers) {
             handler.handle(event);
         }

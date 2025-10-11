@@ -1,5 +1,6 @@
 package idv.kuma.poker.table.entity;
 
+import idv.kuma.poker.common.entity.DomainEvent;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +14,7 @@ public class Table {
     private final String id;
     private TableStatus status;
     private int version;
-    private List<Object> domainEvents;
+    private List<DomainEvent> domainEvents;
     private List<PlayerCards> playerCards;
     private Board board;
 
@@ -31,8 +32,8 @@ public class Table {
         this.domainEvents.add(new TableSettledEvent(id, pokerResult));
     }
 
-    public List<Object> flushDomainEvents() {
-        List<Object> events = new ArrayList<>(domainEvents);
+    public List<DomainEvent> flushDomainEvents() {
+        List<DomainEvent> events = new ArrayList<>(domainEvents);
         domainEvents.clear();
         return events;
     }

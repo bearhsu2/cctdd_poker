@@ -1,5 +1,6 @@
 package idv.kuma.poker;
 
+import idv.kuma.poker.common.entity.DomainEvent;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
 import idv.kuma.poker.table.entity.TableSettledEvent;
 
@@ -10,7 +11,7 @@ public class DummyDomainEventHandler implements DomainEventHandler {
     private List<TableSettledEvent> receivedEvents = new ArrayList<>();
 
     @Override
-    public void handle(Object event) {
+    public void handle(DomainEvent event) {
         if (event instanceof TableSettledEvent) {
             receivedEvents.add((TableSettledEvent) event);
         }
