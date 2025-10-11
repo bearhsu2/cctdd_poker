@@ -40,7 +40,18 @@ public class SettleTableServiceTest {
 
     @Test
     void should_retrieve_table_settle_it_and_save_back() {
-        given_table("table-1");
+        given_table("table-1",
+                List.of(
+                        PlayerCards.of(List.of(Card.of(HEART, ACE), Card.of(HEART, KING))),
+                        PlayerCards.of(List.of(Card.of(SPADE, TWO), Card.of(SPADE, QUEEN)))
+                ),
+                Board.of(List.of(
+                        Card.of(HEART, THREE),
+                        Card.of(SPADE, THREE),
+                        Card.of(HEART, TWO),
+                        Card.of(SPADE, KING),
+                        Card.of(HEART, QUEEN)
+                )));
 
         when_settle("table-1");
 
@@ -48,18 +59,7 @@ public class SettleTableServiceTest {
         then_table_settled_event_should_be_sent("table-1", PokerResult.of(Map.of(0, 1, 1, 2)));
     }
 
-    private void given_table(String tableId) {
-        List<PlayerCards> playerCards = List.of(
-                PlayerCards.of(List.of(Card.of(HEART, ACE), Card.of(HEART, KING))),
-                PlayerCards.of(List.of(Card.of(SPADE, TWO), Card.of(SPADE, QUEEN)))
-        );
-        Board board = Board.of(List.of(
-                Card.of(HEART, THREE),
-                Card.of(SPADE, THREE),
-                Card.of(HEART, TWO),
-                Card.of(SPADE, KING),
-                Card.of(HEART, QUEEN)
-        ));
+    private void given_table(String tableId, List<PlayerCards> playerCards, Board board) {
         Table table = Table.create(tableId, playerCards, board);
         tableRepository.save(table);
     }
