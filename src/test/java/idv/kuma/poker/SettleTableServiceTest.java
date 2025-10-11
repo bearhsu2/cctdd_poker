@@ -45,7 +45,7 @@ public class SettleTableServiceTest {
         when_settle("table-1");
 
         then_table_status_should_be("table-1", TableStatus.SETTLED, 2);
-        then_table_settled_event_should_be_sent("table-1", new PokerResult(Map.of(0, 1, 1, 2)));
+        then_table_settled_event_should_be_sent("table-1", PokerResult.of(Map.of(0, 1, 1, 2)));
     }
 
     private void given_table(String tableId) {

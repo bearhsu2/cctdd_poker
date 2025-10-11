@@ -22,7 +22,7 @@ public class PokerComparator {
             positionToRank.put(sortedEntries.get(i).getKey(), currentRank);
         }
 
-        return new PokerResult(positionToRank);
+        return PokerResult.of(positionToRank);
     }
 
 }
