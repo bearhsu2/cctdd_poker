@@ -9,6 +9,7 @@ import java.util.UUID;
 public class IdGeneratorInMemory implements IdGenerator {
     @Override
     public String generate() {
+        // 36 characters (32 hex + 4 hyphens)
         return UUID.randomUUID().toString();
     }
 }
