@@ -1,9 +1,17 @@
-# ARCHITECTURE PATTERNS
+# TECHNICAL DESIGN DOCUMENT
 
-This project follows Clean Architecture principles with some Spring Boot annotations for convenience.
+## Purpose
 
-For detailed architecture patterns (Controller, Service, Aggregate/Entity, Repository, Domain Service), see
-`.claude/docs/clean-architecture.md`.
+- Document the technical design and architecture of the project.
+
+## Directory
+
+- Stored in the `.claude/docs` directory at the root of the project.
+
+## Sections
+
+- Architecture: `.claude/docs/architecture`
+- Event Bus: `.claude/docs/event-bus`
 
 # ARCHITECTURE DECISION RECORDS (ADR)
 
