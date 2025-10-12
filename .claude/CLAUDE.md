@@ -1,9 +1,11 @@
 # ARCHITECTURE PATTERNS
 
+This project follows Clean Architecture principles with some Spring Boot annotations for convenience.
+
 For detailed architecture patterns (Controller, Service, Aggregate/Entity, Repository, Domain Service), see
 `.claude/docs/clean-architecture.md`.
 
-# ARCHITECTURE DECISION RECORDS
+# ARCHITECTURE DECISION RECORDS (ADR)
 
 ## Purpose
 
