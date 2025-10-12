@@ -85,9 +85,9 @@ public class SettleTableServiceTest {
     private void then_table_settled_event_should_be_sent(String tableId, PokerResult expectedResult) {
         DummyDomainEventHandler handler = (DummyDomainEventHandler) dummyDomainEventHandler;
         assertThat(handler.getReceivedEvents()).hasSize(1);
-        assertThat(handler.getReceivedEvents().get(0).getTableId()).isEqualTo(tableId);
+        assertThat(handler.getReceivedEvents().get(0).tableId()).isEqualTo(tableId);
 
-        PokerResult actualResult = handler.getReceivedEvents().get(0).getPokerResult();
+        PokerResult actualResult = handler.getReceivedEvents().get(0).pokerResult();
         assertThat(actualResult).isEqualTo(expectedResult);
     }
 
