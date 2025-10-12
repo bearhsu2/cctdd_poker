@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DomainEventBusInMemory implements DomainEventBus {
-    private List<DomainEventHandler> handlers;
+    private final List<DomainEventHandler> handlers;
 
     public DomainEventBusInMemory(DomainEventHandler... handlers) {
         this.handlers = Arrays.asList(handlers);
