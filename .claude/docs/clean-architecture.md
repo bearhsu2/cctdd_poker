@@ -82,8 +82,8 @@ public class CreateByDayTeamController {
 
 ```java
 
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
 public class CreateOtpService {
     private final MobileOtpRepository mobileOtpRepository;
     private final SmsSender smsSender;
@@ -126,7 +126,7 @@ public class CreateOtpService {
 ```java
 
 @Data
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Tenant {
     private long id;
     private String code;
