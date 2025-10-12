@@ -1,10 +1,13 @@
 package idv.kuma.poker.table.entity;
 
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+@Component
 public class PokerComparator {
 
     public PokerResult compare(List<PlayerCards> playerCards, Board board) {
