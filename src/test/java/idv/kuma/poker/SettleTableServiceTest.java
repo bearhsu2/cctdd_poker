@@ -1,8 +1,10 @@
 package idv.kuma.poker;
 
 import idv.kuma.poker.common.adapter.DomainEventBusInMemory;
+import idv.kuma.poker.common.adapter.IdGeneratorInMemory;
 import idv.kuma.poker.common.usecase.DomainEventBus;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
+import idv.kuma.poker.common.usecase.IdGenerator;
 import idv.kuma.poker.gamehistory.adapter.AddGameHistoryEventHandler;
 import idv.kuma.poker.gamehistory.adapter.GameHistoryRepositoryInMemory;
 import idv.kuma.poker.gamehistory.entity.GameHistory;
@@ -35,7 +37,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SettleTableServiceTest {
     private final TableRepository tableRepository = new TableRepositoryInMemory();
     private final GameHistoryRepository gameHistoryRepository = new GameHistoryRepositoryInMemory();
-    private final AddGameHistoryService addGameHistoryService = new AddGameHistoryService(gameHistoryRepository);
+    private final IdGenerator idGenerator = new IdGeneratorInMemory();
+    private final AddGameHistoryService addGameHistoryService = new AddGameHistoryService(gameHistoryRepository, idGenerator);
     private final DomainEventHandler dummyDomainEventHandler = new DummyDomainEventHandler();
     private final DomainEventHandler addGameHistoryEventHandler = new AddGameHistoryEventHandler(addGameHistoryService);
     private final DomainEventBus domainEventBus = new DomainEventBusInMemory(dummyDomainEventHandler, addGameHistoryEventHandler);
@@ -91,6 +94,7 @@ public class SettleTableServiceTest {
     private void then_game_history_should_be_created(String tableId, PokerResult expectedResult) {
         GameHistory gameHistory = gameHistoryRepository.findByTableId(tableId);
         assertThat(gameHistory).isNotNull();
+        assertThat(gameHistory.getId()).isNotEmpty();
         assertThat(gameHistory.getTableId()).isEqualTo(tableId);
         assertThat(gameHistory.getPokerResult()).isEqualTo(expectedResult);
     }
