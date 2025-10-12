@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class IdGeneratorInMemory implements IdGenerator {
+public class IdGeneratorWithUUID implements IdGenerator {
     @Override
     public String generate() {
         // 36 characters (32 hex + 4 hyphens)

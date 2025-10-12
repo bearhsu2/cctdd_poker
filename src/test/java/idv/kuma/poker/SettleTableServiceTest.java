@@ -1,7 +1,7 @@
 package idv.kuma.poker;
 
 import idv.kuma.poker.common.adapter.DomainEventBusInMemory;
-import idv.kuma.poker.common.adapter.IdGeneratorInMemory;
+import idv.kuma.poker.common.adapter.IdGeneratorWithUUID;
 import idv.kuma.poker.common.usecase.DomainEventBus;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
 import idv.kuma.poker.common.usecase.IdGenerator;
@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SettleTableServiceTest {
     private final TableRepository tableRepository = new TableRepositoryInMemory();
     private final GameHistoryRepository gameHistoryRepository = new GameHistoryRepositoryInMemory();
-    private final IdGenerator idGenerator = new IdGeneratorInMemory();
+    private final IdGenerator idGenerator = new IdGeneratorWithUUID();
     private final AddGameHistoryService addGameHistoryService = new AddGameHistoryService(gameHistoryRepository, idGenerator);
     private final DomainEventHandler dummyDomainEventHandler = new DummyDomainEventHandler();
     private final DomainEventHandler addGameHistoryEventHandler = new AddGameHistoryEventHandler(addGameHistoryService);
