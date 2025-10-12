@@ -32,7 +32,6 @@ aggregates to publish domain events and event handlers to react to them without 
 ### Example
 
 ```java
-// Domain Event
 public record TableSettled(String tableId, List<PlayerResult> results) implements DomainEvent {
 }
 ```
@@ -61,7 +60,6 @@ public record TableSettled(String tableId, List<PlayerResult> results) implement
 ### Example
 
 ```java
-// Event Bus
 public interface DomainEventBus {
     void publish(DomainEvent event);
 }
@@ -105,7 +103,6 @@ public class DomainEventBusInMemory implements DomainEventBus {
 ## Example
 
 ```java
-// Event Handler
 @Component
 @RequiredArgsConstructor
 public class AddGameHistoryEventHandler {
