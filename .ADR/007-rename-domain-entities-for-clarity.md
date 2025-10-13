@@ -6,15 +6,19 @@ Accepted
 
 ## Context
 
-The codebase initially used the name `Hand` for a 5-card poker hand and `Table` for the aggregate representing one poker game round. This naming caused confusion:
+The codebase initially used generic or ambiguous names for poker domain entities, causing confusion:
 
-1. In poker terminology, "hand" commonly refers to both:
+1. **`Hand`** was used for a 5-card poker hand, but in poker terminology, "hand" commonly refers to both:
    - A player's 5 cards (specific hand ranking like "pair of aces")
    - A complete round of play from deal to showdown
 
-2. "Table" is not accurate for a poker round - a table is where players sit, not a single game
+2. **`Table`** was used for the aggregate representing one poker game round
+   - "Table" is not accurate for a poker round - a table is where players sit, not a single game
 
-3. Having both meanings for "hand" in the same codebase creates ambiguity
+3. **`PlayerCards`** was a generic name for the two private cards dealt to each player
+   - In Texas Hold'em, these are specifically called "hole cards"
+
+These naming issues created ambiguity and reduced clarity in the domain model
 
 ## Decision
 
@@ -37,14 +41,23 @@ We decided to rename the domain entities as follows:
      - `GameHistory.tableId` → `GameHistory.handId`
      - `GameHistoryRepository.findByTableId()` → `findByHandId()`
 
+3. **`PlayerCards` → `HoleCards`**: The two private cards dealt to each player
+   - In Texas Hold'em poker, these are specifically called "hole cards"
+   - More precise and aligned with standard poker terminology
+   - Updated in Hand aggregate field: `playerCards` → `holeCards`
+
 ## Consequences
 
 ### Positive
 
-- **Clearer domain model**: `PokerHand` explicitly indicates a 5-card hand ranking
-- **Better alignment with poker terminology**: "hand" for a game round is standard poker terminology
-- **Reduced ambiguity**: No confusion between the two different concepts
-- **More maintainable**: Developers can immediately understand what each entity represents
+- **Clearer domain model**: Each entity name explicitly indicates what it represents
+  - `PokerHand` clearly means a 5-card hand ranking
+  - `HoleCards` clearly means the player's two private cards
+- **Better alignment with poker terminology**: All names match standard poker vocabulary
+  - "hand" for a game round is standard poker terminology
+  - "hole cards" is the correct Texas Hold'em term
+- **Reduced ambiguity**: No confusion between different concepts
+- **More maintainable**: Developers familiar with poker can immediately understand what each entity represents
 
 ### Negative
 

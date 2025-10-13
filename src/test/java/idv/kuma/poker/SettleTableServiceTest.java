@@ -13,7 +13,7 @@ import idv.kuma.poker.gamehistory.usecase.GameHistoryRepository;
 import idv.kuma.poker.table.adapter.HandRepositoryInMemory;
 import idv.kuma.poker.table.entity.Board;
 import idv.kuma.poker.table.entity.Card;
-import idv.kuma.poker.table.entity.PlayerCards;
+import idv.kuma.poker.table.entity.HoleCards;
 import idv.kuma.poker.table.entity.PokerComparator;
 import idv.kuma.poker.table.entity.PokerResult;
 import idv.kuma.poker.table.entity.Hand;
@@ -49,8 +49,8 @@ public class SettleTableServiceTest {
     void should_retrieve_hand_settle_it_and_save_back() {
         given_hand("hand-1",
                 List.of(
-                        PlayerCards.of(List.of(Card.of(HEART, ACE), Card.of(HEART, KING))),
-                        PlayerCards.of(List.of(Card.of(SPADE, TWO), Card.of(SPADE, QUEEN)))
+                        HoleCards.of(List.of(Card.of(HEART, ACE), Card.of(HEART, KING))),
+                        HoleCards.of(List.of(Card.of(SPADE, TWO), Card.of(SPADE, QUEEN)))
                 ),
                 Board.of(List.of(
                         Card.of(HEART, THREE),
@@ -67,8 +67,8 @@ public class SettleTableServiceTest {
         then_game_history_should_be_created("hand-1", PokerResult.of(Map.of(0, 1, 1, 2)));
     }
 
-    private void given_hand(String handId, List<PlayerCards> playerCards, Board board) {
-        Hand hand = Hand.restore(handId, HandStatus.CREATED, 1, playerCards, board);
+    private void given_hand(String handId, List<HoleCards> holeCards, Board board) {
+        Hand hand = Hand.restore(handId, HandStatus.CREATED, 1, holeCards, board);
         handRepository.save(hand);
     }
 

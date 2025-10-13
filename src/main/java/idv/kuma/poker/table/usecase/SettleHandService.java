@@ -17,7 +17,7 @@ public class SettleHandService {
 
     public void settle(String handId) {
         Hand hand = handRepository.findById(handId);
-        PokerResult pokerResult = pokerComparator.compare(hand.getPlayerCards(), hand.getBoard());
+        PokerResult pokerResult = pokerComparator.compare(hand.getHoleCards(), hand.getBoard());
         hand.settle(pokerResult);
         handRepository.save(hand);
         for (DomainEvent event : hand.flushDomainEvents()) {

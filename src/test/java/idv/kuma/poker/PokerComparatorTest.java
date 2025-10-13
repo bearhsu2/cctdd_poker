@@ -3,7 +3,7 @@ package idv.kuma.poker;
 import idv.kuma.poker.table.entity.Board;
 import idv.kuma.poker.table.entity.Card;
 import idv.kuma.poker.table.entity.Number;
-import idv.kuma.poker.table.entity.PlayerCards;
+import idv.kuma.poker.table.entity.HoleCards;
 import idv.kuma.poker.table.entity.PokerComparator;
 import idv.kuma.poker.table.entity.PokerResult;
 import idv.kuma.poker.table.entity.Suit;
@@ -18,8 +18,8 @@ public class PokerComparatorTest {
     @Test
     public void compare_returns_player1_rank1_when_player1_has_one_pair_and_player2_has_high_card() {
         PokerComparator sut = new PokerComparator();
-        PlayerCards cards0 = PlayerCards.of(List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING)));
-        PlayerCards cards1 = PlayerCards.of(List.of(card(Suit.DIAMOND, Number.ACE), card(Suit.SPADE, Number.JACK)));
+        HoleCards cards0 = HoleCards.of(List.of(card(Suit.CLUB, Number.KING), card(Suit.HEART, Number.KING)));
+        HoleCards cards1 = HoleCards.of(List.of(card(Suit.DIAMOND, Number.ACE), card(Suit.SPADE, Number.JACK)));
         Board board = Board.of(List.of(
                 card(Suit.CLUB, Number.THREE),
                 card(Suit.DIAMOND, Number.FOUR),
@@ -37,9 +37,9 @@ public class PokerComparatorTest {
     @Test
     public void compare_returns_same_rank_for_tied_players() {
         PokerComparator sut = new PokerComparator();
-        PlayerCards cards0 = PlayerCards.of(List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.KING)));
-        PlayerCards cards1 = PlayerCards.of(List.of(card(Suit.DIAMOND, Number.TWO), card(Suit.SPADE, Number.THREE)));
-        PlayerCards cards2 = PlayerCards.of(List.of(card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.THREE)));
+        HoleCards cards0 = HoleCards.of(List.of(card(Suit.CLUB, Number.ACE), card(Suit.HEART, Number.KING)));
+        HoleCards cards1 = HoleCards.of(List.of(card(Suit.DIAMOND, Number.TWO), card(Suit.SPADE, Number.THREE)));
+        HoleCards cards2 = HoleCards.of(List.of(card(Suit.HEART, Number.TWO), card(Suit.CLUB, Number.THREE)));
         Board board = Board.of(List.of(
                 card(Suit.SPADE, Number.FOUR),
                 card(Suit.DIAMOND, Number.FIVE),

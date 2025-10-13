@@ -15,15 +15,15 @@ public class Hand {
     private HandStatus status;
     private int version;
     private List<DomainEvent> domainEvents;
-    private List<PlayerCards> playerCards;
+    private List<HoleCards> holeCards;
     private Board board;
 
     public static Hand create(String id) {
         return new Hand(id, HandStatus.CREATED, 1, new ArrayList<>(), new ArrayList<>(), null);
     }
 
-    public static Hand restore(String id, HandStatus status, int version, List<PlayerCards> playerCards, Board board) {
-        return new Hand(id, status, version, new ArrayList<>(), playerCards, board);
+    public static Hand restore(String id, HandStatus status, int version, List<HoleCards> holeCards, Board board) {
+        return new Hand(id, status, version, new ArrayList<>(), holeCards, board);
     }
 
     public void settle(PokerResult pokerResult) {
