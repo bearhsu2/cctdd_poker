@@ -19,13 +19,13 @@ public class PlayerCards {
     }
 
 
-    public Hand findBestHand(Board board) {
+    public PokerHand findBestHand(Board board) {
         List<Card> allCards = Stream.concat(cards.stream(), board.getCards().stream()).toList();
 
-        return CombinationUtil.generateCombinations(allCards, Hand.HAND_SIZE)
+        return CombinationUtil.generateCombinations(allCards, PokerHand.HAND_SIZE)
             .stream()
-            .map(Hand::of)
-            .max(Hand::compareTo)
+            .map(PokerHand::of)
+            .max(PokerHand::compareTo)
             .orElseThrow();
     }
 }

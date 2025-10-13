@@ -13,11 +13,11 @@ public class GameHistoryRepositoryInMemory implements GameHistoryRepository {
 
     @Override
     public void save(GameHistory gameHistory) {
-        gameHistories.put(gameHistory.getTableId(), gameHistory);
+        gameHistories.put(gameHistory.getHandId(), gameHistory);
     }
 
     @Override
-    public GameHistory findByTableId(String tableId) {
-        return gameHistories.get(tableId);
+    public GameHistory findByHandId(String handId) {
+        return gameHistories.get(handId);
     }
 }

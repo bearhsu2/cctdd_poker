@@ -1,7 +1,7 @@
 package idv.kuma.poker;
 
 import idv.kuma.poker.table.entity.Card;
-import idv.kuma.poker.table.entity.Hand;
+import idv.kuma.poker.table.entity.PokerHand;
 import idv.kuma.poker.table.entity.Number;
 import idv.kuma.poker.table.entity.Suit;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ public class HandComparatorTest {
     }
 
     private void when_compare(java.util.List<Card> poker1, java.util.List<Card> poker2) {
-        actual = Hand.of(poker1).compareTo(Hand.of(poker2));
+        actual = PokerHand.of(poker1).compareTo(PokerHand.of(poker2));
     }
 
     private Card card(Suit suit, Number number) {

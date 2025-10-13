@@ -9,15 +9,15 @@ import lombok.Data;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GameHistory {
     private String id;
-    private String tableId;
+    private String handId;
     private PokerResult pokerResult;
     private int version;
 
-    public static GameHistory create(String id, String tableId, PokerResult pokerResult) {
-        return new GameHistory(id, tableId, pokerResult, 1);
+    public static GameHistory create(String id, String handId, PokerResult pokerResult) {
+        return new GameHistory(id, handId, pokerResult, 1);
     }
 
-    public static GameHistory restore(String id, String tableId, PokerResult pokerResult, int version) {
-        return new GameHistory(id, tableId, pokerResult, version);
+    public static GameHistory restore(String id, String handId, PokerResult pokerResult, int version) {
+        return new GameHistory(id, handId, pokerResult, version);
     }
 }

@@ -12,9 +12,9 @@ public class AddGameHistoryService {
     private final GameHistoryRepository gameHistoryRepository;
     private final IdGenerator idGenerator;
 
-    public void execute(String tableId, PokerResult pokerResult) {
+    public void execute(String handId, PokerResult pokerResult) {
         String id = idGenerator.generate();
-        GameHistory gameHistory = GameHistory.create(id, tableId, pokerResult);
+        GameHistory gameHistory = GameHistory.create(id, handId, pokerResult);
         gameHistoryRepository.save(gameHistory);
     }
 }

@@ -1,201 +1,40 @@
 package idv.kuma.poker.table.entity;
 
-import idv.kuma.poker.common.ComparatorUtil;
-import idv.kuma.poker.common.DBCUtil;
-import lombok.Getter;
+import idv.kuma.poker.common.entity.DomainEvent;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-public class Hand implements Comparable<Hand> {
-    public static final int HAND_SIZE = 5;
+@Data
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class Hand {
+    private final String id;
+    private HandStatus status;
+    private int version;
+    private List<DomainEvent> domainEvents;
+    private List<PlayerCards> playerCards;
+    private Board board;
 
-    @Getter
-    private final List<Card> cards;
-    private final Category category;
-
-    private Hand(List<Card> cards) {
-        this.cards = cards;
-        this.category = Category.from(this);
+    public static Hand create(String id) {
+        return new Hand(id, HandStatus.CREATED, 1, new ArrayList<>(), new ArrayList<>(), null);
     }
 
-    public static Hand of(List<Card> cards) {
-        DBCUtil.require(() -> cards.size() == HAND_SIZE, "Hand must contain exactly " + HAND_SIZE + " cards, but got " + cards.size());
-        return new Hand(cards);
+    public static Hand restore(String id, HandStatus status, int version, List<PlayerCards> playerCards, Board board) {
+        return new Hand(id, status, version, new ArrayList<>(), playerCards, board);
     }
 
-    @Override
-    public int compareTo(Hand other) {
-        int typeComparison = category.compare(other.getCategory());
-        if (typeComparison != 0) {
-            return typeComparison;
-        }
-
-        return category.compareHands(this, other);
+    public void settle(PokerResult pokerResult) {
+        this.status = HandStatus.SETTLED;
+        this.version++;
+        this.domainEvents.add(new HandSettledEvent(id, pokerResult));
     }
 
-    private Category getCategory() {
-        return category;
-    }
-
-    public Number getKickerNumber() {
-        return getKickerCards().stream()
-                .map(Card::number)
-                .findFirst()
-                .orElseThrow();
-    }
-
-    public List<Card> getKickerCards() {
-        return groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 1)
-                .flatMap(List::stream)
-                .toList();
-    }
-
-    private Map<Number, List<Card>> groupCardsByNumber() {
-        return cards.stream().collect(Collectors.groupingBy(Card::number));
-    }
-
-    boolean hasTwoPair() {
-        return getAllPairs().size() == 2;
-    }
-
-    private List<List<Card>> getAllPairs() {
-        return groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 2)
-                .toList();
-    }
-
-    public List<Card> getHighPairCards() {
-        return getAllPairs().stream()
-                .max(ComparatorUtil::compareByHighest)
-                .orElseThrow();
-    }
-
-    public List<Card> getLowPairCards() {
-        return getAllPairs().stream()
-                .min(ComparatorUtil::compareByHighest)
-                .orElseThrow();
-    }
-
-    public int getStraightHighValue() {
-        DBCUtil.require(this::hasStraight, "getStraightHighValue can only be called on a straight hand");
-
-        List<Integer> sortedNumbers = getSortedNumbers();
-
-        if (isAceLowStraight(sortedNumbers)) {
-            return 5;
-        }
-
-        return sortedNumbers.get(HAND_SIZE - 1);
-    }
-
-    boolean hasStraight() {
-        List<Integer> sortedNumbers = getSortedNumbers();
-
-        if (isAceLowStraight(sortedNumbers)) {
-            return true;
-        }
-
-        return sortedNumbers.size() == HAND_SIZE &&
-                sortedNumbers.get(HAND_SIZE - 1) - sortedNumbers.get(0) == HAND_SIZE - 1;
-    }
-
-    private List<Integer> getSortedNumbers() {
-        return cards.stream()
-                .map(card -> card.number().getNumber())
-                .distinct()
-                .sorted()
-                .toList();
-    }
-
-    private boolean isAceLowStraight(List<Integer> sortedNumbers) {
-        return sortedNumbers.equals(List.of(2, 3, 4, 5, 14));
-    }
-
-    boolean hasFlush() {
-        return cards.stream()
-                .map(Card::suit)
-                .distinct()
-                .count() == 1;
-    }
-
-    public List<Number> getNumbers() {
-        return cards.stream().map(Card::number).toList();
-    }
-
-    boolean hasFullHouse() {
-        return hasThreeOfAKind() && hasOnePair();
-    }
-
-    boolean hasStraightFlush() {
-        return hasStraight() && hasFlush();
-    }
-
-    boolean hasThreeOfAKind() {
-        return tryFindTripletCards().isPresent();
-    }
-
-    boolean hasOnePair() {
-        return getAllPairs().size() == 1;
-    }
-
-    private Optional<List<Card>> tryFindTripletCards() {
-        return groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 3)
-                .findFirst();
-    }
-
-    public Number getTripletNumber() {
-        return getTripletCards().get(0).number();
-    }
-
-    public List<Card> getTripletCards() {
-        return tryFindTripletCards().orElseThrow();
-    }
-
-    public Number getPairNumber() {
-        return getPairCards().get(0).number();
-    }
-
-    public List<Card> getPairCards() {
-        return getAllPairs().stream()
-                .findFirst()
-                .orElseThrow();
-    }
-
-    boolean hasFourOfAKind() {
-        return tryFindQuadrupletCards().isPresent();
-    }
-
-    private Optional<List<Card>> tryFindQuadrupletCards() {
-        return groupCardsByNumber().values().stream()
-                .filter(group -> group.size() == 4)
-                .findFirst();
-    }
-
-    public Number getQuadrupletNumber() {
-        return getQuadrupletCards().get(0).number();
-    }
-
-    public List<Card> getQuadrupletCards() {
-        return tryFindQuadrupletCards().orElseThrow();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Hand hand = (Hand) obj;
-        return new HashSet<>(cards).equals(new HashSet<>(hand.cards));
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cards);
+    public List<DomainEvent> flushDomainEvents() {
+        List<DomainEvent> events = new ArrayList<>(domainEvents);
+        domainEvents.clear();
+        return events;
     }
 }

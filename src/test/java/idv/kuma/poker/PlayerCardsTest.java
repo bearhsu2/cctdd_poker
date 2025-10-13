@@ -2,7 +2,7 @@ package idv.kuma.poker;
 
 import idv.kuma.poker.table.entity.Board;
 import idv.kuma.poker.table.entity.Card;
-import idv.kuma.poker.table.entity.Hand;
+import idv.kuma.poker.table.entity.PokerHand;
 import idv.kuma.poker.table.entity.Number;
 import idv.kuma.poker.table.entity.PlayerCards;
 import idv.kuma.poker.table.entity.Suit;
@@ -19,11 +19,11 @@ public class PlayerCardsTest {
     public void findBestHand_returns_straight_when_player_cards_complete_board_straight() {
         PlayerCards sut = PlayerCards.of(List.of(card(Suit.CLUB, Number.NINE), card(Suit.HEART, Number.TEN)));
 
-        Hand result = sut.findBestHand(
+        PokerHand result = sut.findBestHand(
                 Board.of(List.of(card(Suit.SPADE, Number.FOUR), card(Suit.DIAMOND, Number.FIVE), card(Suit.CLUB, Number.SIX), card(Suit.HEART, Number.SEVEN), card(Suit.SPADE, Number.EIGHT)))
         );
 
-        Hand expected = Hand.of(List.of(
+        PokerHand expected = PokerHand.of(List.of(
                 card(Suit.CLUB, Number.SIX),
                 card(Suit.HEART, Number.SEVEN),
                 card(Suit.SPADE, Number.EIGHT),
@@ -37,11 +37,11 @@ public class PlayerCardsTest {
     public void findBestHand_returns_two_pair_when_player_cards_match_two_board_numbers() {
         PlayerCards sut = PlayerCards.of(List.of(card(Suit.DIAMOND, Number.FOUR), card(Suit.HEART, Number.FIVE)));
 
-        Hand result = sut.findBestHand(
+        PokerHand result = sut.findBestHand(
                 Board.of(List.of(card(Suit.SPADE, Number.FOUR), card(Suit.CLUB, Number.FIVE), card(Suit.HEART, Number.JACK), card(Suit.DIAMOND, Number.SEVEN), card(Suit.SPADE, Number.NINE)))
         );
 
-        Hand expected = Hand.of(List.of(
+        PokerHand expected = PokerHand.of(List.of(
                 card(Suit.DIAMOND, Number.FOUR),
                 card(Suit.SPADE, Number.FOUR),
                 card(Suit.HEART, Number.FIVE),

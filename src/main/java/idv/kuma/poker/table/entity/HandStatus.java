@@ -1,6 +1,6 @@
 package idv.kuma.poker.table.entity;
 
-public enum TableStatus {
+public enum HandStatus {
     CREATED,
     SETTLED
 }

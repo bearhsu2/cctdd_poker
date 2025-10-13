@@ -2,22 +2,22 @@ package idv.kuma.poker;
 
 import idv.kuma.poker.common.entity.DomainEvent;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
-import idv.kuma.poker.table.entity.TableSettledEvent;
+import idv.kuma.poker.table.entity.HandSettledEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DummyDomainEventHandler implements DomainEventHandler {
-    private List<TableSettledEvent> receivedEvents = new ArrayList<>();
+    private List<HandSettledEvent> receivedEvents = new ArrayList<>();
 
     @Override
     public void handle(DomainEvent event) {
-        if (event instanceof TableSettledEvent tableSettledEvent) {
-            receivedEvents.add(tableSettledEvent);
+        if (event instanceof HandSettledEvent handSettledEvent) {
+            receivedEvents.add(handSettledEvent);
         }
     }
 
-    public List<TableSettledEvent> getReceivedEvents() {
+    public List<HandSettledEvent> getReceivedEvents() {
         return receivedEvents;
     }
 }
