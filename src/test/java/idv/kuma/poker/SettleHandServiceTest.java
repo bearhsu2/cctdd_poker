@@ -34,7 +34,7 @@ import static idv.kuma.poker.table.entity.Suit.HEART;
 import static idv.kuma.poker.table.entity.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SettleTableServiceTest {
+public class SettleHandServiceTest {
     private final HandRepository handRepository = new HandRepositoryInMemory();
     private final GameHistoryRepository gameHistoryRepository = new GameHistoryRepositoryInMemory();
     private final IdGenerator idGenerator = new IdGeneratorWithUUID();
