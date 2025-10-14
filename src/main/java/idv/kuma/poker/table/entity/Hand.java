@@ -28,10 +28,10 @@ public class Hand {
         return new Hand(id, status, version, new ArrayList<>(), userIds, bet, holeCards, board);
     }
 
-    public void settle(PokerResult pokerResult) {
+    public void settle(HandResult handResult) {
         this.status = HandStatus.SETTLED;
         this.version++;
-        this.domainEvents.add(new HandSettledEvent(id, userIds, bet, pokerResult));
+        this.domainEvents.add(new HandSettledEvent(id, bet, handResult));
     }
 
     public List<DomainEvent> flushDomainEvents() {

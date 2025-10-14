@@ -5,7 +5,7 @@ import idv.kuma.poker.table.entity.Card;
 import idv.kuma.poker.table.entity.Number;
 import idv.kuma.poker.table.entity.HoleCards;
 import idv.kuma.poker.table.entity.PokerComparator;
-import idv.kuma.poker.table.entity.PokerResult;
+import idv.kuma.poker.table.entity.HandResult;
 import idv.kuma.poker.table.entity.Suit;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +28,7 @@ public class PokerComparatorTest {
                 card(Suit.CLUB, Number.EIGHT)
         ));
 
-        PokerResult result = sut.compare(List.of(cards0, cards1), board);
+        HandResult result = sut.compare(List.of("user-0", "user-1"), List.of(cards0, cards1), board);
 
         assertEquals(1, result.getRank(0));
         assertEquals(2, result.getRank(1));
@@ -48,7 +48,7 @@ public class PokerComparatorTest {
                 card(Suit.SPADE, Number.TEN)
         ));
 
-        PokerResult result = sut.compare(List.of(cards0, cards1, cards2), board);
+        HandResult result = sut.compare(List.of("user-0", "user-1", "user-2"), List.of(cards0, cards1, cards2), board);
 
         assertEquals(3, result.getRank(0));
         assertEquals(1, result.getRank(1));

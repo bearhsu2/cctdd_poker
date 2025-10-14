@@ -3,7 +3,7 @@ package idv.kuma.poker.table.usecase;
 import idv.kuma.poker.common.entity.DomainEvent;
 import idv.kuma.poker.common.usecase.DomainEventBus;
 import idv.kuma.poker.table.entity.PokerComparator;
-import idv.kuma.poker.table.entity.PokerResult;
+import idv.kuma.poker.table.entity.HandResult;
 import idv.kuma.poker.table.entity.Hand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,8 +17,8 @@ public class SettleHandService {
 
     public void settle(String handId) {
         Hand hand = handRepository.findById(handId);
-        PokerResult pokerResult = pokerComparator.compare(hand.getHoleCards(), hand.getBoard());
-        hand.settle(pokerResult);
+        HandResult handResult = pokerComparator.compare(hand.getUserIds(), hand.getHoleCards(), hand.getBoard());
+        hand.settle(handResult);
         handRepository.save(hand);
         for (DomainEvent event : hand.flushDomainEvents()) {
             domainEventBus.publish(event);

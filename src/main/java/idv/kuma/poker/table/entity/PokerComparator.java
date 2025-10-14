@@ -10,22 +10,23 @@ import java.util.stream.IntStream;
 @Component
 public class PokerComparator {
 
-    public PokerResult compare(List<HoleCards> holeCards, Board board) {
+    public HandResult compare(List<String> userIds, List<HoleCards> holeCards, Board board) {
         List<Map.Entry<Integer, PokerHand>> sortedEntries = IntStream.range(0, holeCards.size())
                 .mapToObj(i -> Map.entry(i, holeCards.get(i).findBestHand(board)))
                 .sorted(Map.Entry.<Integer, PokerHand>comparingByValue().reversed())
                 .toList();
 
-        Map<Integer, Integer> positionToRank = new HashMap<>();
+        Map<Integer, PlayerResult> results = new HashMap<>();
         int currentRank = 1;
         for (int i = 0; i < sortedEntries.size(); i++) {
             if (i > 0 && sortedEntries.get(i).getValue().compareTo(sortedEntries.get(i - 1).getValue()) != 0) {
                 currentRank = i + 1;
             }
-            positionToRank.put(sortedEntries.get(i).getKey(), currentRank);
+            int position = sortedEntries.get(i).getKey();
+            results.put(position, PlayerResult.of(userIds.get(position), currentRank));
         }
 
-        return PokerResult.of(positionToRank);
+        return HandResult.of(results);
     }
 
 }

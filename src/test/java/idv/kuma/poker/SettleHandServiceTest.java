@@ -15,7 +15,8 @@ import idv.kuma.poker.table.entity.Board;
 import idv.kuma.poker.table.entity.Card;
 import idv.kuma.poker.table.entity.HoleCards;
 import idv.kuma.poker.table.entity.PokerComparator;
-import idv.kuma.poker.table.entity.PokerResult;
+import idv.kuma.poker.table.entity.HandResult;
+import idv.kuma.poker.table.entity.PlayerResult;
 import idv.kuma.poker.table.entity.Hand;
 import idv.kuma.poker.table.entity.HandStatus;
 import idv.kuma.poker.table.usecase.SettleHandService;
@@ -65,8 +66,16 @@ public class SettleHandServiceTest {
         when_settle("hand-1");
 
         then_hand_status_should_be("hand-1", HandStatus.SETTLED, 2);
-        then_hand_settled_event_should_be_sent("hand-1", List.of("user-1", "user-2"), 100, PokerResult.of(Map.of(0, 1, 1, 2)));
-        then_game_history_should_be_created("hand-1", PokerResult.of(Map.of(0, 1, 1, 2)));
+        then_hand_settled_event_should_be_sent("hand-1", 100,
+                HandResult.of(Map.of(
+                        0, PlayerResult.of("user-1", 1),
+                        1, PlayerResult.of("user-2", 2)
+                )));
+        then_game_history_should_be_created("hand-1",
+                HandResult.of(Map.of(
+                        0, PlayerResult.of("user-1", 1),
+                        1, PlayerResult.of("user-2", 2)
+                )));
     }
 
     private void given_hand(String handId, List<String> userIds, int bet, List<HoleCards> holeCards, Board board) {
@@ -84,22 +93,21 @@ public class SettleHandServiceTest {
         assertThat(hand.getVersion()).isEqualTo(expectedVersion);
     }
 
-    private void then_hand_settled_event_should_be_sent(String handId, List<String> expectedUserIds, int expectedBet, PokerResult expectedResult) {
+    private void then_hand_settled_event_should_be_sent(String handId, int expectedBet, HandResult expectedResult) {
         DummyDomainEventHandler handler = (DummyDomainEventHandler) dummyDomainEventHandler;
         assertThat(handler.getReceivedEvents()).hasSize(1);
         assertThat(handler.getReceivedEvents().get(0).handId()).isEqualTo(handId);
-        assertThat(handler.getReceivedEvents().get(0).userIds()).isEqualTo(expectedUserIds);
         assertThat(handler.getReceivedEvents().get(0).bet()).isEqualTo(expectedBet);
 
-        PokerResult actualResult = handler.getReceivedEvents().get(0).pokerResult();
+        HandResult actualResult = handler.getReceivedEvents().get(0).handResult();
         assertThat(actualResult).isEqualTo(expectedResult);
     }
 
-    private void then_game_history_should_be_created(String handId, PokerResult expectedResult) {
+    private void then_game_history_should_be_created(String handId, HandResult expectedResult) {
         GameHistory gameHistory = gameHistoryRepository.findByHandId(handId);
         assertThat(gameHistory).isNotNull();
         assertThat(gameHistory.getId()).isNotEmpty();
         assertThat(gameHistory.getHandId()).isEqualTo(handId);
-        assertThat(gameHistory.getPokerResult()).isEqualTo(expectedResult);
+        assertThat(gameHistory.getHandResult()).isEqualTo(expectedResult);
     }
 }

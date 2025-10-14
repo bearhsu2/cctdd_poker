@@ -17,7 +17,7 @@ public class AddGameHistoryEventHandler implements DomainEventHandler {
         if (event instanceof HandSettledEvent handSettledEvent) {
             addGameHistoryService.execute(
                     handSettledEvent.handId(),
-                    handSettledEvent.pokerResult()
+                    handSettledEvent.handResult()
             );
         }
     }
