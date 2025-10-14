@@ -15,21 +15,23 @@ public class Hand {
     private HandStatus status;
     private int version;
     private List<DomainEvent> domainEvents;
+    private List<String> userIds;
+    private int bet;
     private List<HoleCards> holeCards;
     private Board board;
 
     public static Hand create(String id) {
-        return new Hand(id, HandStatus.CREATED, 1, new ArrayList<>(), new ArrayList<>(), null);
+        return new Hand(id, HandStatus.CREATED, 1, new ArrayList<>(), new ArrayList<>(), 0, new ArrayList<>(), null);
     }
 
-    public static Hand restore(String id, HandStatus status, int version, List<HoleCards> holeCards, Board board) {
-        return new Hand(id, status, version, new ArrayList<>(), holeCards, board);
+    public static Hand restore(String id, HandStatus status, int version, List<String> userIds, int bet, List<HoleCards> holeCards, Board board) {
+        return new Hand(id, status, version, new ArrayList<>(), userIds, bet, holeCards, board);
     }
 
     public void settle(PokerResult pokerResult) {
         this.status = HandStatus.SETTLED;
         this.version++;
-        this.domainEvents.add(new HandSettledEvent(id, pokerResult));
+        this.domainEvents.add(new HandSettledEvent(id, userIds, bet, pokerResult));
     }
 
     public List<DomainEvent> flushDomainEvents() {

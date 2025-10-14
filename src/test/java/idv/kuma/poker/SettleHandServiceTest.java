@@ -48,6 +48,8 @@ public class SettleHandServiceTest {
     @Test
     void should_retrieve_hand_settle_it_and_save_back() {
         given_hand("hand-1",
+                List.of("user-1", "user-2"),
+                100,
                 List.of(
                         HoleCards.of(List.of(Card.of(HEART, ACE), Card.of(HEART, KING))),
                         HoleCards.of(List.of(Card.of(SPADE, TWO), Card.of(SPADE, QUEEN)))
@@ -63,12 +65,12 @@ public class SettleHandServiceTest {
         when_settle("hand-1");
 
         then_hand_status_should_be("hand-1", HandStatus.SETTLED, 2);
-        then_hand_settled_event_should_be_sent("hand-1", PokerResult.of(Map.of(0, 1, 1, 2)));
+        then_hand_settled_event_should_be_sent("hand-1", List.of("user-1", "user-2"), 100, PokerResult.of(Map.of(0, 1, 1, 2)));
         then_game_history_should_be_created("hand-1", PokerResult.of(Map.of(0, 1, 1, 2)));
     }
 
-    private void given_hand(String handId, List<HoleCards> holeCards, Board board) {
-        Hand hand = Hand.restore(handId, HandStatus.CREATED, 1, holeCards, board);
+    private void given_hand(String handId, List<String> userIds, int bet, List<HoleCards> holeCards, Board board) {
+        Hand hand = Hand.restore(handId, HandStatus.CREATED, 1, userIds, bet, holeCards, board);
         handRepository.save(hand);
     }
 
@@ -82,10 +84,12 @@ public class SettleHandServiceTest {
         assertThat(hand.getVersion()).isEqualTo(expectedVersion);
     }
 
-    private void then_hand_settled_event_should_be_sent(String handId, PokerResult expectedResult) {
+    private void then_hand_settled_event_should_be_sent(String handId, List<String> expectedUserIds, int expectedBet, PokerResult expectedResult) {
         DummyDomainEventHandler handler = (DummyDomainEventHandler) dummyDomainEventHandler;
         assertThat(handler.getReceivedEvents()).hasSize(1);
         assertThat(handler.getReceivedEvents().get(0).handId()).isEqualTo(handId);
+        assertThat(handler.getReceivedEvents().get(0).userIds()).isEqualTo(expectedUserIds);
+        assertThat(handler.getReceivedEvents().get(0).bet()).isEqualTo(expectedBet);
 
         PokerResult actualResult = handler.getReceivedEvents().get(0).pokerResult();
         assertThat(actualResult).isEqualTo(expectedResult);
