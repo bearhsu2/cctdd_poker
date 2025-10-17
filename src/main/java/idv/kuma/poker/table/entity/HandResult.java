@@ -10,17 +10,17 @@ import java.util.Map;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class HandResult {
 
-    private final Map<Integer, PlayerResult> results;
+    private final Map<Integer, PlayerResult> positionToResult;
 
     public static HandResult of(Map<Integer, PlayerResult> results) {
         return new HandResult(results);
     }
 
     public int getRank(int position) {
-        return results.get(position).getRank();
+        return positionToResult.get(position).getRank();
     }
 
     public String getUserId(int position) {
-        return results.get(position).getUserId();
+        return positionToResult.get(position).getUserId();
     }
 }
