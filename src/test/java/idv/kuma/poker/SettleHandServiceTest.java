@@ -48,6 +48,8 @@ public class SettleHandServiceTest {
 
     @Test
     void should_retrieve_hand_settle_it_and_save_back() {
+        given_wallet("user-1", 500);
+        given_wallet("user-2", 500);
         given_hand("hand-1",
                 List.of("user-1", "user-2"),
                 100,
@@ -76,6 +78,8 @@ public class SettleHandServiceTest {
                         0, PlayerResult.of("user-1", 1),
                         1, PlayerResult.of("user-2", 2)
                 )));
+        then_wallet_balance_should_be("user-1", 600);
+        then_wallet_balance_should_be("user-2", 500);
     }
 
     private void given_hand(String handId, List<String> userIds, int bet, List<HoleCards> holeCards, Board board) {
@@ -109,5 +113,11 @@ public class SettleHandServiceTest {
         assertThat(gameHistory.getId()).isNotEmpty();
         assertThat(gameHistory.getHandId()).isEqualTo(handId);
         assertThat(gameHistory.getHandResult()).isEqualTo(expectedResult);
+    }
+
+    private void given_wallet(String playerId, long initialBalance) {
+    }
+
+    private void then_wallet_balance_should_be(String playerId, long expectedBalance) {
     }
 }
