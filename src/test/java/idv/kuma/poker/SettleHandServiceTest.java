@@ -21,6 +21,11 @@ import idv.kuma.poker.table.entity.Hand;
 import idv.kuma.poker.table.entity.HandStatus;
 import idv.kuma.poker.table.usecase.SettleHandService;
 import idv.kuma.poker.table.usecase.HandRepository;
+import idv.kuma.poker.wallet.adapter.UpdateWalletEventHandler;
+import idv.kuma.poker.wallet.adapter.WalletRepositoryInMemory;
+import idv.kuma.poker.wallet.entity.Wallet;
+import idv.kuma.poker.wallet.usecase.AddBalanceService;
+import idv.kuma.poker.wallet.usecase.WalletRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -38,11 +43,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SettleHandServiceTest {
     private final HandRepository handRepository = new HandRepositoryInMemory();
     private final GameHistoryRepository gameHistoryRepository = new GameHistoryRepositoryInMemory();
+    private final WalletRepository walletRepository = new WalletRepositoryInMemory();
     private final IdGenerator idGenerator = new IdGeneratorWithUUID();
     private final AddGameHistoryService addGameHistoryService = new AddGameHistoryService(gameHistoryRepository, idGenerator);
+    private final AddBalanceService addBalanceService = new AddBalanceService(walletRepository);
     private final DomainEventHandler dummyDomainEventHandler = new DummyDomainEventHandler();
     private final DomainEventHandler addGameHistoryEventHandler = new AddGameHistoryEventHandler(addGameHistoryService);
-    private final DomainEventBus domainEventBus = new DomainEventBusInMemory(dummyDomainEventHandler, addGameHistoryEventHandler);
+    private final DomainEventHandler updateWalletEventHandler = new UpdateWalletEventHandler(addBalanceService);
+    private final DomainEventBus domainEventBus = new DomainEventBusInMemory(dummyDomainEventHandler, addGameHistoryEventHandler, updateWalletEventHandler);
     private final PokerComparator pokerComparator = new PokerComparator();
     private final SettleHandService settleHandService = new SettleHandService(handRepository, domainEventBus, pokerComparator);
 
@@ -116,8 +124,12 @@ public class SettleHandServiceTest {
     }
 
     private void given_wallet(String playerId, long initialBalance) {
+        Wallet wallet = Wallet.restore(idGenerator.generate(), playerId, 1, initialBalance);
+        walletRepository.save(wallet);
     }
 
     private void then_wallet_balance_should_be(String playerId, long expectedBalance) {
+        Wallet wallet = walletRepository.findByPlayerId(playerId);
+        assertThat(wallet.getBalance()).isEqualTo(expectedBalance);
     }
 }
