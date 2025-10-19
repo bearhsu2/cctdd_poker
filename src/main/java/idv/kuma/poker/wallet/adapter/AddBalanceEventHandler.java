@@ -5,10 +5,10 @@ import idv.kuma.poker.common.usecase.DomainEventHandler;
 import idv.kuma.poker.table.entity.HandSettledEvent;
 import idv.kuma.poker.table.entity.PlayerResult;
 import idv.kuma.poker.wallet.usecase.AddBalanceService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
-public class UpdateWalletEventHandler implements DomainEventHandler {
+@RequiredArgsConstructor
+public class AddBalanceEventHandler implements DomainEventHandler {
     private final AddBalanceService addBalanceService;
 
     @Override
@@ -17,11 +17,9 @@ public class UpdateWalletEventHandler implements DomainEventHandler {
             PlayerResult rank1Winner = handSettledEvent.handResult().getPositionToResult().values().stream()
                     .filter(result -> result.getRank() == 1)
                     .findFirst()
-                    .orElse(null);
+                    .orElseThrow(() -> new RuntimeException("No rank-1 winner found in HandSettledEvent"));
 
-            if (rank1Winner != null) {
-                addBalanceService.addBalance(rank1Winner.getUserId(), handSettledEvent.bet());
-            }
+            addBalanceService.addBalance(rank1Winner.getUserId(), handSettledEvent.bet());
         }
     }
 }

@@ -21,7 +21,7 @@ import idv.kuma.poker.table.entity.Hand;
 import idv.kuma.poker.table.entity.HandStatus;
 import idv.kuma.poker.table.usecase.SettleHandService;
 import idv.kuma.poker.table.usecase.HandRepository;
-import idv.kuma.poker.wallet.adapter.UpdateWalletEventHandler;
+import idv.kuma.poker.wallet.adapter.AddBalanceEventHandler;
 import idv.kuma.poker.wallet.adapter.WalletRepositoryInMemory;
 import idv.kuma.poker.wallet.entity.Wallet;
 import idv.kuma.poker.wallet.usecase.AddBalanceService;
@@ -49,7 +49,7 @@ public class SettleHandServiceTest {
     private final AddBalanceService addBalanceService = new AddBalanceService(walletRepository);
     private final DomainEventHandler dummyDomainEventHandler = new DummyDomainEventHandler();
     private final DomainEventHandler addGameHistoryEventHandler = new AddGameHistoryEventHandler(addGameHistoryService);
-    private final DomainEventHandler updateWalletEventHandler = new UpdateWalletEventHandler(addBalanceService);
+    private final DomainEventHandler updateWalletEventHandler = new AddBalanceEventHandler(addBalanceService);
     private final DomainEventBus domainEventBus = new DomainEventBusInMemory(dummyDomainEventHandler, addGameHistoryEventHandler, updateWalletEventHandler);
     private final PokerComparator pokerComparator = new PokerComparator();
     private final SettleHandService settleHandService = new SettleHandService(handRepository, domainEventBus, pokerComparator);
