@@ -103,9 +103,10 @@ public class DomainEventBusInMemory implements DomainEventBus {
 ## Example
 
 ```java
+
 @Component
 @RequiredArgsConstructor
-public class AddGameHistoryEventHandler {
+public class AddGameHistoryEventHandler implements DomainEventHandler {
     private final GameHistoryRepository gameHistoryRepository;
     private final AddGameHistoryService addGameHistoryService;
 
