@@ -23,4 +23,11 @@ public class HandResult {
     public String getUserId(int position) {
         return positionToResult.get(position).getUserId();
     }
+
+    public PlayerResult getRank1Winner() {
+        return positionToResult.values().stream()
+                .filter(result -> result.getRank() == 1)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No rank-1 winner found"));
+    }
 }

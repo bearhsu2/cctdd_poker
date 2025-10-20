@@ -14,11 +14,7 @@ public class AddBalanceEventHandler implements DomainEventHandler {
     @Override
     public void handle(DomainEvent event) {
         if (event instanceof HandSettledEvent handSettledEvent) {
-            PlayerResult rank1Winner = handSettledEvent.handResult().getPositionToResult().values().stream()
-                    .filter(result -> result.getRank() == 1)
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("No rank-1 winner found in HandSettledEvent"));
-
+            PlayerResult rank1Winner = handSettledEvent.handResult().getRank1Winner();
             addBalanceService.addBalance(rank1Winner.getUserId(), handSettledEvent.bet());
         }
     }
