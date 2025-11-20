@@ -1,5 +1,7 @@
 # Migration Plan: In-Memory to H2 Database with QueryDSL and Flyway
 
+> **📖 Implementation Guide:** For detailed code examples and complete implementation guide for QueryDSL SQL without JPA annotations, see [querydsl-sql-approach.md](./querydsl-sql-approach.md)
+
 ## Configuration Decisions
 
 - **Database**: H2 in-memory mode
