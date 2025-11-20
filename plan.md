@@ -73,8 +73,8 @@ Create directory: `src/main/resources/db/migration/`
 
 Migration files (executed in order):
 - `V00000000001__create_wallet_table.sql` (✅ created with singular table name)
-- `V00000000002__create_hand_table.sql` (✅ created with singular table name)
-- `V00000000003__create_game_history_table.sql` (✅ created with singular table name)
+- `V00000000002__create_hand_table.sql` (will be added in Phase 3)
+- `V00000000003__create_game_history_table.sql` (will be added in Phase 4)
 
 ## Phase 2: Wallet Repository Migration
 
@@ -135,9 +135,9 @@ WalletDbDto dto = queryFactory
 
 ## Phase 3: Hand Repository Migration
 
-### ✅ 3.1 Create Flyway Migration - V00000000002__create_hand_table.sql
+### 3.1 Create Flyway Migration - V00000000002__create_hand_table.sql
 
-**Location**: `src/main/resources/db/migration/V00000000002__create_hand_table.sql` (✅ Already created in Phase 1.4)
+**Location**: `src/main/resources/db/migration/V00000000002__create_hand_table.sql`
 
 ```sql
 CREATE TABLE hand (
@@ -207,9 +207,9 @@ Remove or rename the in-memory implementation
 
 ## Phase 4: GameHistory Repository Migration
 
-### ✅ 4.1 Create Flyway Migration - V00000000003__create_game_history_table.sql
+### 4.1 Create Flyway Migration - V00000000003__create_game_history_table.sql
 
-**Location**: `src/main/resources/db/migration/V00000000003__create_game_history_table.sql` (✅ Already created in Phase 1.4)
+**Location**: `src/main/resources/db/migration/V00000000003__create_game_history_table.sql`
 
 ```sql
 CREATE TABLE game_history (
