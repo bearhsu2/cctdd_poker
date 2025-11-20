@@ -8,16 +8,15 @@ import lombok.Data;
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GameHistory {
-    private String id;
     private String handId;
     private HandResult handResult;
     private int version;
 
-    public static GameHistory create(String id, String handId, HandResult handResult) {
-        return new GameHistory(id, handId, handResult, 1);
+    public static GameHistory create(String handId, HandResult handResult) {
+        return new GameHistory(handId, handResult, 1);
     }
 
-    public static GameHistory restore(String id, String handId, HandResult handResult, int version) {
-        return new GameHistory(id, handId, handResult, version);
+    public static GameHistory restore(String handId, HandResult handResult, int version) {
+        return new GameHistory(handId, handResult, version);
     }
 }

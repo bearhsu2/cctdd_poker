@@ -1,10 +1,8 @@
 package idv.kuma.poker;
 
 import idv.kuma.poker.common.adapter.DomainEventBusInMemory;
-import idv.kuma.poker.common.adapter.IdGeneratorWithUUID;
 import idv.kuma.poker.common.usecase.DomainEventBus;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
-import idv.kuma.poker.common.usecase.IdGenerator;
 import idv.kuma.poker.gamehistory.adapter.AddGameHistoryEventHandler;
 import idv.kuma.poker.gamehistory.adapter.GameHistoryRepositoryInMemory;
 import idv.kuma.poker.gamehistory.entity.GameHistory;
@@ -44,8 +42,7 @@ public class SettleHandServiceTest {
     private final HandRepository handRepository = new HandRepositoryInMemory();
     private final GameHistoryRepository gameHistoryRepository = new GameHistoryRepositoryInMemory();
     private final WalletRepository walletRepository = new WalletRepositoryInMemory();
-    private final IdGenerator idGenerator = new IdGeneratorWithUUID();
-    private final AddGameHistoryService addGameHistoryService = new AddGameHistoryService(gameHistoryRepository, idGenerator);
+    private final AddGameHistoryService addGameHistoryService = new AddGameHistoryService(gameHistoryRepository);
     private final AddBalanceService addBalanceService = new AddBalanceService(walletRepository);
     private final DomainEventHandler dummyDomainEventHandler = new DummyDomainEventHandler();
     private final DomainEventHandler addGameHistoryEventHandler = new AddGameHistoryEventHandler(addGameHistoryService);
@@ -118,7 +115,6 @@ public class SettleHandServiceTest {
     private void then_game_history_should_be_created(String handId, HandResult expectedResult) {
         GameHistory gameHistory = gameHistoryRepository.findByHandId(handId);
         assertThat(gameHistory).isNotNull();
-        assertThat(gameHistory.getId()).isNotEmpty();
         assertThat(gameHistory.getHandId()).isEqualTo(handId);
         assertThat(gameHistory.getHandResult()).isEqualTo(expectedResult);
     }
