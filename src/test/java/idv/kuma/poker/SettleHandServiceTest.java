@@ -124,7 +124,7 @@ public class SettleHandServiceTest {
     }
 
     private void given_wallet(String playerId, long initialBalance) {
-        Wallet wallet = Wallet.restore(idGenerator.generate(), playerId, 1, initialBalance);
+        Wallet wallet = Wallet.restore(playerId, 1, initialBalance);
         walletRepository.save(wallet);
     }
 
