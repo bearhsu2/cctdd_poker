@@ -4,19 +4,21 @@
 
 - **Database**: H2 in-memory mode
 - **H2 Console**: Disabled
-- **ORM**: QueryDSL (type-safe queries)
+- **Query Builder**: QueryDSL SQL (type-safe queries, no ORM)
 - **Schema Migration**: Flyway (versioned migrations)
 - **DTO Naming**: `*DbDto` (e.g., `WalletDbDto`, `HandDbDto`, `GameHistoryDbDto`)
-- **Architecture**: Hexagonal - Domain entities remain pure, JPA annotations only on DTOs
+- **Q-class Generation**: Database metadata (no JPA annotations needed)
+- **Architecture**: Hexagonal - Domain entities remain pure, DTOs are pure POJOs
 
 ## Architecture Pattern
 
 ```
 Domain Entity (Wallet) ←→ DB DTO (WalletDbDto) ←→ Database Table
-     ↑                           ↑
-  Pure DDD               JPA @Entity annotated
-  No persistence         Mapping/conversion happens
-  concerns              in repository adapter
+     ↑                           ↑                      ↑
+  Pure DDD               Pure POJO             Flyway creates schema
+  No persistence         No annotations        QueryDSL reads metadata
+  concerns              Mapping/conversion     Generates Q-classes
+                        in repository adapter
 ```
 
 ## Phase 1: Dependencies & Configuration
@@ -24,20 +26,27 @@ Domain Entity (Wallet) ←→ DB DTO (WalletDbDto) ←→ Database Table
 ### 1.1 Update pom.xml - Add Dependencies
 
 Add the following dependencies:
-- `spring-boot-starter-data-jpa` - JPA/Hibernate support
+- `spring-boot-starter-jdbc` - JDBC support (no JPA/Hibernate)
 - `h2` - H2 database driver
-- `querydsl-jpa` - QueryDSL JPA support
-- `querydsl-apt` - QueryDSL annotation processor (Q-class generation)
-- `jakarta.persistence-api` - JPA API
-- `jakarta.annotation-api` - Annotation API
+- `querydsl-sql` - QueryDSL SQL support (no JPA needed)
+- `querydsl-sql-spring` - Spring integration for QueryDSL SQL
 - `flyway-core` - Flyway migration tool
+- `jackson-databind` - JSON serialization for complex fields
 
-### 1.2 Update pom.xml - Configure QueryDSL Annotation Processor
+### 1.2 Update pom.xml - Configure QueryDSL Maven Plugin
 
-Add `maven-compiler-plugin` configuration with QueryDSL APT processor:
-- Processor: `com.querydsl.apt.jpa.JPAAnnotationProcessor`
+Add `querydsl-maven-plugin` to generate Q-classes from database metadata:
+- Plugin: `com.querydsl:querydsl-maven-plugin`
+- Execution phase: `generate-sources`
+- Database URL: `jdbc:h2:mem:pokerdb` (in-memory for generation)
+- Package name: Match your DTO package structure
 - Output directory: `target/generated-sources/java`
-- This will generate Q-classes (QWalletDbDto, QHandDbDto, QGameHistoryDbDto)
+
+**How it works:**
+1. Plugin starts H2 database
+2. Flyway runs migrations to create schema
+3. Plugin reads table metadata
+4. Generates Q-classes (QWallets, QHands, QGameHistories)
 
 ### 1.3 Configure application.properties
 
@@ -49,17 +58,12 @@ spring.datasource.driver-class-name=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
 
-# JPA/Hibernate
-spring.jpa.hibernate.ddl-auto=none
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
-
 # Flyway
 spring.flyway.enabled=true
 spring.flyway.baseline-on-migrate=true
 ```
 
-**Important**: `spring.jpa.hibernate.ddl-auto=none` - Flyway manages schema, not Hibernate
+**Important**: No JPA/Hibernate configuration needed - we're using pure JDBC with QueryDSL SQL
 
 ### 1.4 Create Flyway Migration Scripts
 
@@ -94,11 +98,8 @@ CREATE TABLE wallets (
 - `version` (Integer) - Optimistic locking
 
 **Annotations**:
-- `@Entity`
-- `@Table(name = "wallets")`
-- `@Id` on playerId field
-- `@Version` on version field
-- Lombok: `@Data`, `@NoArgsConstructor`, `@AllArgsConstructor`
+- Lombok only: `@Data`, `@NoArgsConstructor`, `@AllArgsConstructor`
+- **No JPA annotations needed** - pure POJO
 
 ### 2.3 Create WalletRepositoryQueryDsl
 
