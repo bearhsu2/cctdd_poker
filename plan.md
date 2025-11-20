@@ -25,7 +25,7 @@ Domain Entity (Wallet) ←→ DB DTO (WalletDbDto) ←→ Database Table
 
 ## Phase 1: Dependencies & Configuration
 
-### 1.1 Update pom.xml - Add Dependencies
+### ✅ 1.1 Update pom.xml - Add Dependencies
 
 Add the following dependencies:
 - `spring-boot-starter-jdbc` - JDBC support (no JPA/Hibernate)
@@ -35,7 +35,7 @@ Add the following dependencies:
 - `flyway-core` - Flyway migration tool
 - `jackson-databind` - JSON serialization for complex fields
 
-### 1.2 Update pom.xml - Configure QueryDSL Maven Plugin
+### ✅ 1.2 Update pom.xml - Configure QueryDSL Maven Plugin
 
 Add `querydsl-maven-plugin` to generate Q-classes from database metadata:
 - Plugin: `com.querydsl:querydsl-maven-plugin`
@@ -50,7 +50,7 @@ Add `querydsl-maven-plugin` to generate Q-classes from database metadata:
 3. Plugin reads table metadata
 4. Generates Q-classes (QWallets, QHands, QGameHistories)
 
-### 1.3 Configure application.properties
+### ✅ 1.3 Configure application.properties
 
 Add H2 and Flyway configuration:
 ```properties
@@ -67,23 +67,23 @@ spring.flyway.baseline-on-migrate=true
 
 **Important**: No JPA/Hibernate configuration needed - we're using pure JDBC with QueryDSL SQL
 
-### 1.4 Create Flyway Migration Scripts
+### ✅ 1.4 Create Flyway Migration Scripts
 
 Create directory: `src/main/resources/db/migration/`
 
 Migration files (executed in order):
-- `V1__create_wallets_table.sql`
-- `V2__create_hands_table.sql`
-- `V3__create_game_histories_table.sql`
+- `V00000000001__create_wallet_table.sql` (✅ created with singular table name)
+- `V00000000002__create_hand_table.sql` (✅ created with singular table name)
+- `V00000000003__create_game_history_table.sql` (✅ created with singular table name)
 
 ## Phase 2: Wallet Repository Migration
 
-### 2.1 Create Flyway Migration - V1__create_wallets_table.sql
+### ✅ 2.1 Create Flyway Migration - V00000000001__create_wallet_table.sql
 
-**Location**: `src/main/resources/db/migration/V1__create_wallets_table.sql`
+**Location**: `src/main/resources/db/migration/V00000000001__create_wallet_table.sql` (✅ Already created in Phase 1.4)
 
 ```sql
-CREATE TABLE wallets (
+CREATE TABLE wallet (
     player_id VARCHAR(255) PRIMARY KEY,
     balance BIGINT NOT NULL,
     version INT NOT NULL
@@ -135,12 +135,12 @@ WalletDbDto dto = queryFactory
 
 ## Phase 3: Hand Repository Migration
 
-### 3.1 Create Flyway Migration - V2__create_hands_table.sql
+### ✅ 3.1 Create Flyway Migration - V00000000002__create_hand_table.sql
 
-**Location**: `src/main/resources/db/migration/V2__create_hands_table.sql`
+**Location**: `src/main/resources/db/migration/V00000000002__create_hand_table.sql` (✅ Already created in Phase 1.4)
 
 ```sql
-CREATE TABLE hands (
+CREATE TABLE hand (
     id VARCHAR(255) PRIMARY KEY,
     status VARCHAR(50) NOT NULL,
     version INT NOT NULL,
@@ -150,7 +150,7 @@ CREATE TABLE hands (
     board_json TEXT NOT NULL
 );
 
-CREATE INDEX idx_hands_status ON hands(status);
+CREATE INDEX idx_hand_status ON hand(status);
 ```
 
 ### 3.2 Create HandDbDto
@@ -207,12 +207,12 @@ Remove or rename the in-memory implementation
 
 ## Phase 4: GameHistory Repository Migration
 
-### 4.1 Create Flyway Migration - V3__create_game_histories_table.sql
+### ✅ 4.1 Create Flyway Migration - V00000000003__create_game_history_table.sql
 
-**Location**: `src/main/resources/db/migration/V3__create_game_histories_table.sql`
+**Location**: `src/main/resources/db/migration/V00000000003__create_game_history_table.sql` (✅ Already created in Phase 1.4)
 
 ```sql
-CREATE TABLE game_histories (
+CREATE TABLE game_history (
     hand_id VARCHAR(255) PRIMARY KEY,
     hand_result_json TEXT NOT NULL,
     version INT NOT NULL
