@@ -78,13 +78,10 @@ Migration files (executed in order):
 
 ```sql
 CREATE TABLE wallets (
-    id VARCHAR(255) PRIMARY KEY,
-    player_id VARCHAR(255) NOT NULL,
+    player_id VARCHAR(255) PRIMARY KEY,
     balance BIGINT NOT NULL,
     version INT NOT NULL
 );
-
-CREATE INDEX idx_wallets_player_id ON wallets(player_id);
 ```
 
 ### 2.2 Create WalletDbDto
@@ -92,15 +89,14 @@ CREATE INDEX idx_wallets_player_id ON wallets(player_id);
 **Location**: `src/main/java/idv/kuma/poker/wallet/adapter/WalletDbDto.java`
 
 **Fields**:
-- `id` (String) - Primary key
-- `playerId` (String) - Indexed for lookup
+- `playerId` (String) - Primary key
 - `balance` (Long)
 - `version` (Integer) - Optimistic locking
 
 **Annotations**:
 - `@Entity`
 - `@Table(name = "wallets")`
-- `@Id` on id field
+- `@Id` on playerId field
 - `@Version` on version field
 - Lombok: `@Data`, `@NoArgsConstructor`, `@AllArgsConstructor`
 
@@ -214,13 +210,10 @@ Remove or rename the in-memory implementation
 
 ```sql
 CREATE TABLE game_histories (
-    id VARCHAR(255) PRIMARY KEY,
-    hand_id VARCHAR(255) NOT NULL,
+    hand_id VARCHAR(255) PRIMARY KEY,
     hand_result_json TEXT NOT NULL,
     version INT NOT NULL
 );
-
-CREATE INDEX idx_game_histories_hand_id ON game_histories(hand_id);
 ```
 
 ### 4.2 Create GameHistoryDbDto
@@ -228,25 +221,25 @@ CREATE INDEX idx_game_histories_hand_id ON game_histories(hand_id);
 **Location**: `src/main/java/idv/kuma/poker/gamehistory/adapter/GameHistoryDbDto.java`
 
 **Fields**:
-- `id` (String) - Primary key
-- `handId` (String) - Foreign key reference, indexed
+- `handId` (String) - Primary key
 - `handResultJson` (String) - JSON serialized HandResult (Map<Integer, PlayerResult>)
 - `version` (Integer) - Optimistic locking
 
 **Annotations**:
 - `@Entity`
 - `@Table(name = "game_histories")`
-- `@Id`, `@Version`
-- `@Column(name = "hand_id")`
-- `@Column(name = "hand_result_json", columnDefinition = "TEXT")`
-- Lombok annotations
+- `@Id` on handId field
+- `@Version` on version field
+- `@Column(name = "hand_id")` on handId field
+- `@Column(name = "hand_result_json", columnDefinition = "TEXT")` on handResultJson field
+- Lombok: `@Data`, `@NoArgsConstructor`, `@AllArgsConstructor`
 
 ### 4.3 Create GameHistoryRepositoryQueryDsl
 
 **Location**: `src/main/java/idv/kuma/poker/gamehistory/adapter/GameHistoryRepositoryQueryDsl.java`
 
 **Methods**:
-- `findByHandId(String handId)` - QueryDSL lookup by handId (not primary key!)
+- `findByHandId(String handId)` - QueryDSL lookup by handId (primary key)
 - `save(GameHistory gameHistory)` - Convert to DTO, persist
 
 **Mapping**:
