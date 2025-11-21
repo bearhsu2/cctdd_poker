@@ -133,10 +133,15 @@ WalletDbDto dto = queryFactory
     .fetchOne();
 ```
 
-### 2.4 Replace WalletRepositoryInMemory
+### ✅ 2.4 Replace WalletRepositoryInMemory
 
-- Remove or rename `WalletRepositoryInMemory` to `WalletRepositoryInMemory.old`
-- Update Spring configuration to use `WalletRepositoryQueryDsl` as the `@Repository` implementation
+- Removed `WalletRepositoryInMemory` implementation
+- `WalletRepositoryQueryDsl` is now the sole implementation with `@Component` annotation
+- Added `@Transactional` annotations:
+  - `findByPlayerId`: `@Transactional(readOnly = true)`
+  - `save`: `@Transactional` (uses check-then-insert-or-update pattern)
+  - `AddBalanceService.addBalance`: `@Transactional` for atomic operations
+- Migrated tests to `@SpringBootTest` for integration testing
 
 ## Phase 3: Hand Repository Migration
 
