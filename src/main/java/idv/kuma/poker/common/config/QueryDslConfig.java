@@ -15,7 +15,7 @@ public class QueryDslConfig {
     @Bean
     public com.querydsl.sql.Configuration querydslConfiguration() {
         com.querydsl.sql.Configuration configuration =
-            new com.querydsl.sql.Configuration(new H2Templates());
+                new com.querydsl.sql.Configuration(new H2Templates());
         configuration.setExceptionTranslator(new SpringExceptionTranslator());
         return configuration;
     }

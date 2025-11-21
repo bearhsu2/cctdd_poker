@@ -7,10 +7,10 @@ import idv.kuma.poker.generated.WalletDbDto;
 import idv.kuma.poker.wallet.entity.Wallet;
 import idv.kuma.poker.wallet.usecase.WalletRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
+@Component
 @RequiredArgsConstructor
 public class WalletRepositoryQueryDsl implements WalletRepository {
     private final SQLQueryFactory queryFactory;
