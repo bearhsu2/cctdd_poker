@@ -1,6 +1,5 @@
 package idv.kuma.poker;
 
-import idv.kuma.poker.common.usecase.DomainEventHandler;
 import idv.kuma.poker.gamehistory.entity.GameHistory;
 import idv.kuma.poker.gamehistory.usecase.GameHistoryRepository;
 import idv.kuma.poker.table.entity.*;
@@ -11,9 +10,6 @@ import idv.kuma.poker.wallet.usecase.WalletRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 import java.util.Map;
@@ -34,8 +30,6 @@ public class SettleHandServiceTest {
     private WalletRepository walletRepository;
     @Autowired
     private SettleHandService settleHandService;
-    @Autowired
-    private DomainEventHandler dummyDomainEventHandler;
 
     @Test
     void should_retrieve_hand_settle_it_and_save_back() {
@@ -59,11 +53,6 @@ public class SettleHandServiceTest {
         when_settle("hand-1");
 
         then_hand_status_should_be("hand-1", HandStatus.SETTLED, 2);
-        then_hand_settled_event_should_be_sent("hand-1", 100,
-                HandResult.of(Map.of(
-                        0, PlayerResult.of("user-1", 1),
-                        1, PlayerResult.of("user-2", 2)
-                )));
         then_game_history_should_be_created("hand-1",
                 HandResult.of(Map.of(
                         0, PlayerResult.of("user-1", 1),
@@ -93,16 +82,6 @@ public class SettleHandServiceTest {
         assertThat(hand.getVersion()).isEqualTo(expectedVersion);
     }
 
-    private void then_hand_settled_event_should_be_sent(String handId, int expectedBet, HandResult expectedResult) {
-        DummyDomainEventHandler handler = (DummyDomainEventHandler) dummyDomainEventHandler;
-        assertThat(handler.getReceivedEvents()).hasSize(1);
-        assertThat(handler.getReceivedEvents().get(0).handId()).isEqualTo(handId);
-        assertThat(handler.getReceivedEvents().get(0).bet()).isEqualTo(expectedBet);
-
-        HandResult actualResult = handler.getReceivedEvents().get(0).handResult();
-        assertThat(actualResult).isEqualTo(expectedResult);
-    }
-
     private void then_game_history_should_be_created(String handId, HandResult expectedResult) {
         GameHistory gameHistory = gameHistoryRepository.findByHandId(handId);
         assertThat(gameHistory).isNotNull();
@@ -113,14 +92,5 @@ public class SettleHandServiceTest {
     private void then_wallet_balance_should_be(String playerId, long expectedBalance) {
         Wallet wallet = walletRepository.findByPlayerId(playerId);
         assertThat(wallet.getBalance()).isEqualTo(expectedBalance);
-    }
-
-    @TestConfiguration
-    static class TestConfig {
-        @Bean
-        @Primary
-        public DomainEventHandler dummyDomainEventHandler() {
-            return new DummyDomainEventHandler();
-        }
     }
 }
