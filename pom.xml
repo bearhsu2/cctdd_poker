@@ -81,6 +81,34 @@
                 <version>3.0.0-M7</version>
             </plugin>
             <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>flyway-migrate-for-codegen</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                        <configuration>
+                            <url>jdbc:h2:${project.build.directory}/pokerdb-codegen</url>
+                            <user>sa</user>
+                            <password></password>
+                            <locations>
+                                <location>filesystem:src/main/resources/db/migration</location>
+                            </locations>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>2.2.224</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
                 <groupId>com.querydsl</groupId>
                 <artifactId>querydsl-maven-plugin</artifactId>
                 <version>5.1.0</version>
@@ -92,12 +120,13 @@
                         </goals>
                         <configuration>
                             <jdbcDriver>org.h2.Driver</jdbcDriver>
-                            <jdbcUrl>jdbc:h2:mem:pokerdb</jdbcUrl>
+                            <jdbcUrl>jdbc:h2:${project.build.directory}/pokerdb-codegen</jdbcUrl>
                             <jdbcUser>sa</jdbcUser>
                             <jdbcPassword></jdbcPassword>
                             <packageName>idv.kuma.poker.generated</packageName>
                             <targetFolder>${project.basedir}/target/generated-sources/java</targetFolder>
                             <exportBeans>true</exportBeans>
+                            <beanSuffix>DbDto</beanSuffix>
                         </configuration>
                     </execution>
                 </executions>

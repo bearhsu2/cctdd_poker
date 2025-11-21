@@ -1,0 +1,60 @@
+package idv.kuma.poker.wallet.adapter;
+
+import com.querydsl.core.types.Projections;
+import com.querydsl.sql.SQLQueryFactory;
+import idv.kuma.poker.generated.QWallet;
+import idv.kuma.poker.generated.WalletDbDto;
+import idv.kuma.poker.wallet.entity.Wallet;
+import idv.kuma.poker.wallet.usecase.WalletRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+@Repository
+@RequiredArgsConstructor
+public class WalletRepositoryQueryDsl implements WalletRepository {
+    private final SQLQueryFactory queryFactory;
+    private static final QWallet qWallet = QWallet.wallet;
+
+    @Override
+    public Wallet findByPlayerId(String playerId) {
+        WalletDbDto dto = queryFactory
+            .select(Projections.bean(WalletDbDto.class,
+                qWallet.playerId,
+                qWallet.balance,
+                qWallet.version))
+            .from(qWallet)
+            .where(qWallet.playerId.eq(playerId))
+            .fetchOne();
+
+        return dto == null ? null : toEntity(dto);
+    }
+
+    @Override
+    @Transactional
+    public void save(Wallet wallet) {
+        Long count = queryFactory
+            .select(qWallet.playerId.count())
+            .from(qWallet)
+            .where(qWallet.playerId.eq(wallet.getPlayerId()))
+            .fetchOne();
+
+        if (count == 0) {
+            queryFactory.insert(qWallet)
+                .set(qWallet.playerId, wallet.getPlayerId())
+                .set(qWallet.balance, wallet.getBalance())
+                .set(qWallet.version, wallet.getVersion())
+                .execute();
+        } else {
+            queryFactory.update(qWallet)
+                .set(qWallet.balance, wallet.getBalance())
+                .set(qWallet.version, wallet.getVersion())
+                .where(qWallet.playerId.eq(wallet.getPlayerId()))
+                .execute();
+        }
+    }
+
+    private Wallet toEntity(WalletDbDto dto) {
+        return Wallet.restore(dto.getPlayerId(), dto.getVersion(), dto.getBalance());
+    }
+}

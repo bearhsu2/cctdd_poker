@@ -9,6 +9,7 @@ import java.util.Map;
 public class WalletRepositoryInMemory implements WalletRepository {
     private final Map<String, Wallet> wallets = new HashMap<>();
 
+
     @Override
     public Wallet findByPlayerId(String playerId) {
         return wallets.get(playerId);
