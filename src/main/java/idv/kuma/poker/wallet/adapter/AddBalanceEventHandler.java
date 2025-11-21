@@ -6,7 +6,9 @@ import idv.kuma.poker.table.entity.HandSettledEvent;
 import idv.kuma.poker.table.entity.PlayerResult;
 import idv.kuma.poker.wallet.usecase.AddBalanceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class AddBalanceEventHandler implements DomainEventHandler {
     private final AddBalanceService addBalanceService;

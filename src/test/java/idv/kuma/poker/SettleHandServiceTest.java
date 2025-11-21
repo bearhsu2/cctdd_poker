@@ -1,55 +1,41 @@
 package idv.kuma.poker;
 
-import idv.kuma.poker.common.adapter.DomainEventBusInMemory;
-import idv.kuma.poker.common.usecase.DomainEventBus;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
-import idv.kuma.poker.gamehistory.adapter.AddGameHistoryEventHandler;
-import idv.kuma.poker.gamehistory.adapter.GameHistoryRepositoryInMemory;
 import idv.kuma.poker.gamehistory.entity.GameHistory;
-import idv.kuma.poker.gamehistory.usecase.AddGameHistoryService;
 import idv.kuma.poker.gamehistory.usecase.GameHistoryRepository;
-import idv.kuma.poker.table.adapter.HandRepositoryInMemory;
-import idv.kuma.poker.table.entity.Board;
-import idv.kuma.poker.table.entity.Card;
-import idv.kuma.poker.table.entity.HoleCards;
-import idv.kuma.poker.table.entity.PokerComparator;
-import idv.kuma.poker.table.entity.HandResult;
-import idv.kuma.poker.table.entity.PlayerResult;
-import idv.kuma.poker.table.entity.Hand;
-import idv.kuma.poker.table.entity.HandStatus;
-import idv.kuma.poker.table.usecase.SettleHandService;
+import idv.kuma.poker.table.entity.*;
 import idv.kuma.poker.table.usecase.HandRepository;
-import idv.kuma.poker.wallet.adapter.AddBalanceEventHandler;
-import idv.kuma.poker.wallet.adapter.WalletRepositoryInMemory;
+import idv.kuma.poker.table.usecase.SettleHandService;
 import idv.kuma.poker.wallet.entity.Wallet;
-import idv.kuma.poker.wallet.usecase.AddBalanceService;
 import idv.kuma.poker.wallet.usecase.WalletRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 import java.util.Map;
 
-import static idv.kuma.poker.table.entity.Number.ACE;
-import static idv.kuma.poker.table.entity.Number.KING;
-import static idv.kuma.poker.table.entity.Number.QUEEN;
-import static idv.kuma.poker.table.entity.Number.TWO;
-import static idv.kuma.poker.table.entity.Number.THREE;
+import static idv.kuma.poker.table.entity.Number.*;
 import static idv.kuma.poker.table.entity.Suit.HEART;
 import static idv.kuma.poker.table.entity.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 public class SettleHandServiceTest {
-    private final HandRepository handRepository = new HandRepositoryInMemory();
-    private final GameHistoryRepository gameHistoryRepository = new GameHistoryRepositoryInMemory();
-    private final WalletRepository walletRepository = new WalletRepositoryInMemory();
-    private final AddGameHistoryService addGameHistoryService = new AddGameHistoryService(gameHistoryRepository);
-    private final AddBalanceService addBalanceService = new AddBalanceService(walletRepository);
-    private final DomainEventHandler dummyDomainEventHandler = new DummyDomainEventHandler();
-    private final DomainEventHandler addGameHistoryEventHandler = new AddGameHistoryEventHandler(addGameHistoryService);
-    private final DomainEventHandler updateWalletEventHandler = new AddBalanceEventHandler(addBalanceService);
-    private final DomainEventBus domainEventBus = new DomainEventBusInMemory(dummyDomainEventHandler, addGameHistoryEventHandler, updateWalletEventHandler);
-    private final PokerComparator pokerComparator = new PokerComparator();
-    private final SettleHandService settleHandService = new SettleHandService(handRepository, domainEventBus, pokerComparator);
+
+    @Autowired
+    private HandRepository handRepository;
+    @Autowired
+    private GameHistoryRepository gameHistoryRepository;
+    @Autowired
+    private WalletRepository walletRepository;
+    @Autowired
+    private SettleHandService settleHandService;
+    @Autowired
+    private DomainEventHandler dummyDomainEventHandler;
 
     @Test
     void should_retrieve_hand_settle_it_and_save_back() {
@@ -87,6 +73,11 @@ public class SettleHandServiceTest {
         then_wallet_balance_should_be("user-2", 500);
     }
 
+    private void given_wallet(String playerId, long initialBalance) {
+        Wallet wallet = Wallet.restore(playerId, 1, initialBalance);
+        walletRepository.save(wallet);
+    }
+
     private void given_hand(String handId, List<String> userIds, int bet, List<HoleCards> holeCards, Board board) {
         Hand hand = Hand.restore(handId, HandStatus.CREATED, 1, userIds, bet, holeCards, board);
         handRepository.save(hand);
@@ -119,13 +110,17 @@ public class SettleHandServiceTest {
         assertThat(gameHistory.getHandResult()).isEqualTo(expectedResult);
     }
 
-    private void given_wallet(String playerId, long initialBalance) {
-        Wallet wallet = Wallet.restore(playerId, 1, initialBalance);
-        walletRepository.save(wallet);
-    }
-
     private void then_wallet_balance_should_be(String playerId, long expectedBalance) {
         Wallet wallet = walletRepository.findByPlayerId(playerId);
         assertThat(wallet.getBalance()).isEqualTo(expectedBalance);
+    }
+
+    @TestConfiguration
+    static class TestConfig {
+        @Bean
+        @Primary
+        public DomainEventHandler dummyDomainEventHandler() {
+            return new DummyDomainEventHandler();
+        }
     }
 }

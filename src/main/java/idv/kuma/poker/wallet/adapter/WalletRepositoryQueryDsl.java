@@ -17,6 +17,7 @@ public class WalletRepositoryQueryDsl implements WalletRepository {
     private static final QWallet qWallet = QWallet.wallet;
 
     @Override
+    @Transactional(readOnly = true)
     public Wallet findByPlayerId(String playerId) {
         WalletDbDto dto = queryFactory
             .select(Projections.bean(WalletDbDto.class,
