@@ -2,11 +2,13 @@ package idv.kuma.poker.table.entity;
 
 import idv.kuma.poker.common.CombinationUtil;
 import idv.kuma.poker.common.DBCUtil;
+import lombok.Getter;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 public class HoleCards {
+    @Getter
     private final List<Card> cards;
 
     private HoleCards(List<Card> cards) {

@@ -1,5 +1,7 @@
 package idv.kuma.poker.common.config;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.querydsl.sql.H2Templates;
 import com.querydsl.sql.SQLQueryFactory;
 import com.querydsl.sql.spring.SpringConnectionProvider;
@@ -25,5 +27,16 @@ public class QueryDslConfig {
                                         com.querydsl.sql.Configuration configuration) {
         SpringConnectionProvider provider = new SpringConnectionProvider(dataSource);
         return new SQLQueryFactory(configuration, provider);
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(mapper.getSerializationConfig().getDefaultVisibilityChecker()
+                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
+        return mapper;
     }
 }
