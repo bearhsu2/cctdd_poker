@@ -67,14 +67,16 @@ spring.flyway.baseline-on-migrate=true
 
 **Important**: No JPA/Hibernate configuration needed - we're using pure JDBC with QueryDSL SQL
 
-### ✅ 1.4 Create Flyway Migration Scripts
+### ✅ 1.4 Create Flyway Migration Directory
 
 Create directory: `src/main/resources/db/migration/`
 
-Migration files (executed in order):
-- `V00000000001__create_wallet_table.sql` (✅ created with singular table name)
-- `V00000000002__create_hand_table.sql` (will be added in Phase 3)
-- `V00000000003__create_game_history_table.sql` (will be added in Phase 4)
+**Note**: Migration files are created incrementally in each phase:
+- `V00000000001__create_wallet_table.sql` (✅ created in Phase 1)
+- `V00000000002__create_hand_table.sql` (will be created in Phase 3)
+- `V00000000003__create_game_history_table.sql` (will be created in Phase 4)
+
+**Workflow**: After each migration is created → run `mvn generate-sources` → QueryDSL auto-generates corresponding DbDto and Q-class
 
 ## Phase 2: Wallet Repository Migration
 
@@ -156,11 +158,13 @@ CREATE TABLE hand (
 CREATE INDEX idx_hand_status ON hand(status);
 ```
 
-### 3.2 Create HandDbDto
+### 3.2 Generate HandDbDto
 
-**Location**: `src/main/java/idv/kuma/poker/table/adapter/HandDbDto.java`
+**Location**: `target/generated-sources/java/idv/kuma/poker/generated/HandDbDto.java` (auto-generated)
 
-**Fields**:
+**How to generate**: Run `mvn generate-sources` after creating the migration in 3.1
+
+**Generated fields** (based on table schema):
 - `id` (String) - Primary key
 - `status` (String) - HandStatus enum as string
 - `version` (Integer) - Optimistic locking
@@ -169,14 +173,9 @@ CREATE INDEX idx_hand_status ON hand(status);
 - `holeCardsJson` (String) - JSON serialized List<HoleCards>
 - `boardJson` (String) - JSON serialized Board
 
-**Annotations**:
-- `@Entity`
-- `@Table(name = "hands")`
-- `@Id`, `@Version`
-- `@Column(name = "user_ids", columnDefinition = "TEXT")`
-- `@Column(name = "hole_cards_json", columnDefinition = "TEXT")`
-- `@Column(name = "board_json", columnDefinition = "TEXT")`
-- Lombok annotations
+**Annotations** (auto-generated):
+- Lombok only: `@Data`, `@NoArgsConstructor`, `@AllArgsConstructor`
+- **No JPA annotations** - pure POJO
 
 **Note**: Domain events (`domainEvents`) will NOT be persisted - they are transient events
 
@@ -222,23 +221,20 @@ CREATE TABLE game_history (
 );
 ```
 
-### 4.2 Create GameHistoryDbDto
+### 4.2 Generate GameHistoryDbDto
 
-**Location**: `src/main/java/idv/kuma/poker/gamehistory/adapter/GameHistoryDbDto.java`
+**Location**: `target/generated-sources/java/idv/kuma/poker/generated/GameHistoryDbDto.java` (auto-generated)
 
-**Fields**:
+**How to generate**: Run `mvn generate-sources` after creating the migration in 4.1
+
+**Generated fields** (based on table schema):
 - `handId` (String) - Primary key
 - `handResultJson` (String) - JSON serialized HandResult (Map<Integer, PlayerResult>)
 - `version` (Integer) - Optimistic locking
 
-**Annotations**:
-- `@Entity`
-- `@Table(name = "game_histories")`
-- `@Id` on handId field
-- `@Version` on version field
-- `@Column(name = "hand_id")` on handId field
-- `@Column(name = "hand_result_json", columnDefinition = "TEXT")` on handResultJson field
-- Lombok: `@Data`, `@NoArgsConstructor`, `@AllArgsConstructor`
+**Annotations** (auto-generated):
+- Lombok only: `@Data`, `@NoArgsConstructor`, `@AllArgsConstructor`
+- **No JPA annotations** - pure POJO
 
 ### 4.3 Create GameHistoryRepositoryQueryDsl
 
