@@ -90,9 +90,9 @@ CREATE TABLE wallet (
 );
 ```
 
-### 2.2 Create WalletDbDto
+### ✅ 2.2 Create WalletDbDto
 
-**Location**: `src/main/java/idv/kuma/poker/wallet/adapter/WalletDbDto.java`
+**Location**: `target/generated-sources/java/idv/kuma/poker/generated/WalletDbDto.java` (auto-generated)
 
 **Fields**:
 - `playerId` (String) - Primary key
@@ -103,27 +103,30 @@ CREATE TABLE wallet (
 - Lombok only: `@Data`, `@NoArgsConstructor`, `@AllArgsConstructor`
 - **No JPA annotations needed** - pure POJO
 
-### 2.3 Create WalletRepositoryQueryDsl
+### ✅ 2.3 Create WalletRepositoryQueryDsl
 
 **Location**: `src/main/java/idv/kuma/poker/wallet/adapter/WalletRepositoryQueryDsl.java`
 
 **Dependencies**:
-- Inject `EntityManager`
-- Create `JPAQueryFactory` from EntityManager
+- Inject `SQLQueryFactory` (configured in QueryDslConfig)
+- Use `QWallet` and `WalletDbDto` from generated sources
 
 **Methods**:
 - `findByPlayerId(String playerId)` - Use QueryDSL to query by playerId
-- `save(Wallet wallet)` - Convert to DTO, persist, convert back
+- `save(Wallet wallet)` - Upsert logic (insert if new, update if exists)
 
 **Mapping**:
 - `toEntity(WalletDbDto dto)` - DTO → Domain Entity
-- `toDto(Wallet entity)` - Domain Entity → DTO
 
 **Implementation Details**:
 ```java
-QWalletDbDto qWallet = QWalletDbDto.walletDbDto;
+QWallet qWallet = QWallet.wallet;
 WalletDbDto dto = queryFactory
-    .selectFrom(qWallet)
+    .select(Projections.bean(WalletDbDto.class,
+        qWallet.playerId,
+        qWallet.balance,
+        qWallet.version))
+    .from(qWallet)
     .where(qWallet.playerId.eq(playerId))
     .fetchOne();
 ```
