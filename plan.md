@@ -214,7 +214,7 @@ Remove or rename the in-memory implementation
 
 ## Phase 4: GameHistory Repository Migration
 
-### 4.1 Create Flyway Migration - V00000000003__create_game_history_table.sql
+### ✅ 4.1 Create Flyway Migration - V00000000003__create_game_history_table.sql
 
 **Location**: `src/main/resources/db/migration/V00000000003__create_game_history_table.sql`
 
@@ -226,7 +226,7 @@ CREATE TABLE game_history (
 );
 ```
 
-### 4.2 Generate GameHistoryDbDto
+### ✅ 4.2 Generate GameHistoryDbDto
 
 **Location**: `target/generated-sources/java/idv/kuma/poker/generated/GameHistoryDbDto.java` (auto-generated)
 
@@ -241,7 +241,7 @@ CREATE TABLE game_history (
 - Lombok only: `@Data`, `@NoArgsConstructor`, `@AllArgsConstructor`
 - **No JPA annotations** - pure POJO
 
-### 4.3 Create GameHistoryRepositoryQueryDsl
+### ✅ 4.3 Create GameHistoryRepositoryQueryDsl
 
 **Location**: `src/main/java/idv/kuma/poker/gamehistory/adapter/GameHistoryRepositoryQueryDsl.java`
 
@@ -261,9 +261,11 @@ CREATE TABLE game_history (
 }
 ```
 
-### 4.4 Replace GameHistoryRepositoryInMemory
+### ✅ 4.4 Replace GameHistoryRepositoryInMemory
 
-Remove or rename the in-memory implementation
+Removed the in-memory implementation. `GameHistoryRepositoryQueryDsl` is now the sole implementation.
+
+**Note**: Converted `PlayerResult` from a class to a record to enable Jackson JSON serialization without polluting the domain model.
 
 ## Phase 5: Code Generation & Testing
 

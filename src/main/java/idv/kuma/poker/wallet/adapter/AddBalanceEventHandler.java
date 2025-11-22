@@ -17,7 +17,7 @@ public class AddBalanceEventHandler implements DomainEventHandler {
     public void handle(DomainEvent event) {
         if (event instanceof HandSettledEvent handSettledEvent) {
             PlayerResult rank1Winner = handSettledEvent.handResult().getRank1Winner();
-            addBalanceService.addBalance(rank1Winner.getUserId(), handSettledEvent.bet());
+            addBalanceService.addBalance(rank1Winner.userId(), handSettledEvent.bet());
         }
     }
 }

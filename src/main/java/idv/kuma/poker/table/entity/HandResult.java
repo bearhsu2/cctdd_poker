@@ -17,16 +17,16 @@ public class HandResult {
     }
 
     public int getRank(int position) {
-        return positionToResult.get(position).getRank();
+        return positionToResult.get(position).rank();
     }
 
     public String getUserId(int position) {
-        return positionToResult.get(position).getUserId();
+        return positionToResult.get(position).userId();
     }
 
     public PlayerResult getRank1Winner() {
         return positionToResult.values().stream()
-                .filter(result -> result.getRank() == 1)
+                .filter(result -> result.rank() == 1)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("No rank-1 winner found"));
     }

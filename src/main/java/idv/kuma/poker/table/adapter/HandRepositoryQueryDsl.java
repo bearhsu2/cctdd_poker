@@ -83,6 +83,7 @@ public class HandRepositoryQueryDsl implements HandRepository {
     }
 
     private Hand toEntity(HandDbDto dto) {
+
         List<List<Card>> holeCardsList = fromJson(dto.getHoleCardsJson(), new TypeReference<>() {});
         List<HoleCards> holeCards = holeCardsList.stream()
             .map(HoleCards::of)
