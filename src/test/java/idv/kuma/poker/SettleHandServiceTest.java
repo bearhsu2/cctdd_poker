@@ -10,6 +10,7 @@ import idv.kuma.poker.wallet.usecase.WalletRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import static idv.kuma.poker.table.entity.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@Transactional
 public class SettleHandServiceTest {
 
     @Autowired

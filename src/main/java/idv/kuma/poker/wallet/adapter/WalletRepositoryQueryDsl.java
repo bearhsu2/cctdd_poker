@@ -2,6 +2,7 @@ package idv.kuma.poker.wallet.adapter;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.sql.SQLQueryFactory;
+import idv.kuma.poker.common.OptimisticLockException;
 import idv.kuma.poker.generated.QWallet;
 import idv.kuma.poker.generated.WalletDbDto;
 import idv.kuma.poker.wallet.entity.Wallet;
@@ -47,11 +48,16 @@ public class WalletRepositoryQueryDsl implements WalletRepository {
                 .set(qWallet.version, wallet.getVersion())
                 .execute();
         } else {
-            queryFactory.update(qWallet)
+            long rowsUpdated = queryFactory.update(qWallet)
                 .set(qWallet.balance, wallet.getBalance())
                 .set(qWallet.version, wallet.getVersion())
-                .where(qWallet.playerId.eq(wallet.getPlayerId()))
+                .where(qWallet.playerId.eq(wallet.getPlayerId())
+                    .and(qWallet.version.eq(wallet.getVersion() - 1)))
                 .execute();
+
+            if (rowsUpdated == 0) {
+                throw new OptimisticLockException("Wallet " + wallet.getPlayerId() + " has been modified by another transaction");
+            }
         }
     }
 
