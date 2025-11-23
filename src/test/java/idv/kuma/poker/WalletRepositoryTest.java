@@ -87,4 +87,16 @@ public class WalletRepositoryTest {
                 e -> assertThat(e).isInstanceOf(OptimisticLockException.class)
             );
     }
+
+    @Test
+    void save_should_throw_optimistic_lock_exception_when_inserting_after_another_insert_completes() {
+        Wallet wallet1 = Wallet.create("user-4", 1000);
+        walletRepository.save(wallet1);
+
+        Wallet wallet2 = Wallet.create("user-4", 2000);
+
+        assertThrows(OptimisticLockException.class, () -> {
+            walletRepository.save(wallet2);
+        });
+    }
 }
