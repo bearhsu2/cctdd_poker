@@ -1,7 +1,7 @@
 package idv.kuma.poker;
 
-import idv.kuma.poker.common.OptimisticLockException;
 import idv.kuma.poker.wallet.entity.Wallet;
+import idv.kuma.poker.wallet.entity.exception.EntityVersionConflictException;
 import idv.kuma.poker.wallet.usecase.WalletRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class WalletRepositoryTest {
 
         walletTx2.addBalance(200);
 
-        assertThrows(OptimisticLockException.class, () -> {
+        assertThrows(EntityVersionConflictException.class, () -> {
             walletRepository.save(walletTx2);
         });
     }
@@ -84,7 +84,7 @@ public class WalletRepositoryTest {
         assertThat(thrownException)
             .satisfiesAnyOf(
                 e -> assertThat(e).isInstanceOf(DuplicateKeyException.class),
-                e -> assertThat(e).isInstanceOf(OptimisticLockException.class)
+                e -> assertThat(e).isInstanceOf(EntityVersionConflictException.class)
             );
     }
 
@@ -95,7 +95,7 @@ public class WalletRepositoryTest {
 
         Wallet wallet2 = Wallet.create("user-4", 2000);
 
-        assertThrows(OptimisticLockException.class, () -> {
+        assertThrows(EntityVersionConflictException.class, () -> {
             walletRepository.save(wallet2);
         });
     }
