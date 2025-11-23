@@ -23,7 +23,7 @@ public class WalletRepositoryTest {
     private WalletRepository walletRepository;
 
     @Test
-    void save_should_throw_exception_when_version_conflict_occurs() {
+    void save_should_throw_exception_when_version_conflict_occurs() throws EntityExistsException {
         Wallet wallet = Wallet.create("user-1", 1000);
         walletRepository.save(wallet);
 
@@ -89,7 +89,7 @@ public class WalletRepositoryTest {
     }
 
     @Test
-    void save_should_throw_optimistic_lock_exception_when_inserting_after_another_insert_completes() {
+    void save_should_throw_optimistic_lock_exception_when_inserting_after_another_insert_completes() throws EntityExistsException {
         Wallet wallet1 = Wallet.create("user-4", 1000);
         walletRepository.save(wallet1);
 
