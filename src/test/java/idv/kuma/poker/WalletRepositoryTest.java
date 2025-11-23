@@ -1,12 +1,12 @@
 package idv.kuma.poker;
 
 import idv.kuma.poker.wallet.entity.Wallet;
+import idv.kuma.poker.wallet.entity.exception.EntityExistsException;
 import idv.kuma.poker.wallet.entity.exception.EntityVersionConflictException;
 import idv.kuma.poker.wallet.usecase.WalletRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.CountDownLatch;
@@ -83,7 +83,7 @@ public class WalletRepositoryTest {
         Exception thrownException = exception1.get() != null ? exception1.get() : exception2.get();
         assertThat(thrownException)
             .satisfiesAnyOf(
-                e -> assertThat(e).isInstanceOf(DuplicateKeyException.class),
+                e -> assertThat(e).isInstanceOf(EntityExistsException.class),
                 e -> assertThat(e).isInstanceOf(EntityVersionConflictException.class)
             );
     }

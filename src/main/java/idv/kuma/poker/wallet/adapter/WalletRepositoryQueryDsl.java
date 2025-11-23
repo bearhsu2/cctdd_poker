@@ -3,11 +3,13 @@ package idv.kuma.poker.wallet.adapter;
 import com.querydsl.core.types.Projections;
 import com.querydsl.sql.SQLQueryFactory;
 import idv.kuma.poker.generated.QWallet;
-import idv.kuma.poker.wallet.entity.exception.EntityVersionConflictException;
 import idv.kuma.poker.generated.WalletDbDto;
 import idv.kuma.poker.wallet.entity.Wallet;
+import idv.kuma.poker.wallet.entity.exception.EntityExistsException;
+import idv.kuma.poker.wallet.entity.exception.EntityVersionConflictException;
 import idv.kuma.poker.wallet.usecase.WalletRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,11 +45,15 @@ public class WalletRepositoryQueryDsl implements WalletRepository {
             .fetchOne();
 
         if (count == 0) {
-            queryFactory.insert(qWallet)
-                .set(qWallet.playerId, wallet.getPlayerId())
-                .set(qWallet.balance, wallet.getBalance())
-                .set(qWallet.version, wallet.getVersion())
-                .execute();
+            try {
+                queryFactory.insert(qWallet)
+                    .set(qWallet.playerId, wallet.getPlayerId())
+                    .set(qWallet.balance, wallet.getBalance())
+                    .set(qWallet.version, wallet.getVersion())
+                    .execute();
+            } catch (DuplicateKeyException e) {
+                throw new EntityExistsException("Wallet " + wallet.getPlayerId() + " already exists", e);
+            }
         } else {
             long rowsUpdated = queryFactory.update(qWallet)
                 .set(qWallet.balance, wallet.getBalance())
