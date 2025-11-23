@@ -1,4 +1,4 @@
-package idv.kuma.poker.wallet.entity.exception;
+package idv.kuma.poker.common.exception;
 
 public class EntityVersionConflictException extends RuntimeException {
     public EntityVersionConflictException(String message) {

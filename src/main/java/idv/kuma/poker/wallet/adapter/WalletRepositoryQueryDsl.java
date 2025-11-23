@@ -2,11 +2,11 @@ package idv.kuma.poker.wallet.adapter;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.sql.SQLQueryFactory;
+import idv.kuma.poker.common.exception.EntityExistsException;
+import idv.kuma.poker.common.exception.EntityVersionConflictException;
 import idv.kuma.poker.generated.QWallet;
 import idv.kuma.poker.generated.WalletDbDto;
 import idv.kuma.poker.wallet.entity.Wallet;
-import idv.kuma.poker.wallet.entity.exception.EntityExistsException;
-import idv.kuma.poker.wallet.entity.exception.EntityVersionConflictException;
 import idv.kuma.poker.wallet.usecase.WalletRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;

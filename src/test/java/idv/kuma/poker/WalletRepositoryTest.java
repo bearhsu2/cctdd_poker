@@ -1,8 +1,8 @@
 package idv.kuma.poker;
 
+import idv.kuma.poker.common.exception.EntityExistsException;
+import idv.kuma.poker.common.exception.EntityVersionConflictException;
 import idv.kuma.poker.wallet.entity.Wallet;
-import idv.kuma.poker.wallet.entity.exception.EntityExistsException;
-import idv.kuma.poker.wallet.entity.exception.EntityVersionConflictException;
 import idv.kuma.poker.wallet.usecase.WalletRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
