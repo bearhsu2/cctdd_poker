@@ -1,6 +1,6 @@
 package idv.kuma.poker.table.entity;
 
-import idv.kuma.poker.common.ComparatorUtil;
+import idv.kuma.poker.common.tool.ComparatorUtil;
 import lombok.Getter;
 
 import java.util.Arrays;

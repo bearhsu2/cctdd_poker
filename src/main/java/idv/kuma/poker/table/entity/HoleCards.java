@@ -1,7 +1,7 @@
 package idv.kuma.poker.table.entity;
 
-import idv.kuma.poker.common.CombinationUtil;
-import idv.kuma.poker.common.DBCUtil;
+import idv.kuma.poker.common.tool.CombinationUtil;
+import idv.kuma.poker.common.tool.DBCUtil;
 import lombok.Getter;
 
 import java.util.List;

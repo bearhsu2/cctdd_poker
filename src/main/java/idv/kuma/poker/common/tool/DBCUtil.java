@@ -1,4 +1,4 @@
-package idv.kuma.poker.common;
+package idv.kuma.poker.common.tool;
 
 import java.util.function.BooleanSupplier;
 
