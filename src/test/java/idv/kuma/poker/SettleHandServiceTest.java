@@ -1,6 +1,7 @@
 package idv.kuma.poker;
 
 import idv.kuma.poker.common.exception.EntityExistsException;
+import idv.kuma.poker.common.exception.EntityVersionConflictException;
 import idv.kuma.poker.gamehistory.entity.GameHistory;
 import idv.kuma.poker.gamehistory.usecase.GameHistoryRepository;
 import idv.kuma.poker.table.entity.*;
@@ -35,7 +36,7 @@ public class SettleHandServiceTest {
     private SettleHandService settleHandService;
 
     @Test
-    void should_retrieve_hand_settle_it_and_save_back() throws EntityExistsException {
+    void should_retrieve_hand_settle_it_and_save_back() throws EntityExistsException, EntityVersionConflictException {
         given_wallet("user-1", 500);
         given_wallet("user-2", 500);
         given_hand("hand-1",
@@ -65,7 +66,7 @@ public class SettleHandServiceTest {
         then_wallet_balance_should_be("user-2", 500);
     }
 
-    private void given_wallet(String playerId, long initialBalance) throws EntityExistsException {
+    private void given_wallet(String playerId, long initialBalance) throws EntityExistsException, EntityVersionConflictException {
         Wallet wallet = Wallet.create(playerId, initialBalance);
         walletRepository.save(wallet);
     }

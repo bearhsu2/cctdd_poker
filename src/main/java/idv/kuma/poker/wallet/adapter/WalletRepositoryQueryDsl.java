@@ -37,7 +37,7 @@ public class WalletRepositoryQueryDsl implements WalletRepository {
 
     @Override
     @Transactional
-    public void save(Wallet wallet) throws EntityExistsException {
+    public void save(Wallet wallet) throws EntityExistsException, EntityVersionConflictException {
         Long count = queryFactory
             .select(qWallet.playerId.count())
             .from(qWallet)

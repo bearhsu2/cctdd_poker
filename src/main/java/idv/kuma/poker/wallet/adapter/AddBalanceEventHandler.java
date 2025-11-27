@@ -2,6 +2,7 @@ package idv.kuma.poker.wallet.adapter;
 
 import idv.kuma.poker.common.entity.DomainEvent;
 import idv.kuma.poker.common.exception.EntityExistsException;
+import idv.kuma.poker.common.exception.EntityVersionConflictException;
 import idv.kuma.poker.common.usecase.DomainEventHandler;
 import idv.kuma.poker.table.entity.HandSettledEvent;
 import idv.kuma.poker.table.entity.PlayerResult;
@@ -20,7 +21,7 @@ public class AddBalanceEventHandler implements DomainEventHandler {
             PlayerResult rank1Winner = handSettledEvent.handResult().getRank1Winner();
             try {
                 addBalanceService.addBalance(rank1Winner.userId(), handSettledEvent.bet());
-            } catch (EntityExistsException e) {
+            } catch (EntityExistsException | EntityVersionConflictException e) {
                 throw new RuntimeException("Failed to add balance", e);
             }
         }
