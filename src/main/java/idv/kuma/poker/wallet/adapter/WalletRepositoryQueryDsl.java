@@ -4,6 +4,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.sql.SQLQueryFactory;
 import idv.kuma.poker.common.exception.EntityExistsException;
 import idv.kuma.poker.common.exception.EntityVersionConflictException;
+import idv.kuma.poker.common.exception.PersistenceException;
 import idv.kuma.poker.generated.QWallet;
 import idv.kuma.poker.generated.WalletDbDto;
 import idv.kuma.poker.wallet.entity.Wallet;
@@ -37,7 +38,7 @@ public class WalletRepositoryQueryDsl implements WalletRepository {
 
     @Override
     @Transactional
-    public void insert(Wallet wallet) throws EntityExistsException {
+    public void insert(Wallet wallet) throws EntityExistsException, PersistenceException {
         try {
             queryFactory.insert(qWallet)
                 .set(qWallet.playerId, wallet.getPlayerId())
@@ -46,21 +47,29 @@ public class WalletRepositoryQueryDsl implements WalletRepository {
                 .execute();
         } catch (DuplicateKeyException e) {
             throw new EntityExistsException("Wallet " + wallet.getPlayerId() + " already exists", e);
+        } catch (Exception e) {
+            throw new PersistenceException("Failed to insert wallet", e);
         }
     }
 
     @Override
     @Transactional
-    public void update(Wallet wallet) throws EntityVersionConflictException {
-        long rowsUpdated = queryFactory.update(qWallet)
-            .set(qWallet.balance, wallet.getBalance())
-            .set(qWallet.version, wallet.getVersion())
-            .where(qWallet.playerId.eq(wallet.getPlayerId())
-                .and(qWallet.version.eq(wallet.getVersion() - 1)))
-            .execute();
+    public void update(Wallet wallet) throws EntityVersionConflictException, PersistenceException {
+        try {
+            long rowsUpdated = queryFactory.update(qWallet)
+                .set(qWallet.balance, wallet.getBalance())
+                .set(qWallet.version, wallet.getVersion())
+                .where(qWallet.playerId.eq(wallet.getPlayerId())
+                    .and(qWallet.version.eq(wallet.getVersion() - 1)))
+                .execute();
 
-        if (rowsUpdated == 0) {
-            throw new EntityVersionConflictException("Wallet " + wallet.getPlayerId() + " has been modified by another transaction");
+            if (rowsUpdated == 0) {
+                throw new EntityVersionConflictException("Wallet " + wallet.getPlayerId() + " has been modified by another transaction");
+            }
+        } catch (EntityVersionConflictException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new PersistenceException("Failed to update wallet", e);
         }
     }
 

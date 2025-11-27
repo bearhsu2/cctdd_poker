@@ -2,6 +2,7 @@ package idv.kuma.poker;
 
 import idv.kuma.poker.common.exception.EntityExistsException;
 import idv.kuma.poker.common.exception.EntityVersionConflictException;
+import idv.kuma.poker.common.exception.PersistenceException;
 import idv.kuma.poker.wallet.entity.Wallet;
 import idv.kuma.poker.wallet.usecase.WalletRepository;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ public class WalletRepositoryTest {
     private WalletRepository walletRepository;
 
     @Test
-    void save_should_throw_exception_when_version_conflict_occurs() throws EntityExistsException, EntityVersionConflictException {
+    void save_should_throw_exception_when_version_conflict_occurs() throws EntityExistsException, EntityVersionConflictException, PersistenceException {
         Wallet wallet = Wallet.create("user-1", 1000);
         walletRepository.insert(wallet);
 
@@ -85,7 +86,7 @@ public class WalletRepositoryTest {
     }
 
     @Test
-    void save_should_throw_optimistic_lock_exception_when_inserting_after_another_insert_completes() throws EntityExistsException {
+    void save_should_throw_optimistic_lock_exception_when_inserting_after_another_insert_completes() throws EntityExistsException, PersistenceException {
         Wallet wallet1 = Wallet.create("user-4", 1000);
         walletRepository.insert(wallet1);
 
@@ -93,6 +94,15 @@ public class WalletRepositoryTest {
 
         assertThrows(EntityExistsException.class, () -> {
             walletRepository.insert(wallet2);
+        });
+    }
+
+    @Test
+    void insert_should_throw_persistence_exception_when_player_id_is_null() {
+        Wallet wallet = Wallet.create(null, 1000);
+
+        assertThrows(PersistenceException.class, () -> {
+            walletRepository.insert(wallet);
         });
     }
 }
