@@ -37,34 +37,30 @@ public class WalletRepositoryQueryDsl implements WalletRepository {
 
     @Override
     @Transactional
-    public void save(Wallet wallet) throws EntityExistsException, EntityVersionConflictException {
-        Long count = queryFactory
-            .select(qWallet.playerId.count())
-            .from(qWallet)
-            .where(qWallet.playerId.eq(wallet.getPlayerId()))
-            .fetchOne();
-
-        if (count == 0) {
-            try {
-                queryFactory.insert(qWallet)
-                    .set(qWallet.playerId, wallet.getPlayerId())
-                    .set(qWallet.balance, wallet.getBalance())
-                    .set(qWallet.version, wallet.getVersion())
-                    .execute();
-            } catch (DuplicateKeyException e) {
-                throw new EntityExistsException("Wallet " + wallet.getPlayerId() + " already exists", e);
-            }
-        } else {
-            long rowsUpdated = queryFactory.update(qWallet)
+    public void insert(Wallet wallet) throws EntityExistsException {
+        try {
+            queryFactory.insert(qWallet)
+                .set(qWallet.playerId, wallet.getPlayerId())
                 .set(qWallet.balance, wallet.getBalance())
                 .set(qWallet.version, wallet.getVersion())
-                .where(qWallet.playerId.eq(wallet.getPlayerId())
-                    .and(qWallet.version.eq(wallet.getVersion() - 1)))
                 .execute();
+        } catch (DuplicateKeyException e) {
+            throw new EntityExistsException("Wallet " + wallet.getPlayerId() + " already exists", e);
+        }
+    }
 
-            if (rowsUpdated == 0) {
-                throw new EntityVersionConflictException("Wallet " + wallet.getPlayerId() + " has been modified by another transaction");
-            }
+    @Override
+    @Transactional
+    public void update(Wallet wallet) throws EntityVersionConflictException {
+        long rowsUpdated = queryFactory.update(qWallet)
+            .set(qWallet.balance, wallet.getBalance())
+            .set(qWallet.version, wallet.getVersion())
+            .where(qWallet.playerId.eq(wallet.getPlayerId())
+                .and(qWallet.version.eq(wallet.getVersion() - 1)))
+            .execute();
+
+        if (rowsUpdated == 0) {
+            throw new EntityVersionConflictException("Wallet " + wallet.getPlayerId() + " has been modified by another transaction");
         }
     }
 

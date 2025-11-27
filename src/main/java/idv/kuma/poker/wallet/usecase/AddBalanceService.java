@@ -1,6 +1,5 @@
 package idv.kuma.poker.wallet.usecase;
 
-import idv.kuma.poker.common.exception.EntityExistsException;
 import idv.kuma.poker.common.exception.EntityVersionConflictException;
 import idv.kuma.poker.wallet.entity.Wallet;
 import lombok.AllArgsConstructor;
@@ -13,9 +12,9 @@ public class AddBalanceService {
     private final WalletRepository walletRepository;
 
     @Transactional
-    public void addBalance(String playerId, long amount) throws EntityExistsException, EntityVersionConflictException {
+    public void addBalance(String playerId, long amount) throws EntityVersionConflictException {
         Wallet wallet = walletRepository.findByPlayerId(playerId);
         wallet.addBalance(amount);
-        walletRepository.save(wallet);
+        walletRepository.update(wallet);
     }
 }

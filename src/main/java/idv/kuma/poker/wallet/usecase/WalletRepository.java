@@ -6,5 +6,6 @@ import idv.kuma.poker.wallet.entity.Wallet;
 
 public interface WalletRepository {
     Wallet findByPlayerId(String playerId);
-    void save(Wallet wallet) throws EntityExistsException, EntityVersionConflictException;
+    void insert(Wallet wallet) throws EntityExistsException;
+    void update(Wallet wallet) throws EntityVersionConflictException;
 }

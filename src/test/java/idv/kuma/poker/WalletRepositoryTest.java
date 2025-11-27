@@ -25,18 +25,18 @@ public class WalletRepositoryTest {
     @Test
     void save_should_throw_exception_when_version_conflict_occurs() throws EntityExistsException, EntityVersionConflictException {
         Wallet wallet = Wallet.create("user-1", 1000);
-        walletRepository.save(wallet);
+        walletRepository.insert(wallet);
 
         Wallet walletTx1 = walletRepository.findByPlayerId("user-1");
         Wallet walletTx2 = walletRepository.findByPlayerId("user-1");
 
         walletTx1.addBalance(100);
-        walletRepository.save(walletTx1);
+        walletRepository.update(walletTx1);
 
         walletTx2.addBalance(200);
 
         assertThrows(EntityVersionConflictException.class, () -> {
-            walletRepository.save(walletTx2);
+            walletRepository.update(walletTx2);
         });
     }
 
@@ -51,7 +51,7 @@ public class WalletRepositoryTest {
             try {
                 startLatch.await();
                 Wallet wallet1 = Wallet.create("user-3", 1000);
-                walletRepository.save(wallet1);
+                walletRepository.insert(wallet1);
             } catch (Exception e) {
                 exception1.set(e);
             } finally {
@@ -63,7 +63,7 @@ public class WalletRepositoryTest {
             try {
                 startLatch.await();
                 Wallet wallet2 = Wallet.create("user-3", 2000);
-                walletRepository.save(wallet2);
+                walletRepository.insert(wallet2);
             } catch (Exception e) {
                 exception2.set(e);
             } finally {
@@ -81,22 +81,18 @@ public class WalletRepositoryTest {
         assertThat(oneSucceededOneThrew).isTrue();
 
         Exception thrownException = exception1.get() != null ? exception1.get() : exception2.get();
-        assertThat(thrownException)
-            .satisfiesAnyOf(
-                e -> assertThat(e).isInstanceOf(EntityExistsException.class),
-                e -> assertThat(e).isInstanceOf(EntityVersionConflictException.class)
-            );
+        assertThat(thrownException).isInstanceOf(EntityExistsException.class);
     }
 
     @Test
-    void save_should_throw_optimistic_lock_exception_when_inserting_after_another_insert_completes() throws EntityExistsException, EntityVersionConflictException {
+    void save_should_throw_optimistic_lock_exception_when_inserting_after_another_insert_completes() throws EntityExistsException {
         Wallet wallet1 = Wallet.create("user-4", 1000);
-        walletRepository.save(wallet1);
+        walletRepository.insert(wallet1);
 
         Wallet wallet2 = Wallet.create("user-4", 2000);
 
-        assertThrows(EntityVersionConflictException.class, () -> {
-            walletRepository.save(wallet2);
+        assertThrows(EntityExistsException.class, () -> {
+            walletRepository.insert(wallet2);
         });
     }
 }
