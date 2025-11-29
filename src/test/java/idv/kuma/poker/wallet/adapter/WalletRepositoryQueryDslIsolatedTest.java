@@ -1,11 +1,8 @@
 package idv.kuma.poker.wallet.adapter;
 
 import com.querydsl.core.types.Expression;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.sql.SQLQuery;
 import com.querydsl.sql.SQLQueryFactory;
 import idv.kuma.poker.common.exception.PersistenceException;
-import idv.kuma.poker.generated.QWallet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,13 +14,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class WalletRepositoryQueryDslTest {
+public class WalletRepositoryQueryDslIsolatedTest {
 
     @Mock
     private SQLQueryFactory queryFactory;
-
-    @Mock
-    private SQLQuery<Object> sqlQuery;
 
     private WalletRepositoryQueryDsl walletRepository;
 
@@ -34,10 +28,8 @@ public class WalletRepositoryQueryDslTest {
 
     @Test
     void find_by_player_id_should_throw_persistence_exception_when_database_error_occurs() {
-        when(queryFactory.select(any(Expression.class))).thenReturn(sqlQuery);
-        when(sqlQuery.from(any(QWallet.class))).thenReturn(sqlQuery);
-        when(sqlQuery.where(any(Predicate.class))).thenReturn(sqlQuery);
-        when(sqlQuery.fetchOne()).thenThrow(new RuntimeException("Database connection lost"));
+        when(queryFactory.select(any(Expression.class)))
+                .thenThrow(new RuntimeException("any runtime exception"));
 
         assertThrows(PersistenceException.class, () -> {
             walletRepository.findByPlayerId("player-1");
