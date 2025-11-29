@@ -30,8 +30,7 @@ public class GameHistoryRepositoryQueryDsl implements GameHistoryRepository {
         GameHistoryDbDto dto = queryFactory
             .select(Projections.bean(GameHistoryDbDto.class,
                 qGameHistory.handId,
-                qGameHistory.handResultJson,
-                qGameHistory.version))
+                qGameHistory.handResultJson))
             .from(qGameHistory)
             .where(qGameHistory.handId.eq(handId))
             .fetchOne();
@@ -52,12 +51,10 @@ public class GameHistoryRepositoryQueryDsl implements GameHistoryRepository {
             queryFactory.insert(qGameHistory)
                 .set(qGameHistory.handId, gameHistory.getHandId())
                 .set(qGameHistory.handResultJson, toJson(gameHistory.getHandResult().getPositionToResult()))
-                .set(qGameHistory.version, gameHistory.getVersion())
                 .execute();
         } else {
             queryFactory.update(qGameHistory)
                 .set(qGameHistory.handResultJson, toJson(gameHistory.getHandResult().getPositionToResult()))
-                .set(qGameHistory.version, gameHistory.getVersion())
                 .where(qGameHistory.handId.eq(gameHistory.getHandId()))
                 .execute();
         }
@@ -69,8 +66,7 @@ public class GameHistoryRepositoryQueryDsl implements GameHistoryRepository {
 
         return GameHistory.restore(
             dto.getHandId(),
-            handResult,
-            dto.getVersion()
+            handResult
         );
     }
 

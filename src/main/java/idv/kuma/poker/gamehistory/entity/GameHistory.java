@@ -10,13 +10,12 @@ import lombok.Data;
 public class GameHistory {
     private String handId;
     private HandResult handResult;
-    private int version;
 
     public static GameHistory create(String handId, HandResult handResult) {
-        return new GameHistory(handId, handResult, 1);
+        return new GameHistory(handId, handResult);
     }
 
-    public static GameHistory restore(String handId, HandResult handResult, int version) {
-        return new GameHistory(handId, handResult, version);
+    public static GameHistory restore(String handId, HandResult handResult) {
+        return new GameHistory(handId, handResult);
     }
 }
