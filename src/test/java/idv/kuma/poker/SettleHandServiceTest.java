@@ -93,7 +93,7 @@ public class SettleHandServiceTest {
         assertThat(gameHistory.getHandResult()).isEqualTo(expectedResult);
     }
 
-    private void then_wallet_balance_should_be(String playerId, long expectedBalance) {
+    private void then_wallet_balance_should_be(String playerId, long expectedBalance) throws PersistenceException {
         Wallet wallet = walletRepository.findByPlayerId(playerId);
         assertThat(wallet.getBalance()).isEqualTo(expectedBalance);
     }

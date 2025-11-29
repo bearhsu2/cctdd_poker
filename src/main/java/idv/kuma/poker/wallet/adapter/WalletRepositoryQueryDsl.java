@@ -22,17 +22,21 @@ public class WalletRepositoryQueryDsl implements WalletRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Wallet findByPlayerId(String playerId) {
-        WalletDbDto dto = queryFactory
-            .select(Projections.bean(WalletDbDto.class,
-                qWallet.playerId,
-                qWallet.balance,
-                qWallet.version))
-            .from(qWallet)
-            .where(qWallet.playerId.eq(playerId))
-            .fetchOne();
+    public Wallet findByPlayerId(String playerId) throws PersistenceException {
+        try {
+            WalletDbDto dto = queryFactory
+                .select(Projections.bean(WalletDbDto.class,
+                    qWallet.playerId,
+                    qWallet.balance,
+                    qWallet.version))
+                .from(qWallet)
+                .where(qWallet.playerId.eq(playerId))
+                .fetchOne();
 
-        return dto == null ? null : toEntity(dto);
+            return dto == null ? null : toEntity(dto);
+        } catch (Exception e) {
+            throw new PersistenceException("Failed to find wallet by playerId", e);
+        }
     }
 
 
