@@ -41,23 +41,10 @@ public class GameHistoryRepositoryQueryDsl implements GameHistoryRepository {
     @Override
     @Transactional
     public void save(GameHistory gameHistory) {
-        Long count = queryFactory
-            .select(qGameHistory.handId.count())
-            .from(qGameHistory)
-            .where(qGameHistory.handId.eq(gameHistory.getHandId()))
-            .fetchOne();
-
-        if (count == 0) {
-            queryFactory.insert(qGameHistory)
-                .set(qGameHistory.handId, gameHistory.getHandId())
-                .set(qGameHistory.handResultJson, toJson(gameHistory.getHandResult().getPositionToResult()))
-                .execute();
-        } else {
-            queryFactory.update(qGameHistory)
-                .set(qGameHistory.handResultJson, toJson(gameHistory.getHandResult().getPositionToResult()))
-                .where(qGameHistory.handId.eq(gameHistory.getHandId()))
-                .execute();
-        }
+        queryFactory.insert(qGameHistory)
+            .set(qGameHistory.handId, gameHistory.getHandId())
+            .set(qGameHistory.handResultJson, toJson(gameHistory.getHandResult().getPositionToResult()))
+            .execute();
     }
 
     private GameHistory toEntity(GameHistoryDbDto dto) {
