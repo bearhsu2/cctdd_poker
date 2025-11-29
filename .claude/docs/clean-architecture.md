@@ -104,10 +104,19 @@ public class CreateOtpService {
 - It should enforce domain invariance, pre-condition, and post-condition.
 - It should NOT depend on any framework-specific annotations or classes (e.g., Spring annotations).
 - It should NOT perform any I/O operations (e.g., database access, network calls).
-- It contains a ```version``` field, which has initial value ```1``` for optimistic locking.
-- Every command that changes the state of the aggregate/entity should be done via a method call on the aggregate/entity
-  itself.
-    - Once the state is changed, the ```version``` field should be incremented by ```1```.
+
+### Version Field for Optimistic Locking
+
+**Mutable aggregates** (aggregates with state-changing methods) should contain a ```version``` field:
+- The version field has initial value ```1``` for optimistic locking.
+- Every command that changes the state of the aggregate/entity should be done via a method call on the aggregate/entity itself.
+- Once the state is changed, the ```version``` field should be incremented by ```1```.
+- Examples: Wallet (has deposit/withdraw methods), Player (has updateProfile method)
+
+**Immutable aggregates** (aggregates with no state-changing methods) do NOT need a version field:
+- Immutable aggregates are never updated after creation - they follow an append-only pattern.
+- No concurrent modification risk exists, so optimistic locking is unnecessary.
+- Examples: GameHistory (historical record), Event (audit log), Transaction (immutable record)
 
 ### Factory Methods
 
@@ -121,68 +130,63 @@ public class CreateOtpService {
 
 - Place aggregates/entities in the `/{aggreagte name}/entity` package.
 
-### Sample
+### Samples
+
+#### Mutable Aggregate Example (with version field)
 
 ```java
 
 @Data
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class Tenant {
-    private long id;
-    private String code;
-    private Long creator;
-    private long createTime;
-    private String secretKey;
-    private String publicKey;
-    private TenantType tenantType;
+public class Wallet {
+    private Long playerId;
+    private long balance;
     private int version;
 
-    public static Tenant create(String tenantCode, long creatorId, long createTime, TenantType tenantType, String secretKey, String publicKey) {
-        Tenant tenant = new Tenant();
-        tenant.setCode(tenantCode);
-        tenant.setCreator(creatorId);
-        tenant.setCreateTime(createTime);
-        tenant.setSecretKey(secretKey);
-        tenant.setPublicKey(publicKey);
-        tenant.setTenantType(tenantType);
-        return tenant;
+    public static Wallet create(Long playerId, long initialBalance) {
+        return new Wallet(playerId, initialBalance, 1);
     }
 
-    public static Tenant restore(long id, String code, Long creator, long createTime, TenantType tenantType, String secretKey, String publicKey) {
-        Tenant tenant = new Tenant();
-        tenant.setId(id);
-        tenant.setCode(code);
-        tenant.setCreator(creator);
-        tenant.setCreateTime(createTime);
-        tenant.setSecretKey(secretKey);
-        tenant.setPublicKey(publicKey);
-        tenant.setTenantType(tenantType);
-        return tenant;
+    public static Wallet restore(Long playerId, long balance, int version) {
+        return new Wallet(playerId, balance, version);
     }
 
-    public boolean isAllowApLevel(ActivityPointsLevel minApLevel) {
-        return getAllowApLevels().contains(minApLevel);
+    // State-changing methods require version increment
+    public void deposit(long amount) {
+        this.balance += amount;
+        this.version++;
     }
 
-    public List<ActivityPointsLevel> getAllowApLevels() {
-        if (tenantType.equals(TenantType.B2C)) {
-            return getB2CAllowApLevels();
+    public void withdraw(long amount) {
+        if (this.balance < amount) {
+            throw new InsufficientBalanceException("Insufficient balance");
         }
+        this.balance -= amount;
+        this.version++;
+    }
+}
+```
 
-        return getB2BAllowApLevels();
+#### Immutable Aggregate Example (no version field)
+
+```java
+
+@Data
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class GameHistory {
+    private String handId;
+    private HandResult handResult;
+
+    public static GameHistory create(String handId, HandResult handResult) {
+        return new GameHistory(handId, handResult);
     }
 
-    private static List<ActivityPointsLevel> getB2CAllowApLevels() {
-        return ActivityPointsLevel.findLevelsExcludeDummy();
+    public static GameHistory restore(String handId, HandResult handResult) {
+        return new GameHistory(handId, handResult);
     }
 
-    private static List<ActivityPointsLevel> getB2BAllowApLevels() {
-        return List.of(ActivityPointsLevel.STEEL);
-    }
-
-    public TenantInfo getInfo() {
-        return TenantInfo.from(this);
-    }
+    // No state-changing methods - this is an immutable record
+    // Only query methods allowed
 }
 ```
 
