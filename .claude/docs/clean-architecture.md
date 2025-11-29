@@ -194,6 +194,17 @@ public class Tenant {
 - The repository implementation can use any persistence mechanism (e.g., in-memory, database, file system).
 - The repository implementation should NOT contain business logic.
 
+### Persistence Method Design
+
+Developers may choose between two approaches for persistence methods (see ADR 009):
+
+1. **Generic save()**: Use when the caller doesn't need to distinguish between insert and update operations
+2. **Explicit insert()/update()**: Use when explicit operation semantics, fail-fast behavior, or domain alignment is important
+
+Consider the tradeoffs:
+- `save()` provides convenience and framework consistency
+- `insert()/update()` provides explicit intent, better testability, and clearer error handling
+
 ### Spring Annotations
 
 - Use @Component to define the repository implementation class.
@@ -204,7 +215,9 @@ public class Tenant {
 - Place repository interfaces in the `/{aggreagte name}/service` package.
 - Place repository implements in the `/{aggreagte name}/adapter` package.
 
-### Sample
+### Samples
+
+#### Option 1: Using save()
 
 ```java
 
@@ -221,6 +234,38 @@ public class TableRepositoryInMemory implements TableRepository {
     @Override
     public Table findById(String tableId) {
         return tables.get(tableId);
+    }
+}
+```
+
+#### Option 2: Using insert()/update()
+
+```java
+
+@RequiredArgsConstructor
+@Component
+public class WalletRepositoryInMemory implements WalletRepository {
+    private final Map<Long, Wallet> wallets = new HashMap<>();
+
+    @Override
+    public void insert(Wallet wallet) {
+        if (wallets.containsKey(wallet.getPlayerId())) {
+            throw new PersistenceException("Wallet already exists for player: " + wallet.getPlayerId());
+        }
+        wallets.put(wallet.getPlayerId(), wallet);
+    }
+
+    @Override
+    public void update(Wallet wallet) {
+        if (!wallets.containsKey(wallet.getPlayerId())) {
+            throw new PersistenceException("Wallet not found for player: " + wallet.getPlayerId());
+        }
+        wallets.put(wallet.getPlayerId(), wallet);
+    }
+
+    @Override
+    public Wallet findByPlayerId(Long playerId) {
+        return wallets.get(playerId);
     }
 }
 ```
