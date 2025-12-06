@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class GameHistoryRepositoryQueryDsl implements GameHistoryRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public GameHistory findByHandId(String handId) {
+    public Optional<GameHistory> findByHandId(String handId) {
         GameHistoryDbDto dto = queryFactory
             .select(Projections.bean(GameHistoryDbDto.class,
                 qGameHistory.handId,
@@ -35,7 +36,7 @@ public class GameHistoryRepositoryQueryDsl implements GameHistoryRepository {
             .where(qGameHistory.handId.eq(handId))
             .fetchOne();
 
-        return dto == null ? null : toEntity(dto);
+        return Optional.ofNullable(dto).map(this::toEntity);
     }
 
     @Override

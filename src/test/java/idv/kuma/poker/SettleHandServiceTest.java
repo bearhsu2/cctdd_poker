@@ -86,8 +86,7 @@ public class SettleHandServiceTest {
     }
 
     private void then_game_history_should_be_created(String handId, HandResult expectedResult) {
-        GameHistory gameHistory = gameHistoryRepository.findByHandId(handId);
-        assertThat(gameHistory).isNotNull();
+        GameHistory gameHistory = gameHistoryRepository.findByHandId(handId).orElseThrow();
         assertThat(gameHistory.getHandId()).isEqualTo(handId);
         assertThat(gameHistory.getHandResult()).isEqualTo(expectedResult);
     }
