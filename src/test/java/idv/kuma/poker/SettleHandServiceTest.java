@@ -15,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 import static idv.kuma.poker.table.entity.Number.*;
 import static idv.kuma.poker.table.entity.Suit.HEART;
@@ -58,9 +57,9 @@ public class SettleHandServiceTest {
 
         then_hand_status_should_be("hand-1", HandStatus.SETTLED, 2);
         then_game_history_should_be_created("hand-1",
-                HandResult.of(Map.of(
-                        0, PlayerResult.of("user-1", 1),
-                        1, PlayerResult.of("user-2", 2)
+                HandResult.of(List.of(
+                        PlayerResult.of(0, "user-1", 1),
+                        PlayerResult.of(1, "user-2", 2)
                 )));
         then_wallet_balance_should_be("user-1", 600);
         then_wallet_balance_should_be("user-2", 500);

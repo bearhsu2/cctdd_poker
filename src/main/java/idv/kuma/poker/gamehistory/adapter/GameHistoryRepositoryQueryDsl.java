@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -43,13 +43,13 @@ public class GameHistoryRepositoryQueryDsl implements GameHistoryRepository {
     public void save(GameHistory gameHistory) {
         queryFactory.insert(qGameHistory)
             .set(qGameHistory.handId, gameHistory.getHandId())
-            .set(qGameHistory.handResultJson, toJson(gameHistory.getHandResult().getPositionToResult()))
+            .set(qGameHistory.handResultJson, toJson(gameHistory.getHandResult().getResults()))
             .execute();
     }
 
     private GameHistory toEntity(GameHistoryDbDto dto) {
-        Map<Integer, PlayerResult> positionToResult = fromJson(dto.getHandResultJson(), new TypeReference<>() {});
-        HandResult handResult = HandResult.of(positionToResult);
+        List<PlayerResult> results = fromJson(dto.getHandResultJson(), new TypeReference<>() {});
+        HandResult handResult = HandResult.of(results);
 
         return GameHistory.restore(
             dto.getHandId(),
