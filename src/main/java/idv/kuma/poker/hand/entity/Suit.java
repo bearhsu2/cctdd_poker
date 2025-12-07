@@ -1,4 +1,4 @@
-package idv.kuma.poker.table.entity;
+package idv.kuma.poker.hand.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package idv.kuma.poker.table.usecase;
+package idv.kuma.poker.hand.usecase;
 
-import idv.kuma.poker.table.entity.Hand;
+import idv.kuma.poker.hand.entity.Hand;
 
 public interface HandRepository {
     void save(Hand hand);

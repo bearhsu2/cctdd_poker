@@ -1,7 +1,7 @@
 package idv.kuma.poker.gamehistory.usecase;
 
 import idv.kuma.poker.gamehistory.entity.GameHistory;
-import idv.kuma.poker.table.entity.HandResult;
+import idv.kuma.poker.hand.entity.HandResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

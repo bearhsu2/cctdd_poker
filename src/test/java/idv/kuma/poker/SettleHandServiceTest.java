@@ -4,9 +4,9 @@ import idv.kuma.poker.common.exception.EntityExistsException;
 import idv.kuma.poker.common.exception.PersistenceException;
 import idv.kuma.poker.gamehistory.entity.GameHistory;
 import idv.kuma.poker.gamehistory.usecase.GameHistoryRepository;
-import idv.kuma.poker.table.entity.*;
-import idv.kuma.poker.table.usecase.HandRepository;
-import idv.kuma.poker.table.usecase.SettleHandService;
+import idv.kuma.poker.hand.entity.*;
+import idv.kuma.poker.hand.usecase.HandRepository;
+import idv.kuma.poker.hand.usecase.SettleHandService;
 import idv.kuma.poker.wallet.entity.Wallet;
 import idv.kuma.poker.wallet.usecase.WalletRepository;
 import org.junit.jupiter.api.Test;
@@ -16,9 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static idv.kuma.poker.table.entity.Number.*;
-import static idv.kuma.poker.table.entity.Suit.HEART;
-import static idv.kuma.poker.table.entity.Suit.SPADE;
+import static idv.kuma.poker.hand.entity.Number.*;
+import static idv.kuma.poker.hand.entity.Suit.HEART;
+import static idv.kuma.poker.hand.entity.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest

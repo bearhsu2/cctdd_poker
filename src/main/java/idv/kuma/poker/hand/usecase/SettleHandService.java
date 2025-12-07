@@ -1,10 +1,10 @@
-package idv.kuma.poker.table.usecase;
+package idv.kuma.poker.hand.usecase;
 
 import idv.kuma.poker.common.entity.DomainEvent;
 import idv.kuma.poker.common.usecase.DomainEventBus;
-import idv.kuma.poker.table.entity.PokerComparator;
-import idv.kuma.poker.table.entity.HandResult;
-import idv.kuma.poker.table.entity.Hand;
+import idv.kuma.poker.hand.entity.PokerComparator;
+import idv.kuma.poker.hand.entity.HandResult;
+import idv.kuma.poker.hand.entity.Hand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

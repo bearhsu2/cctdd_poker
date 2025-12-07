@@ -1,4 +1,4 @@
-package idv.kuma.poker.table.adapter;
+package idv.kuma.poker.hand.adapter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -7,12 +7,12 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.sql.SQLQueryFactory;
 import idv.kuma.poker.generated.HandDbDto;
 import idv.kuma.poker.generated.QHand;
-import idv.kuma.poker.table.entity.Board;
-import idv.kuma.poker.table.entity.Card;
-import idv.kuma.poker.table.entity.Hand;
-import idv.kuma.poker.table.entity.HandStatus;
-import idv.kuma.poker.table.entity.HoleCards;
-import idv.kuma.poker.table.usecase.HandRepository;
+import idv.kuma.poker.hand.entity.Board;
+import idv.kuma.poker.hand.entity.Card;
+import idv.kuma.poker.hand.entity.Hand;
+import idv.kuma.poker.hand.entity.HandStatus;
+import idv.kuma.poker.hand.entity.HoleCards;
+import idv.kuma.poker.hand.usecase.HandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

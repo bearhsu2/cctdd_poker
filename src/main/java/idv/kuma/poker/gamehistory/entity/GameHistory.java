@@ -1,6 +1,6 @@
 package idv.kuma.poker.gamehistory.entity;
 
-import idv.kuma.poker.table.entity.HandResult;
+import idv.kuma.poker.hand.entity.HandResult;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
